@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:intl/intl.dart'; // Import for date formatting
+import 'package:intl/intl.dart';
 
 void main() => runApp(ChartApp());
 
@@ -20,6 +20,9 @@ class LineChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
+      // Adjusting chart title and styling
+      title: ChartTitle(text: 'Copper (Cu)'),
+      legend: Legend(isVisible: true),
       primaryXAxis: DateTimeAxis(
         intervalType: DateTimeIntervalType.days,
         dateFormat: DateFormat.Md(), // Corrected DateFormat usage
@@ -57,26 +60,23 @@ class LineChart extends StatelessWidget {
       annotations: <CartesianChartAnnotation>[
         CartesianChartAnnotation(
           widget: Container(
-            child: Text('Spec',
-                style:
-                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-          ),
-          coordinateUnit:
-              CoordinateUnit.logicalPixel, // Corrected CoordinateUnit usage
-          x: 80, // Use a logical pixel value or provide a DateTime value if required
-          y: 250, // Position the annotation as needed
-        ),
-        CartesianChartAnnotation(
-          widget: Container(
-            child: Divider(
-              color: Colors.red,
-              thickness: 2,
+            width: double.infinity, // Ensure the line spans the entire width
+            height: 2,
+            color: Colors.red,
+            child: Text(
+              'Spec',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
-          coordinateUnit:
-              CoordinateUnit.logicalPixel, // Corrected CoordinateUnit usage
-          x: 0, // Position the annotation as needed
-          y: 5, // Use a logical pixel value for the y-position
+          coordinateUnit: CoordinateUnit.logicalPixel,
+          region: AnnotationRegion.chart,
+          x: 0, // Span entire chart region
+          y: 5, // Adjust according to spec value
         ),
       ],
     );
