@@ -88,7 +88,8 @@ class LineChart extends StatelessWidget {
       ChartData(DateTime(2024, 8, 21), 2, 1.5),
       ChartData(DateTime(2024, 8, 22), 3, 2.5),
       ChartData(DateTime(2024, 8, 23), 4, 3.5),
-      ChartData(DateTime(2024, 8, 24), 5, 4.5),
+      ChartData(DateTime(2024, 8, 24), 5, 2.5),
+      ChartData(DateTime(2024, 8, 25), 5, 4.5),
     ];
   }
 }
