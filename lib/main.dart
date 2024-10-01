@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
               },
               child: const Text('Show Chart App UI'),
             ),
-            const SizedBox(height: 20), // Add spacing between buttons
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // Navigate to the UI from rec_selector.dart
