@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomWidget extends StatelessWidget {
-  const CustomWidget({Key? key}) : super(key: key);
+  const CustomWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +31,14 @@ class CustomWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
+            const Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    children: const [
+                    children: [
                       Text(
                         'Accept',
                         style: TextStyle(
@@ -51,9 +51,9 @@ class CustomWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4), // Add some space between the texts
+                  SizedBox(height: 4), // Add some space between the texts
                   Row(
-                    children: const [
+                    children: [
                       Expanded(
                         child: Text(
                           'Recommendation',
@@ -71,15 +71,15 @@ class CustomWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               width: 125,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Column(
+                  const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
                         '2000',
                         textAlign: TextAlign.center,

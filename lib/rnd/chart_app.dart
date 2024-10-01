@@ -26,7 +26,7 @@ class LineChart extends StatelessWidget {
   // Initialize TrackballBehavior
   final TrackballBehavior _trackballBehavior = TrackballBehavior(
     enable: true,
-    tooltipSettings: InteractiveTooltip(enable: true),
+    tooltipSettings: const InteractiveTooltip(enable: true),
     activationMode: ActivationMode.singleTap, // Use tap to activate trackball
   );
 
@@ -36,13 +36,13 @@ class LineChart extends StatelessWidget {
       // Adding Trackball to Chart
       trackballBehavior: _trackballBehavior,
       // Chart Title
-      title: ChartTitle(text: 'Copper (Cu)'),
-      legend: Legend(isVisible: true),
+      title: const ChartTitle(text: 'Copper (Cu)'),
+      legend: const Legend(isVisible: true),
       tooltipBehavior: TooltipBehavior(enable: true),
       primaryXAxis: DateTimeAxis(
         intervalType: DateTimeIntervalType.days,
         dateFormat: DateFormat.Md(),
-        majorGridLines: MajorGridLines(width: 0),
+        majorGridLines: const MajorGridLines(width: 0),
         labelFormat: '{value}',
         axisLabelFormatter: (AxisLabelRenderDetails details) {
           final date =
@@ -50,14 +50,15 @@ class LineChart extends StatelessWidget {
           if (date.day == DateTime.now().day &&
               date.month == DateTime.now().month &&
               date.year == DateTime.now().year) {
-            return ChartAxisLabel('Today', TextStyle(color: Colors.black));
-          } else {
             return ChartAxisLabel(
-                DateFormat.Md().format(date), TextStyle(color: Colors.black));
+                'Today', const TextStyle(color: Colors.black));
+          } else {
+            return ChartAxisLabel(DateFormat.Md().format(date),
+                const TextStyle(color: Colors.black));
           }
         },
       ),
-      primaryYAxis: NumericAxis(
+      primaryYAxis: const NumericAxis(
         minimum: 0,
         maximum: 10,
         interval: 1,
@@ -70,9 +71,9 @@ class LineChart extends StatelessWidget {
           dataSource: getChartData(),
           xValueMapper: (ChartData data, _) => data.date,
           yValueMapper: (ChartData data, _) => data.recommend,
-          markerSettings: MarkerSettings(isVisible: true),
-          dashArray: [5, 3],
-          dataLabelSettings: DataLabelSettings(isVisible: false),
+          markerSettings: const MarkerSettings(isVisible: true),
+          dashArray: const [5, 3],
+          dataLabelSettings: const DataLabelSettings(isVisible: false),
         ),
         LineSeries<ChartData, DateTime>(
           name: 'Cu - Current',
@@ -80,9 +81,9 @@ class LineChart extends StatelessWidget {
           dataSource: getChartData(),
           xValueMapper: (ChartData data, _) => data.date,
           yValueMapper: (ChartData data, _) => data.current,
-          markerSettings: MarkerSettings(isVisible: true),
-          dashArray: [5, 3],
-          dataLabelSettings: DataLabelSettings(isVisible: false),
+          markerSettings: const MarkerSettings(isVisible: true),
+          dashArray: const [5, 3],
+          dataLabelSettings: const DataLabelSettings(isVisible: false),
         ),
       ],
       annotations: <CartesianChartAnnotation>[
@@ -109,14 +110,12 @@ class LineChart extends StatelessWidget {
           y: 0,
         ),
         CartesianChartAnnotation(
-          widget: Container(
-            child: Text(
-              'Today',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-              ),
+          widget: const Text(
+            'Today',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
             ),
           ),
           coordinateUnit: CoordinateUnit.point,

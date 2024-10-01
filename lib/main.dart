@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  // @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -36,18 +36,6 @@ class HomeScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                // Navigate to the UI from rec_selector.dart
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          CustomWidget()), // Use the widget from rec_selector.dart
-                );
-              },
-              child: const Text('Show Rec Selector UI'),
-            ),
-            ElevatedButton(
-              onPressed: () {
                 // Navigate to the UI from chart_app.dart
                 Navigator.push(
                   context,
@@ -57,6 +45,19 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               child: const Text('Show Chart App UI'),
+            ),
+            const SizedBox(height: 20), // Add spacing between buttons
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to the UI from rec_selector.dart
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const CustomWidget()), // Use the widget from rec_selector.dart
+                );
+              },
+              child: const Text('Show Rec Selector UI'),
             ),
           ],
         ),
