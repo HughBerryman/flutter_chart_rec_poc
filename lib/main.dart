@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'rnd/rec_selector.dart';
-import 'rnd/chart_app.dart'; 
+import 'rnd/chart_app.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
+  // @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

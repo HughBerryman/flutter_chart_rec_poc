@@ -7,11 +7,17 @@ void main() => runApp(ChartApp());
 class ChartApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Copper Analysis')),
-        body: LineChart(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Copper Analysis'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Navigate back to the previous screen
+          },
+        ),
       ),
+      body: LineChart(),
     );
   }
 }
