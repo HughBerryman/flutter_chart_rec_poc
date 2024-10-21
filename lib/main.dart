@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'rnd/rec_selector.dart';
 import 'rnd/chart_app.dart';
-import 'rnd/rnd_chart.dart'; // Import the RndChart
 
 void main() {
   runApp(const MyApp());
