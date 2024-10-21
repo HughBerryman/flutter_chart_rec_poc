@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'rnd/rec_selector.dart';
 import 'rnd/chart_app.dart';
+import 'rnd/rnd_chart.dart'; // Import the RndChart
 
 void main() {
   runApp(const MyApp());
@@ -58,6 +59,19 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               child: const Text('Show Rec Selector UI'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to the new RndChart UI
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const RndChart()), // Use the widget from rnd_chart.dart
+                );
+              },
+              child: const Text('Show Rnd Chart UI'),
             ),
           ],
         ),
