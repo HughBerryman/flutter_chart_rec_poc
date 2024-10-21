@@ -27,7 +27,13 @@ class RndChart extends StatelessWidget {
                 // Handle tap if needed
               },
               child: Tooltip(
-                message: "Checkmark for Day 1",
+                message: """
+                  x: Day 1
+                  decantBleed: 2000 gal/shift
+                  freshFerric: 4000 gal/shift
+                  digesterRun: 2 runs
+                  throughput: 5.9 TPH
+                """,
                 preferBelow: false, // Display tooltip above the widget
                 child: const Icon(Icons.check, color: Colors.green),
               ),
@@ -42,7 +48,13 @@ class RndChart extends StatelessWidget {
                 // Handle tap if needed
               },
               child: Tooltip(
-                message: "Checkmark for Day 2",
+                message: """
+                  x: Day 2
+                  decantBleed: 2100 gal/shift
+                  freshFerric: 4100 gal/shift
+                  digesterRun: 3 runs
+                  throughput: 6.0 TPH
+                """,
                 preferBelow: false, // Display tooltip above the widget
                 child: const Icon(Icons.check, color: Colors.green),
               ),
