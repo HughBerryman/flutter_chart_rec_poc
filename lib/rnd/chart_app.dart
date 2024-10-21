@@ -87,6 +87,31 @@ class LineChart extends StatelessWidget {
         ),
       ],
       annotations: <CartesianChartAnnotation>[
+        // Horizontal Red Line Annotation
+        CartesianChartAnnotation(
+          widget: Container(
+            height: 2,
+            color: Colors.red,
+          ),
+          coordinateUnit: CoordinateUnit.point,
+          region: AnnotationRegion.plotArea,
+          x: DateTime(2024, 8, 20), // Start date of the chart
+          y: 7, // Y-axis value for the line
+          horizontalAlignment: ChartAlignment.near,
+          verticalAlignment: ChartAlignment.center,
+        ),
+        CartesianChartAnnotation(
+          widget: Container(
+            height: 2,
+            color: Colors.red,
+          ),
+          coordinateUnit: CoordinateUnit.point,
+          region: AnnotationRegion.plotArea,
+          x: DateTime(2024, 8, 28), // End date of the chart
+          y: 7, // Y-axis value for the line
+          horizontalAlignment: ChartAlignment.far,
+          verticalAlignment: ChartAlignment.center,
+        ),
         // Spec Line Annotation
         CartesianChartAnnotation(
           widget: Container(
