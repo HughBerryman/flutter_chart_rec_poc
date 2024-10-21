@@ -121,7 +121,7 @@ class LineChart extends StatelessWidget {
           coordinateUnit: CoordinateUnit.logicalPixel,
           region: AnnotationRegion.plotArea,
           x: 0,
-          y: 0,
+          y: 0.1,
         ),
         CartesianChartAnnotation(
           widget: const Text(
@@ -157,7 +157,7 @@ class LineChart extends StatelessWidget {
           ),
           coordinateUnit: CoordinateUnit.point,
           x: DateTime(2024, 8, 20),
-          y: 0, // Position the checkmark on the x-axis
+          y: 0.1, // Position the checkmark on the x-axis
         ),
         CartesianChartAnnotation(
           widget: GestureDetector(
@@ -178,7 +178,7 @@ class LineChart extends StatelessWidget {
           ),
           coordinateUnit: CoordinateUnit.point,
           x: DateTime(2024, 8, 21),
-          y: 0, // Position the checkmark on the x-axis
+          y: 0.1, // Position the checkmark on the x-axis
         ),
         CartesianChartAnnotation(
           widget: GestureDetector(
@@ -199,7 +199,7 @@ class LineChart extends StatelessWidget {
           ),
           coordinateUnit: CoordinateUnit.point,
           x: DateTime(2024, 8, 22),
-          y: 0, // Position the checkmark on the x-axis
+          y: 0.1, // Position the checkmark on the x-axis
         ),
         // Replace checkmark with "Today" text for 2024-08-25
         CartesianChartAnnotation(
@@ -213,7 +213,7 @@ class LineChart extends StatelessWidget {
           ),
           coordinateUnit: CoordinateUnit.point,
           x: DateTime(2024, 8, 25),
-          y: 0, // Position the text on the x-axis
+          y: 0.1, // Position the text on the x-axis
         ),
       ],
     );
