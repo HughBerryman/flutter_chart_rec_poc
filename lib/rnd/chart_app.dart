@@ -127,7 +127,7 @@ class LineChart extends StatelessWidget {
           widget: const Text(
             'Today',
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.yellow,
               fontWeight: FontWeight.bold,
               fontSize: 12,
             ),
@@ -145,12 +145,12 @@ class LineChart extends StatelessWidget {
             },
             child: Tooltip(
               message: """
-                  x: Day 2
-                  decantBleed: 2100 gal/shift
-                  freshFerric: 4100 gal/shift
-                  digesterRun: 3 runs
-                  throughput: 6.0 TPH
-                """,
+                x: Day 1
+                decantBleed: 2100 gal/shift
+                freshFerric: 4100 gal/shift
+                digesterRun: 3 runs
+                throughput: 6.0 TPH
+              """,
               preferBelow: false,
               child: const Icon(Icons.check, color: Colors.green),
             ),
@@ -166,12 +166,12 @@ class LineChart extends StatelessWidget {
             },
             child: Tooltip(
               message: """
-                  x: Day 2
-                  decantBleed: 2100 gal/shift
-                  freshFerric: 4100 gal/shift
-                  digesterRun: 3 runs
-                  throughput: 6.0 TPH
-                """,
+                x: Day 2
+                decantBleed: 2100 gal/shift
+                freshFerric: 4100 gal/shift
+                digesterRun: 3 runs
+                throughput: 6.0 TPH
+              """,
               preferBelow: false,
               child: const Icon(Icons.check, color: Colors.green),
             ),
@@ -187,12 +187,12 @@ class LineChart extends StatelessWidget {
             },
             child: Tooltip(
               message: """
-                  x: Day 2
-                  decantBleed: 2100 gal/shift
-                  freshFerric: 4100 gal/shift
-                  digesterRun: 3 runs
-                  throughput: 6.0 TPH
-                """,
+                x: Day 3
+                decantBleed: 2100 gal/shift
+                freshFerric: 4100 gal/shift
+                digesterRun: 3 runs
+                throughput: 6.0 TPH
+              """,
               preferBelow: false,
               child: const Icon(Icons.check, color: Colors.green),
             ),
@@ -201,27 +201,19 @@ class LineChart extends StatelessWidget {
           x: DateTime(2024, 8, 22),
           y: 0, // Position the checkmark on the x-axis
         ),
-        // Existing checkmark for 2024-08-25
+        // Replace checkmark with "Today" text for 2024-08-25
         CartesianChartAnnotation(
-          widget: GestureDetector(
-            onTap: () {
-              // Handle tap if needed
-            },
-            child: Tooltip(
-              message: """
-                  x: Day 2
-                  decantBleed: 2100 gal/shift
-                  freshFerric: 4100 gal/shift
-                  digesterRun: 3 runs
-                  throughput: 6.0 TPH
-                """,
-              preferBelow: false,
-              child: const Icon(Icons.check, color: Colors.green),
+          widget: const Text(
+            'Today',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
             ),
           ),
           coordinateUnit: CoordinateUnit.point,
           x: DateTime(2024, 8, 25),
-          y: 0, // Position the checkmark on the x-axis
+          y: 0, // Position the text on the x-axis
         ),
       ],
     );
