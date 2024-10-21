@@ -28,12 +28,13 @@ class RndChart extends StatelessWidget {
               },
               child: Tooltip(
                 message: "Checkmark for Day 1",
+                preferBelow: false, // Display tooltip above the widget
                 child: const Icon(Icons.check, color: Colors.green),
               ),
             ),
             coordinateUnit: CoordinateUnit.point,
             x: 'Day 1',
-            y: 15, // Move the checkmark up by 15 pixels
+            y: 0.5, // Adjust this value to position the checkmark just above the x-axis
           ),
           CartesianChartAnnotation(
             widget: GestureDetector(
@@ -42,12 +43,13 @@ class RndChart extends StatelessWidget {
               },
               child: Tooltip(
                 message: "Checkmark for Day 2",
+                preferBelow: false, // Display tooltip above the widget
                 child: const Icon(Icons.check, color: Colors.green),
               ),
             ),
             coordinateUnit: CoordinateUnit.point,
             x: 'Day 2',
-            y: 15, // Move the checkmark up by 15 pixels
+            y: 0.5, // Adjust this value to position the checkmark just above the x-axis
           ),
         ],
         tooltipBehavior: TooltipBehavior(
