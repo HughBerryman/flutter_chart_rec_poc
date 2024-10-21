@@ -35,18 +35,6 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to the new RndChart UI
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const RndChart()), // Use the widget from rnd_chart.dart
-                );
-              },
-              child: const Text('Show Rnd Chart UI'),
-            ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
