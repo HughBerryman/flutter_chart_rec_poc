@@ -112,17 +112,6 @@ class LineChart extends StatelessWidget {
           horizontalAlignment: ChartAlignment.far,
           verticalAlignment: ChartAlignment.center,
         ),
-        // Spec Line Annotation
-        CartesianChartAnnotation(
-          widget: Container(
-            height: 2,
-            color: Colors.red,
-          ),
-          coordinateUnit: CoordinateUnit.logicalPixel,
-          region: AnnotationRegion.plotArea,
-          x: 0,
-          y: 5,
-        ),
         // Today Line Annotation
         CartesianChartAnnotation(
           widget: Container(
