@@ -125,9 +125,9 @@ class LineChart extends StatelessWidget {
         ),
         CartesianChartAnnotation(
           widget: const Text(
-            'Today',
+            'Today vertical line goes here',
             style: TextStyle(
-              color: Colors.yellow,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 12,
             ),
