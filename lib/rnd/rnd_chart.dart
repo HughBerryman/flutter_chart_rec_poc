@@ -22,58 +22,36 @@ class RndChart extends StatelessWidget {
         ],
         annotations: <CartesianChartAnnotation>[
           CartesianChartAnnotation(
-            widget: const Icon(Icons.check, color: Colors.green),
+            widget: GestureDetector(
+              onTap: () {
+                // Handle tap if needed
+              },
+              child: Tooltip(
+                message: "Checkmark for Day 1",
+                child: const Icon(Icons.check, color: Colors.green),
+              ),
+            ),
             coordinateUnit: CoordinateUnit.point,
             x: 'Day 1',
-            y: 0, // Adjust y to align with x-axis
+            y: 15, // Move the checkmark up by 15 pixels
           ),
           CartesianChartAnnotation(
-            widget: const Icon(Icons.check, color: Colors.green),
+            widget: GestureDetector(
+              onTap: () {
+                // Handle tap if needed
+              },
+              child: Tooltip(
+                message: "Checkmark for Day 2",
+                child: const Icon(Icons.check, color: Colors.green),
+              ),
+            ),
             coordinateUnit: CoordinateUnit.point,
             x: 'Day 2',
-            y: 0, // Adjust y to align with x-axis
+            y: 15, // Move the checkmark up by 15 pixels
           ),
         ],
         tooltipBehavior: TooltipBehavior(
           enable: true,
-          builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
-              int seriesIndex) {
-            final ChartData chartData = data;
-            return Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '{${chartData.x}}',
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    '✓ Decant Bleed: 2000 gal/shift',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const Text(
-                    '✓ Fresh Ferric: 4000 gal/shift',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const Text(
-                    '✓ Digester Run: 2 runs',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const Text(
-                    '✓ Throughput: 5.9 TPH',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            );
-          },
         ),
       ),
     );
