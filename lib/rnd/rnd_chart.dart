@@ -25,18 +25,19 @@ class RndChart extends StatelessWidget {
             widget: const Icon(Icons.check, color: Colors.green),
             coordinateUnit: CoordinateUnit.point,
             x: 'Day 1',
-            y: 30,
+            y: 0, // Adjust y to align with x-axis
           ),
           CartesianChartAnnotation(
             widget: const Icon(Icons.check, color: Colors.green),
             coordinateUnit: CoordinateUnit.point,
             x: 'Day 2',
-            y: 40,
+            y: 0, // Adjust y to align with x-axis
           ),
         ],
         tooltipBehavior: TooltipBehavior(
           enable: true,
-          builder: (dynamic data, dynamic point, dynamic series, int pointIndex, int seriesIndex) {
+          builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+              int seriesIndex) {
             final ChartData chartData = data;
             return Container(
               padding: const EdgeInsets.all(8),
@@ -49,7 +50,8 @@ class RndChart extends StatelessWidget {
                 children: [
                   Text(
                     '{${chartData.x}}',
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
                   const Text(
