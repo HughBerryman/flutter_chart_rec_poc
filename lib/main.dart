@@ -53,9 +53,7 @@ class HomeScreen extends StatelessWidget {
                 // Navigate to the UI from rec_selector.dart
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const CustomWidget()), // Use the widget from rec_selector.dart
+                  MaterialPageRoute(builder: (context) => const RecSelector()),
                 );
               },
               child: const Text('Show Rec Selector UI'),
