@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 
-void main() => runApp(ChartApp());
+void main() => runApp(const ChartApp());
 
 class ChartApp extends StatelessWidget {
+  const ChartApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +31,8 @@ class LineChart extends StatelessWidget {
     tooltipSettings: const InteractiveTooltip(enable: true),
     activationMode: ActivationMode.singleTap, // Use tap to activate trackball
   );
+
+  LineChart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +95,7 @@ class LineChart extends StatelessWidget {
         CartesianChartAnnotation(
           widget: Container(
             height: 2,
-            color: Colors.red,
+            color: const Color.fromARGB(255, 244, 81, 70),
           ),
           coordinateUnit: CoordinateUnit.point,
           region: AnnotationRegion.plotArea,
