@@ -95,7 +95,7 @@ class LineChart extends StatelessWidget {
         CartesianChartAnnotation(
           widget: Container(
             height: 2,
-            color: const Color.fromARGB(255, 244, 81, 70),
+            color: Color.fromARGB(255, 225, 66, 55),
           ),
           coordinateUnit: CoordinateUnit.point,
           region: AnnotationRegion.plotArea,
