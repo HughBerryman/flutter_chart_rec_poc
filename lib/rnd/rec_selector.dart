@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 
 class RecSelector extends StatelessWidget {
-  const RecSelector({super.key, required bool isEnabled, required String title, required Color color});
+  final bool isEnabled;
+  final String title;
+  final Color color;
+
+  const RecSelector({
+    super.key,
+    this.isEnabled = true,
+    this.title = "Default Title",
+    this.color = const Color(0xFFDBF2E0),
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Rec Selector UI'),
+        title: Text(title),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(
-                context); // This will navigate back to the previous screen
+            Navigator.pop(context);
           },
         ),
       ),
@@ -22,7 +30,7 @@ class RecSelector extends StatelessWidget {
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: isEnabled ? color : Colors.grey,
             border: Border.all(color: const Color(0xFFE2E2E5), width: 1),
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
@@ -88,10 +96,14 @@ class RecSelector extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFDBF2E0),
+                  color: isEnabled ? const Color(0xFFDBF2E0) : Colors.red,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check, size: 20, color: Colors.green),
+                child: Icon(
+                  Icons.check,
+                  size: 20,
+                  color: isEnabled ? Colors.green : Colors.red,
+                ),
               ),
             ],
           ),

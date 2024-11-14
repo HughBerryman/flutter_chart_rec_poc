@@ -10,11 +10,9 @@ Widget buildCustomWidgetUseCase(BuildContext context) {
       context.knobs.boolean(label: "Is Enabled", initialValue: true);
   final String title = context.knobs.string(
     label: "Title",
-    initialValue: "Default Title",
   );
   final Color color = context.knobs.color(
     label: "Color",
-    initialValue: Colors.blue,
   );
 
   return RecSelector(
