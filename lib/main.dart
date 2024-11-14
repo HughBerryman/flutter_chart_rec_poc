@@ -3,7 +3,9 @@ import 'rnd/rec_selector.dart';
 import 'rnd/chart_app.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(
+    home: ChartApp(chartTitle: 'Copper Analysis'),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -41,8 +43,9 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          ChartApp()), // Use the widget from chart_app.dart
+                      builder: (context) => ChartApp(
+                          chartTitle:
+                              'Copper Analysis')), // Use the widget from chart_app.dart
                 );
               },
               child: const Text('Show Chart App UI'),

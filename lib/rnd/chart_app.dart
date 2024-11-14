@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 
-void main() => runApp(const ChartApp());
+void main() => runApp(const ChartApp(chartTitle: 'Copper Analysis'));
 
 class ChartApp extends StatelessWidget {
-  const ChartApp({super.key});
+  final String chartTitle;
+
+  const ChartApp({super.key, required this.chartTitle});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Copper Analysis'),
+        title: Text(chartTitle),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
