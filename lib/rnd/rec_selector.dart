@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RecSelector extends StatelessWidget {
-  const RecSelector({super.key});
+  const RecSelector({super.key, required bool isEnabled, required String title, required Color color});
 
   @override
   Widget build(BuildContext context) {
