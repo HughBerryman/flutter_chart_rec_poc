@@ -17,7 +17,7 @@ final directories = <_i1.WidgetbookNode>[
     name: 'rnd',
     children: [
       _i1.WidgetbookLeafComponent(
-        name: 'CustomWidget',
+        name: 'RecSelector',
         useCase: _i1.WidgetbookUseCase(
           name: 'Default',
           builder: _i2.buildCustomWidgetUseCase,
