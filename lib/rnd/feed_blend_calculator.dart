@@ -15,6 +15,26 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   double _panelWidth = 800;
   bool _isPanelVisible = true;
   Map<String, bool> _expandedLots = {};
+  String? selectedLocation;
+  String? selectedSort;
+
+  final List<String> locations = [
+    'All Locations',
+    'Morenci',
+    'Sierra Verde',
+    'Bagdad',
+    'Sierrita',
+    'Miami',
+    'Tyrone',
+    'Chino',
+    'Safford',
+  ];
+
+  final List<String> sortOptions = [
+    'No sort applied',
+    'Sort by In Spec',
+    'Sort by Out of Spec',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -199,16 +219,120 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                   // Filter Row
                   Row(
                     children: [
-                      DropdownButton<String>(
-                        hint: const Text('All Locations'),
-                        items: const [],
-                        onChanged: (value) {},
+                      PopupMenuButton<String>(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: Colors.grey[300]!),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                selectedLocation ?? 'All Locations',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Icon(Icons.arrow_drop_down,
+                                  color: Colors.grey[600]),
+                            ],
+                          ),
+                        ),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 8),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.search,
+                                          size: 20, color: Colors.grey[600]),
+                                      const SizedBox(width: 8),
+                                      const Text(
+                                        'Search locations...',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Divider(height: 1),
+                              ],
+                            ),
+                            enabled: false,
+                          ),
+                          ...locations.map(
+                            (location) => PopupMenuItem(
+                              value: location,
+                              child: Text(location),
+                            ),
+                          ),
+                        ],
+                        onSelected: (value) {
+                          setState(() {
+                            selectedLocation = value;
+                          });
+                        },
                       ),
                       const SizedBox(width: 16),
-                      DropdownButton<String>(
-                        hint: const Text('No sort applied'),
-                        items: const [],
-                        onChanged: (value) {},
+                      PopupMenuButton<String>(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: Colors.grey[300]!),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                selectedSort ?? 'No sort applied',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Icon(Icons.arrow_drop_down,
+                                  color: Colors.grey[600]),
+                            ],
+                          ),
+                        ),
+                        itemBuilder: (context) => sortOptions
+                            .map(
+                              (sort) => PopupMenuItem(
+                                value: sort,
+                                child: Row(
+                                  children: [
+                                    Text(sort),
+                                    if (sort == selectedSort)
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 8),
+                                        child: Icon(Icons.check, size: 18),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        onSelected: (value) {
+                          setState(() {
+                            selectedSort = value;
+                          });
+                        },
                       ),
                       const SizedBox(width: 16),
                       Switch(
