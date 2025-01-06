@@ -917,7 +917,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                                 child: Card(
                                   margin: EdgeInsets.zero,
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () => _showSpecificationSheet(lotId),
                                     child: Padding(
                                       padding: const EdgeInsets.all(12),
                                       child: Row(
@@ -944,7 +944,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                                 child: Card(
                                   margin: EdgeInsets.zero,
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () => _showQualityCertificate(lotId),
                                     child: Padding(
                                       padding: const EdgeInsets.all(12),
                                       child: Row(
@@ -1001,5 +1001,449 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
         ],
       ),
     );
+  }
+
+  void _showSpecificationSheet(String lotId) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: Container(
+          width: 800,
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header with close button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Specification Sheet - $lotId',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+
+              // Document Info
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Document ID',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'SPEC-$lotId',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Issue Date',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        const Text(
+                          '2024-03-15',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+
+              // Specification Table
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(2),
+                  2: FlexColumnWidth(2),
+                  3: FlexColumnWidth(2),
+                },
+                children: [
+                  TableRow(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Colors.grey[300]!),
+                      ),
+                    ),
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          'Parameter',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          'Method',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          'Result',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          'Specification',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  ..._buildSpecificationRows([
+                    {
+                      'parameter': 'Molybdenum Content',
+                      'method': 'XRF-001',
+                      'result': '58.2%',
+                      'specification': '50.0 - 95.0%',
+                    },
+                    {
+                      'parameter': 'Moisture Content',
+                      'method': 'ASTM D6304',
+                      'result': '4.2%',
+                      'specification': 'Max 7.0%',
+                    },
+                    {
+                      'parameter': 'Particle Size',
+                      'method': 'ASTM B214',
+                      'result': '98.5%',
+                      'specification': '>95% -325 mesh',
+                    },
+                    {
+                      'parameter': 'Bulk Density',
+                      'method': 'ASTM B212',
+                      'result': '1.8 g/cm³',
+                      'specification': '1.5 - 2.2 g/cm³',
+                    },
+                    {
+                      'parameter': 'Oil Content',
+                      'method': 'SOL-442',
+                      'result': '2.1%',
+                      'specification': 'Max 3.5%',
+                    },
+                  ]),
+                ],
+              ),
+              const SizedBox(height: 24),
+
+              // Footer text
+              Text(
+                'Analysis performed according to standard procedures.',
+                style: TextStyle(color: Colors.grey[600], fontSize: 14),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Document generated on 2024-03-15 14:30 MST',
+                style: TextStyle(color: Colors.grey[600], fontSize: 14),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showQualityCertificate(String lotId) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: Container(
+          width: 800,
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header with close button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Quality Certificate - $lotId',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+
+              // Document Info
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Document ID',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'QC-$lotId',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Issue Date',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        const Text(
+                          '2024-03-15',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+
+              // Quality Certificate Table
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(2),
+                  2: FlexColumnWidth(2),
+                  3: FlexColumnWidth(2),
+                },
+                children: [
+                  TableRow(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Colors.grey[300]!),
+                      ),
+                    ),
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          'Parameter',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          'Method',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          'Result',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          'Specification',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  ..._buildSpecificationRows([
+                    {
+                      'parameter': 'Molybdenum Content',
+                      'method': 'XRF-001',
+                      'result': '58.2%',
+                      'specification': '50.0 - 95.0%',
+                    },
+                    {
+                      'parameter': 'Iron Content',
+                      'method': 'XRF-001',
+                      'result': '1.30%',
+                      'specification': 'Max 3.5%',
+                    },
+                    {
+                      'parameter': 'Copper Content',
+                      'method': 'XRF-001',
+                      'result': '2.20%',
+                      'specification': 'Max 2.8%',
+                    },
+                    {
+                      'parameter': 'Lead Content',
+                      'method': 'XRF-001',
+                      'result': '0.00%',
+                      'specification': 'Max 0.08%',
+                    },
+                    {
+                      'parameter': 'Tin Content',
+                      'method': 'XRF-001',
+                      'result': '0.00%',
+                      'specification': 'Max 0.002%',
+                    },
+                    {
+                      'parameter': 'Aluminum Content',
+                      'method': 'XRF-001',
+                      'result': '0.10%',
+                      'specification': 'Max 0.4%',
+                    },
+                    {
+                      'parameter': 'Chlorine Content',
+                      'method': 'XRF-001',
+                      'result': '0.00%',
+                      'specification': 'Max 0.08%',
+                    },
+                    {
+                      'parameter': 'Potassium Content',
+                      'method': 'XRF-001',
+                      'result': '0.00%',
+                      'specification': 'Max 0.08%',
+                    },
+                  ]),
+                ],
+              ),
+              const SizedBox(height: 24),
+
+              // Footer text
+              Text(
+                'Analysis performed according to standard procedures.',
+                style: TextStyle(color: Colors.grey[600], fontSize: 14),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Document generated on 2024-03-15 14:30 MST',
+                style: TextStyle(color: Colors.grey[600], fontSize: 14),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<TableRow> _buildSpecificationRows(List<Map<String, String>> specs) {
+    return specs.map((spec) {
+      return TableRow(
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: Colors.grey[200]!),
+          ),
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              spec['parameter']!,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              spec['method']!,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              spec['result']!,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              spec['specification']!,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+        ],
+      );
+    }).toList();
   }
 }
