@@ -54,6 +54,10 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
             onPressed: () => setState(() => _isPanelVisible = !_isPanelVisible),
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Divider(height: 1, color: Colors.grey[300]),
+        ),
       ),
       body: Row(
         children: [
@@ -65,47 +69,114 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Feed Rate and SIE Mo Production Sliders
+                  const Text(
+                    'Feed Parameters',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 16),
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
-                      child: Column(
+                      child: Row(
                         children: [
-                          Row(
-                            children: [
-                              const Text('Overall Feed Rate'),
-                              Expanded(
-                                child: Slider(
-                                  value: feedRate,
-                                  min: 0,
-                                  max: 15,
-                                  onChanged: (value) =>
-                                      setState(() => feedRate = value),
+                          // Overall Feed Rate
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Overall Feed Rate'),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: SliderTheme(
+                                        data: SliderTheme.of(context).copyWith(
+                                          activeTrackColor: Colors.blue,
+                                          inactiveTrackColor: Colors.grey[200],
+                                          thumbColor: Colors.white,
+                                          overlayColor:
+                                              Colors.blue.withOpacity(0.1),
+                                          valueIndicatorColor: Colors.blue,
+                                          showValueIndicator:
+                                              ShowValueIndicator.always,
+                                        ),
+                                        child: Slider(
+                                          value: feedRate,
+                                          min: 0,
+                                          max: 15,
+                                          divisions: 150,
+                                          label:
+                                              '${feedRate.toStringAsFixed(1)} TPH',
+                                          onChanged: (value) =>
+                                              setState(() => feedRate = value),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 80,
+                                      child: Text(
+                                        '${feedRate.toStringAsFixed(1)} TPH',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text('${feedRate.toStringAsFixed(1)} TPH'),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
-                            children: [
-                              const Text('SIE Mo Production'),
-                              Expanded(
-                                child: Slider(
-                                  value: sieProduction,
-                                  min: 0,
-                                  max: 100,
-                                  onChanged: (value) =>
-                                      setState(() => sieProduction = value),
+                          const SizedBox(width: 32),
+                          // SIE Mo Production
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('SIE Mo Production'),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: SliderTheme(
+                                        data: SliderTheme.of(context).copyWith(
+                                          activeTrackColor: Colors.blue,
+                                          inactiveTrackColor: Colors.grey[200],
+                                          thumbColor: Colors.white,
+                                          overlayColor:
+                                              Colors.blue.withOpacity(0.1),
+                                          valueIndicatorColor: Colors.blue,
+                                          showValueIndicator:
+                                              ShowValueIndicator.always,
+                                        ),
+                                        child: Slider(
+                                          value: sieProduction,
+                                          min: 0,
+                                          max: 100,
+                                          divisions: 100,
+                                          label:
+                                              '${sieProduction.toStringAsFixed(1)}k lbs/day',
+                                          onChanged: (value) => setState(
+                                              () => sieProduction = value),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        '${sieProduction.toStringAsFixed(1)}k lbs/day',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                  '${sieProduction.toStringAsFixed(1)}k lbs/day'),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
+                  const Divider(height: 1),
+                  const SizedBox(height: 24),
 
                   // Feed Material Assays Section
                   Row(
@@ -122,7 +193,9 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 16),
+                  const Divider(height: 1),
+                  const SizedBox(height: 16),
 
                   // Filter Row
                   Row(
