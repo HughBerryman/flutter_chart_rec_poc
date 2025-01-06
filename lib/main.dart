@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'UI Tester',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color(0xFFEBF2F8),
       ),
       home: const HomeScreen(), // HomeScreen will help select between UIs
     );

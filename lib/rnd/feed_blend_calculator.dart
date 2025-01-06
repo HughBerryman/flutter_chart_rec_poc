@@ -39,7 +39,9 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFEBF2F8),
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -434,7 +436,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
               duration: const Duration(milliseconds: 200),
               width: _panelWidth,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: Colors.white,
                 border: Border(
                   left: BorderSide(
                     color: Colors.grey[300]!,
