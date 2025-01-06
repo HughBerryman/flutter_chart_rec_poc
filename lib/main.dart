@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'rnd/rec_selector.dart';
 import 'rnd/chart_app.dart';
+import 'rnd/feed_blend_calculator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +35,17 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const FeedBlendCalculator()),
+                );
+              },
+              child: const Text('Feed Blend Calculator'),
+            ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
