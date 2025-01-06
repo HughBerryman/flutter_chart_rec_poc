@@ -303,6 +303,16 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                             'Potassium': {'value': 0.15, 'range': '0% - 0.08%'},
                           },
                         ),
+                        const SizedBox(height: 24),
+
+                        // Properties Section
+                        _buildElementsSection(
+                          'Properties',
+                          {
+                            'Moisture': {'value': 0.00, 'range': '0% - 7%'},
+                            'Oil': {'value': 0.00, 'range': '0% - 7%'},
+                          },
+                        ),
                       ],
                     ),
                   ),
