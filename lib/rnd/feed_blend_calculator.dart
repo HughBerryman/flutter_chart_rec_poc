@@ -463,7 +463,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
               duration: const Duration(milliseconds: 200),
               width: _panelWidth,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: const Color(0xFFEBF2F8),
                 border: Border(
                   left: BorderSide(
                     color: Colors.grey[300]!,
