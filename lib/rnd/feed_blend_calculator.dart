@@ -195,8 +195,6 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Divider(height: 1),
-                  const SizedBox(height: 16),
 
                   // Filter Row
                   Row(
