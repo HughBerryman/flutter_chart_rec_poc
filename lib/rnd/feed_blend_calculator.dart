@@ -166,6 +166,40 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                       'K': 0.15,
                     },
                   ),
+                  const SizedBox(height: 16),
+                  _buildLotCard(
+                    'LOT-002',
+                    'Safford',
+                    '174 bags in lot (4,000 lbs/bag)',
+                    0,
+                    {
+                      'Mo': 58.00,
+                      'Fe': 1.30,
+                      'Cu': 2.20,
+                      'Pb': 0.00,
+                      'Sn': 0.00,
+                      'Al': 0.10,
+                      'Cl': 0.00,
+                      'K': 0.00,
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  _buildLotCard(
+                    'LOT-003',
+                    'Sierrita',
+                    '150 bags in lot (4,000 lbs/bag)',
+                    0,
+                    {
+                      'Mo': 82.20,
+                      'Fe': 2.40,
+                      'Cu': 2.50,
+                      'Pb': 0.10,
+                      'Sn': 0.00,
+                      'Al': 0.10,
+                      'Cl': 0.00,
+                      'K': 0.10,
+                    },
+                  ),
                 ],
               ),
             ),
@@ -467,7 +501,15 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   }
 
   Widget _buildElementRow(String name, double value, String range) {
-    final isOutOfSpec = true; // You can implement the actual logic here
+    // Calculate if value is out of spec based on range
+    final rangeParts = range.replaceAll('%', '').split(' - ');
+    final minValue = double.parse(rangeParts[0]);
+    final maxValue = double.parse(rangeParts[1]);
+    final isOutOfSpec = value < minValue || value > maxValue;
+
+    // Calculate progress value (0-1)
+    final progressValue = (value - minValue) / (maxValue - minValue);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
@@ -505,11 +547,14 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
             ],
           ),
           const SizedBox(height: 8),
-          LinearProgressIndicator(
-            value: 0.7,
-            backgroundColor: Colors.grey[200],
-            valueColor: AlwaysStoppedAnimation<Color>(
-              isOutOfSpec ? Colors.red : Colors.blue,
+          SizedBox(
+            height: 6, // Thicker progress bar
+            child: LinearProgressIndicator(
+              value: progressValue.clamp(0.0, 1.0),
+              backgroundColor: Colors.grey[200],
+              valueColor: AlwaysStoppedAnimation<Color>(
+                isOutOfSpec ? Colors.red : Colors.blue,
+              ),
             ),
           ),
         ],
@@ -531,43 +576,79 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                   lotId,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                const Icon(Icons.link),
+                const SizedBox(width: 4),
+                Icon(Icons.link, size: 16, color: Colors.blue[700]),
               ],
             ),
+            const SizedBox(height: 4),
             Text(location),
-            Text(bagInfo, style: TextStyle(color: Colors.grey[600])),
-            const SizedBox(height: 8),
+            Text(bagInfo,
+                style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+            const SizedBox(height: 12),
             Row(
               children: [
-                const Text('Number of Bags'),
+                const Text(
+                  'Number of Bags',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
                 Expanded(
-                  child: Slider(
-                    value: bags.toDouble(),
-                    min: 0,
-                    max: 150,
-                    divisions: 150,
-                    onChanged: (value) =>
-                        setState(() => selectedBags = value.toInt()),
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: Colors.blue,
+                      inactiveTrackColor: Colors.grey[200],
+                      thumbColor: Colors.white,
+                      overlayColor: Colors.blue.withOpacity(0.1),
+                      valueIndicatorColor: Colors.blue,
+                      showValueIndicator: ShowValueIndicator.always,
+                    ),
+                    child: Slider(
+                      value: bags.toDouble(),
+                      min: 0,
+                      max: 150,
+                      divisions: 150,
+                      label: bags.toString(),
+                      onChanged: (value) =>
+                          setState(() => selectedBags = value.toInt()),
+                    ),
                   ),
                 ),
-                Text(bags.toString()),
+                Container(
+                  width: 40,
+                  alignment: Alignment.center,
+                  child: Text(
+                    bags.toString(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             Wrap(
-              spacing: 16,
+              spacing: 24,
+              runSpacing: 16,
               children: elements.entries.map((entry) {
-                return Column(
-                  children: [
-                    Text(entry.key),
-                    Text(
-                      '${entry.value.toStringAsFixed(2)}%',
-                      style: TextStyle(
-                        color: entry.value > 5 ? Colors.orange : null,
-                        fontWeight: FontWeight.bold,
+                final isHighValue = entry.value > 5;
+                return SizedBox(
+                  width: 80,
+                  child: Column(
+                    children: [
+                      Text(
+                        entry.key,
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontSize: 13,
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 4),
+                      Text(
+                        '${entry.value.toStringAsFixed(2)}%',
+                        style: TextStyle(
+                          color: isHighValue ? Colors.orange[700] : null,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               }).toList(),
             ),
