@@ -12,7 +12,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   double sieProduction = 50.0;
   int selectedBags = 26;
   bool showSelected = false;
-  double _panelWidth = 400;
+  double _panelWidth = 800;
   bool _isPanelVisible = true;
 
   @override
@@ -178,7 +178,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                 onHorizontalDragUpdate: (details) {
                   setState(() {
                     _panelWidth = (_panelWidth - details.delta.dx)
-                        .clamp(300.0, MediaQuery.of(context).size.width * 0.4);
+                        .clamp(600.0, MediaQuery.of(context).size.width * 0.6);
                   });
                 },
                 child: Container(
@@ -324,36 +324,60 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                           ),
                           const SizedBox(height: 16),
 
-                          // Primary Elements
-                          _buildElementsSection(
-                            'Primary Elements',
-                            {
-                              'Molybdenum': {
-                                'value': 45.00,
-                                'range': '50% - 95%'
-                              },
-                              'Iron': {'value': 4.20, 'range': '0% - 3.5%'},
-                              'Copper': {'value': 3.50, 'range': '1.2% - 2.8%'},
-                              'Lead': {'value': 0.15, 'range': '0% - 0.08%'},
-                            },
-                          ),
-                          const SizedBox(height: 16),
-
-                          // Secondary Elements
-                          _buildElementsSection(
-                            'Secondary Elements',
-                            {
-                              'Tin': {'value': 0.01, 'range': '0% - 0.002%'},
-                              'Aluminum': {'value': 0.60, 'range': '0% - 0.4%'},
-                              'Chlorine': {
-                                'value': 0.12,
-                                'range': '0% - 0.08%'
-                              },
-                              'Potassium': {
-                                'value': 0.15,
-                                'range': '0% - 0.08%'
-                              },
-                            },
+                          // Elements Row
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Primary Elements
+                              Expanded(
+                                child: _buildElementsSection(
+                                  'Primary Elements',
+                                  {
+                                    'Molybdenum': {
+                                      'value': 45.00,
+                                      'range': '50% - 95%'
+                                    },
+                                    'Iron': {
+                                      'value': 4.20,
+                                      'range': '0% - 3.5%'
+                                    },
+                                    'Copper': {
+                                      'value': 3.50,
+                                      'range': '1.2% - 2.8%'
+                                    },
+                                    'Lead': {
+                                      'value': 0.15,
+                                      'range': '0% - 0.08%'
+                                    },
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              // Secondary Elements
+                              Expanded(
+                                child: _buildElementsSection(
+                                  'Secondary Elements',
+                                  {
+                                    'Tin': {
+                                      'value': 0.01,
+                                      'range': '0% - 0.002%'
+                                    },
+                                    'Aluminum': {
+                                      'value': 0.60,
+                                      'range': '0% - 0.4%'
+                                    },
+                                    'Chlorine': {
+                                      'value': 0.12,
+                                      'range': '0% - 0.08%'
+                                    },
+                                    'Potassium': {
+                                      'value': 0.15,
+                                      'range': '0% - 0.08%'
+                                    },
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 24),
 
