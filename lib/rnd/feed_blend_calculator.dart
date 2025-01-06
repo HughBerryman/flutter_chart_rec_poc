@@ -403,25 +403,42 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
 
   Widget _buildElementsSection(
       String title, Map<String, Map<String, dynamic>> elements) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
+    return Card(
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.expand_more),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  onPressed: () {
+                    // TODO: Implement expand/collapse
+                  },
+                ),
+              ],
             ),
-            const Icon(Icons.expand_more),
+            const Divider(),
+            ...elements.entries.map((element) => _buildElementRow(
+                  element.key,
+                  element.value['value'] as double,
+                  element.value['range'] as String,
+                )),
           ],
         ),
-        const SizedBox(height: 8),
-        ...elements.entries.map((element) => _buildElementRow(
-              element.key,
-              element.value['value'] as double,
-              element.value['range'] as String,
-            )),
-      ],
+      ),
     );
   }
 
@@ -435,8 +452,17 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(name),
-              Text('${value.toStringAsFixed(2)}%'),
+              Text(
+                name,
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+              Text(
+                '${value.toStringAsFixed(2)}%',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: isOutOfSpec ? Colors.red[700] : null,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 4),
@@ -454,7 +480,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                 ),
             ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           LinearProgressIndicator(
             value: 0.7,
             backgroundColor: Colors.grey[200],
