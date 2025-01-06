@@ -14,6 +14,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   bool showSelected = false;
   double _panelWidth = 800;
   bool _isPanelVisible = true;
+  Map<String, bool> _expandedLots = {};
 
   @override
   Widget build(BuildContext context) {
@@ -637,96 +638,348 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
 
   Widget _buildLotCard(String lotId, String location, String bagInfo, int bags,
       Map<String, double> elements) {
+    final isExpanded = _expandedLots[lotId] ?? false;
+
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Header
+                Row(
+                  children: [
+                    Text(
+                      lotId,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(Icons.edit, size: 16, color: Colors.blue[700]),
+                  ],
+                ),
+                const SizedBox(height: 4),
                 Text(
-                  lotId,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  location,
+                  style: const TextStyle(fontSize: 15),
                 ),
-                const SizedBox(width: 4),
-                Icon(Icons.link, size: 16, color: Colors.blue[700]),
+                Text(
+                  bagInfo,
+                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                ),
+                const SizedBox(height: 16),
+
+                // Main content row
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Left side - Slider
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Number of Bags',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SliderTheme(
+                                  data: SliderTheme.of(context).copyWith(
+                                    activeTrackColor: Colors.blue[700],
+                                    inactiveTrackColor: Colors.grey[200],
+                                    thumbColor: Colors.white,
+                                    overlayColor: Colors.blue.withOpacity(0.1),
+                                    valueIndicatorColor: Colors.blue[700],
+                                    showValueIndicator:
+                                        ShowValueIndicator.always,
+                                    trackHeight: 4,
+                                  ),
+                                  child: Slider(
+                                    value: bags.toDouble(),
+                                    min: 0,
+                                    max: 150,
+                                    divisions: 150,
+                                    label: bags.toString(),
+                                    onChanged: (value) => setState(
+                                        () => selectedBags = value.toInt()),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 40,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  bags.toString(),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 32),
+                    // Right side - Element grid
+                    Expanded(
+                      flex: 3,
+                      child: Wrap(
+                        spacing: 32,
+                        runSpacing: 16,
+                        children: elements.entries.map((entry) {
+                          final isHighValue = entry.value > 5;
+                          return SizedBox(
+                            width: 70,
+                            child: Column(
+                              children: [
+                                Text(
+                                  entry.key,
+                                  style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  '${entry.value.toStringAsFixed(2)}%',
+                                  style: TextStyle(
+                                    color:
+                                        isHighValue ? Colors.orange[700] : null,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-            const SizedBox(height: 4),
-            Text(location),
-            Text(bagInfo,
-                style: TextStyle(color: Colors.grey[600], fontSize: 12)),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                const Text(
-                  'Number of Bags',
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
-                Expanded(
-                  child: SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                      activeTrackColor: Colors.blue,
-                      inactiveTrackColor: Colors.grey[200],
-                      thumbColor: Colors.white,
-                      overlayColor: Colors.blue.withOpacity(0.1),
-                      valueIndicatorColor: Colors.blue,
-                      showValueIndicator: ShowValueIndicator.always,
-                    ),
-                    child: Slider(
-                      value: bags.toDouble(),
-                      min: 0,
-                      max: 150,
-                      divisions: 150,
-                      label: bags.toString(),
-                      onChanged: (value) =>
-                          setState(() => selectedBags = value.toInt()),
+          ),
+          // Bottom expandable section
+          Column(
+            children: [
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    _expandedLots[lotId] = !isExpanded;
+                  });
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(color: Colors.grey[300]!),
                     ),
                   ),
-                ),
-                Container(
-                  width: 40,
-                  alignment: Alignment.center,
-                  child: Text(
-                    bags.toString(),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Wrap(
-              spacing: 24,
-              runSpacing: 16,
-              children: elements.entries.map((entry) {
-                final isHighValue = entry.value > 5;
-                return SizedBox(
-                  width: 80,
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        entry.key,
+                        'Lot Details',
                         style: TextStyle(
                           color: Colors.grey[700],
-                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '${entry.value.toStringAsFixed(2)}%',
-                        style: TextStyle(
-                          color: isHighValue ? Colors.orange[700] : null,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Icon(
+                        isExpanded ? Icons.expand_less : Icons.expand_more,
+                        color: Colors.grey[700],
+                        size: 20,
                       ),
                     ],
                   ),
-                );
-              }).toList(),
-            ),
-          ],
-        ),
+                ),
+              ),
+              if (isExpanded)
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Received Date and Carrier
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.calendar_today,
+                                        size: 16, color: Colors.grey[600]),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Received Date',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 4),
+                                const Text(
+                                  '12/10/2024',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.local_shipping,
+                                        size: 16, color: Colors.grey[600]),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Carrier',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 4),
+                                const Text(
+                                  'Knight-Swift',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Related Documents
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.description,
+                                  size: 16, color: Colors.grey[600]),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Related Documents',
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Card(
+                            margin: EdgeInsets.zero,
+                            child: InkWell(
+                              onTap: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.link,
+                                        size: 16, color: Colors.blue[700]),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Specification Sheet',
+                                      style: TextStyle(
+                                        color: Colors.blue[700],
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Card(
+                            margin: EdgeInsets.zero,
+                            child: InkWell(
+                              onTap: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.link,
+                                        size: 16, color: Colors.blue[700]),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Quality Certificate',
+                                      style: TextStyle(
+                                        color: Colors.blue[700],
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Lot Notes
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Lot Notes:',
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'No additional notes for this lot.',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ],
       ),
     );
   }
