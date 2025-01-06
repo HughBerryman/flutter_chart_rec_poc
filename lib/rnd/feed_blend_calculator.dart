@@ -41,7 +41,8 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     return Scaffold(
       backgroundColor: const Color(0xFFEBF2F8),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFEBF2F8),
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -91,11 +92,19 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
             child: Column(
               children: [
                 const SizedBox(height: 16),
-                // MIRA Logo
-                Image.asset(
-                  'assets/mira_logo.png',
+                // MIRA Logo Placeholder
+                Container(
                   width: 40,
                   height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.blue[700],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.analytics_rounded,
+                    color: Colors.white,
+                    size: 24,
+                  ),
                 ),
                 const SizedBox(height: 32),
                 // Navigation Items
@@ -114,12 +123,8 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Feed Rate and SIE Mo Production Sliders
-                  const Text(
-                    'Feed Parameters',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 16),
                   Card(
+                    color: const Color(0xFFFCFCFF),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Row(
@@ -718,6 +723,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   Widget _buildElementsSection(
       String title, Map<String, Map<String, dynamic>> elements) {
     return Card(
+      color: const Color(0xFFFCFCFF),
       margin: const EdgeInsets.only(bottom: 16),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -823,10 +829,12 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     final isExpanded = _expandedLots[lotId] ?? false;
 
     return Card(
+      color: const Color(0xFFFCFCFF),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          Container(
+            color: const Color(0xFFEBF2F8),
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -854,8 +862,14 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                   bagInfo,
                   style: TextStyle(color: Colors.grey[600], fontSize: 12),
                 ),
-                const SizedBox(height: 16),
-
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 // Main content row
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1096,6 +1110,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                             children: [
                               Expanded(
                                 child: Card(
+                                  color: const Color(0xFFFCFCFF),
                                   margin: EdgeInsets.zero,
                                   child: InkWell(
                                     onTap: () => _showSpecificationSheet(lotId),
@@ -1123,6 +1138,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Card(
+                                  color: const Color(0xFFFCFCFF),
                                   margin: EdgeInsets.zero,
                                   child: InkWell(
                                     onTap: () => _showQualityCertificate(lotId),
@@ -1188,6 +1204,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     showDialog(
       context: context,
       builder: (context) => Dialog(
+        backgroundColor: const Color(0xFFFCFCFF),
         child: Container(
           width: 800,
           padding: const EdgeInsets.all(24),
@@ -1380,6 +1397,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     showDialog(
       context: context,
       builder: (context) => Dialog(
+        backgroundColor: const Color(0xFFFCFCFF),
         child: Container(
           width: 800,
           padding: const EdgeInsets.all(24),

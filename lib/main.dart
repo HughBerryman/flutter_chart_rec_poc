@@ -30,6 +30,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFFEBF2F8),
+        elevation: 0,
         title: const Text('UI Test Selector'),
       ),
       body: Center(
