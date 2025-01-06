@@ -336,6 +336,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(Icons.science),
                             SizedBox(width: 8),
@@ -733,7 +734,13 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 32),
+                    // Vertical Divider
+                    Container(
+                      height: 100,
+                      width: 1,
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                      color: Colors.grey[300],
+                    ),
                     // Right side - Element grid
                     Expanded(
                       flex: 3,
@@ -777,37 +784,39 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
           // Bottom expandable section
           Column(
             children: [
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    _expandedLots[lotId] = !isExpanded;
-                  });
-                },
-                child: Container(
-                  width: double.infinity,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(color: Colors.grey[300]!),
-                    ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(color: Colors.grey[300]!),
+                    bottom: BorderSide(color: Colors.grey[300]!),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Lot Details',
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontWeight: FontWeight.w500,
+                ),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _expandedLots[lotId] = !isExpanded;
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Lot Details',
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      Icon(
-                        isExpanded ? Icons.expand_less : Icons.expand_more,
-                        color: Colors.grey[700],
-                        size: 20,
-                      ),
-                    ],
+                        Icon(
+                          isExpanded ? Icons.expand_less : Icons.expand_more,
+                          color: Colors.grey[700],
+                          size: 20,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -902,52 +911,62 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                             ],
                           ),
                           const SizedBox(height: 8),
-                          Card(
-                            margin: EdgeInsets.zero,
-                            child: InkWell(
-                              onTap: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.link,
-                                        size: 16, color: Colors.blue[700]),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Specification Sheet',
-                                      style: TextStyle(
-                                        color: Colors.blue[700],
-                                        fontWeight: FontWeight.w500,
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Card(
+                                  margin: EdgeInsets.zero,
+                                  child: InkWell(
+                                    onTap: () {},
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12),
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.link,
+                                              size: 16,
+                                              color: Colors.blue[700]),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            'Specification Sheet',
+                                            style: TextStyle(
+                                              color: Colors.blue[700],
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Card(
-                            margin: EdgeInsets.zero,
-                            child: InkWell(
-                              onTap: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.link,
-                                        size: 16, color: Colors.blue[700]),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Quality Certificate',
-                                      style: TextStyle(
-                                        color: Colors.blue[700],
-                                        fontWeight: FontWeight.w500,
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Card(
+                                  margin: EdgeInsets.zero,
+                                  child: InkWell(
+                                    onTap: () {},
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12),
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.link,
+                                              size: 16,
+                                              color: Colors.blue[700]),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            'Quality Certificate',
+                                            style: TextStyle(
+                                              color: Colors.blue[700],
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ],
                       ),
