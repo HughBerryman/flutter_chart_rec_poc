@@ -122,8 +122,19 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Feed Parameters Title
+                  const Text(
+                    'Feed Parameters',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
                   // Feed Rate and SIE Mo Production Sliders
                   Card(
+                    margin: EdgeInsets.zero,
                     color: const Color(0xFFFCFCFF),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
