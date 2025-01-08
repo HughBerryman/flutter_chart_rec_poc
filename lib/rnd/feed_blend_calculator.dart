@@ -525,58 +525,141 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              _buildStatCard(
-                                Icons.inventory_2,
-                                '26',
-                                'Bags Selected',
+                              Expanded(
+                                child: Card(
+                                  color: const Color(0xFFFCFCFF),
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Column(
+                                      children: [
+                                        Icon(Icons.inventory_2, size: 28),
+                                        const SizedBox(height: 8),
+                                        const Text(
+                                          '36',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Bags Selected',
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 14,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
-                              _buildStatCard(
-                                Icons.speed,
-                                '101,200',
-                                'External Mo lbs/day',
+                              Expanded(
+                                child: Card(
+                                  color: const Color(0xFFFCFCFF),
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Column(
+                                      children: [
+                                        Icon(Icons.science, size: 28),
+                                        const SizedBox(height: 8),
+                                        const Text(
+                                          '133,600',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          'External Mo lbs/day',
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 14,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
-                              _buildStatCard(
-                                Icons.scale,
-                                '51',
-                                'Total Tons (SIE Mo + External)',
+                              Expanded(
+                                child: Card(
+                                  color: const Color(0xFFFCFCFF),
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Column(
+                                      children: [
+                                        Icon(Icons.balance, size: 28),
+                                        const SizedBox(height: 8),
+                                        const Text(
+                                          '61',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Total Tons (SIE Mo + External)',
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 14,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 24),
 
                           // Out of Specification Warning
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: Colors.red[50],
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.red[200]!),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.warning, color: Colors.red[700]),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Out of Specification Elements',
-                                        style: TextStyle(
-                                          color: Colors.red[700],
-                                          fontWeight: FontWeight.bold,
+                          Card(
+                            color: Colors.red[50],
+                            margin: EdgeInsets.zero,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.warning_amber_rounded,
+                                      color: Colors.red[700], size: 24),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Out of Specification Elements',
+                                          style: TextStyle(
+                                            color: Colors.red[700],
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        'One or more elements outside target range',
-                                        style:
-                                            TextStyle(color: Colors.red[700]),
-                                      ),
-                                    ],
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'One or more elements outside target range',
+                                          style: TextStyle(
+                                            color: Colors.red[700],
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           const SizedBox(height: 24),
@@ -700,30 +783,6 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildStatCard(IconData icon, String value, String label) {
-    return Column(
-      children: [
-        Icon(icon, size: 24),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 12,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
     );
   }
 
