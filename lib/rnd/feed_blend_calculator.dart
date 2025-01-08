@@ -833,8 +833,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            color: const Color(0xFFEBF2F8),
+          Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -862,14 +861,8 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                   bagInfo,
                   style: TextStyle(color: Colors.grey[600], fontSize: 12),
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+                const SizedBox(height: 16),
+
                 // Main content row
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
