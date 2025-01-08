@@ -833,138 +833,136 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          // Main content row with divider
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Header
-                Row(
-                  children: [
-                    Text(
-                      lotId,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    Icon(Icons.edit, size: 16, color: Colors.blue[700]),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  location,
-                  style: const TextStyle(fontSize: 15),
-                ),
-                Text(
-                  bagInfo,
-                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                ),
-                const SizedBox(height: 16),
-
-                // Main content row
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Left side - Slider
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Number of Bags',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                // Left side - Header and Slider
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Header
+                        Row(
+                          children: [
+                            Text(
+                              lotId,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                            const SizedBox(width: 4),
+                            Icon(Icons.edit, size: 16, color: Colors.blue[700]),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          location,
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                        Text(
+                          bagInfo,
+                          style:
+                              TextStyle(color: Colors.grey[600], fontSize: 12),
+                        ),
+                        const SizedBox(height: 24),
+                        // Slider section
+                        const Text(
+                          'Number of Bags',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
                           ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: SliderTheme(
-                                  data: SliderTheme.of(context).copyWith(
-                                    activeTrackColor: Colors.blue[700],
-                                    inactiveTrackColor: Colors.grey[200],
-                                    thumbColor: Colors.white,
-                                    overlayColor: Colors.blue.withOpacity(0.1),
-                                    valueIndicatorColor: Colors.blue[700],
-                                    showValueIndicator:
-                                        ShowValueIndicator.always,
-                                    trackHeight: 4,
-                                  ),
-                                  child: Slider(
-                                    value: bags.toDouble(),
-                                    min: 0,
-                                    max: 150,
-                                    divisions: 150,
-                                    label: bags.toString(),
-                                    onChanged: (value) => setState(
-                                        () => selectedBags = value.toInt()),
-                                  ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: SliderTheme(
+                                data: SliderTheme.of(context).copyWith(
+                                  activeTrackColor: Colors.blue[700],
+                                  inactiveTrackColor: Colors.grey[200],
+                                  thumbColor: Colors.white,
+                                  overlayColor: Colors.blue.withOpacity(0.1),
+                                  valueIndicatorColor: Colors.blue[700],
+                                  showValueIndicator: ShowValueIndicator.always,
+                                  trackHeight: 4,
+                                ),
+                                child: Slider(
+                                  value: bags.toDouble(),
+                                  min: 0,
+                                  max: 150,
+                                  divisions: 150,
+                                  label: bags.toString(),
+                                  onChanged: (value) => setState(
+                                      () => selectedBags = value.toInt()),
                                 ),
                               ),
-                              Container(
-                                width: 40,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  bags.toString(),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
+                            ),
+                            Container(
+                              width: 40,
+                              alignment: Alignment.center,
+                              child: Text(
+                                bags.toString(),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                // Vertical Divider
+                Container(
+                  width: 1,
+                  color: Colors.grey[300],
+                ),
+                // Right side - Element grid
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Wrap(
+                      spacing: 32,
+                      runSpacing: 16,
+                      children: elements.entries.map((entry) {
+                        final isHighValue = entry.value > 5;
+                        return SizedBox(
+                          width: 70,
+                          child: Column(
+                            children: [
+                              Text(
+                                entry.key,
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontSize: 13,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${entry.value.toStringAsFixed(2)}%',
+                                style: TextStyle(
+                                  color:
+                                      isHighValue ? Colors.orange[700] : null,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
                                 ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        );
+                      }).toList(),
                     ),
-                    // Vertical Divider
-                    Container(
-                      height: 100,
-                      width: 1,
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      color: Colors.grey[300],
-                    ),
-                    // Right side - Element grid
-                    Expanded(
-                      flex: 3,
-                      child: Wrap(
-                        spacing: 32,
-                        runSpacing: 16,
-                        children: elements.entries.map((entry) {
-                          final isHighValue = entry.value > 5;
-                          return SizedBox(
-                            width: 70,
-                            child: Column(
-                              children: [
-                                Text(
-                                  entry.key,
-                                  style: TextStyle(
-                                    color: Colors.grey[700],
-                                    fontSize: 13,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  '${entry.value.toStringAsFixed(2)}%',
-                                  style: TextStyle(
-                                    color:
-                                        isHighValue ? Colors.orange[700] : null,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
