@@ -100,7 +100,7 @@ class ElementsSection extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           SizedBox(
-            height: 6, // Thicker progress bar
+            height: 6,
             child: LinearProgressIndicator(
               value: progressValue.clamp(0.0, 1.0),
               backgroundColor: Colors.grey[200],

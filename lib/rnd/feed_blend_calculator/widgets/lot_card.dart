@@ -3,18 +3,18 @@ import '../../models/lot_data.dart';
 
 class LotCard extends StatelessWidget {
   final LotData lot;
-  final Function(int) onBagsChanged;
-  final Function(bool) onExpandChanged;
-  final VoidCallback? onSpecificationView;
-  final VoidCallback? onQualityCertificateView;
+  final ValueChanged<int> onBagsChanged;
+  final ValueChanged<bool> onExpandChanged;
+  final VoidCallback onSpecificationView;
+  final VoidCallback onQualityCertificateView;
 
   const LotCard({
     super.key,
     required this.lot,
     required this.onBagsChanged,
     required this.onExpandChanged,
-    this.onSpecificationView,
-    this.onQualityCertificateView,
+    required this.onSpecificationView,
+    required this.onQualityCertificateView,
   });
 
   @override
@@ -24,300 +24,157 @@ class LotCard extends StatelessWidget {
       color: const Color(0xFFFCFCFF),
       child: Column(
         children: [
-          IntrinsicHeight(
+          // Header
+          Padding(
+            padding: const EdgeInsets.all(16),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Left Section - Slider
                 Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              lot.id,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            lot.id,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
-                            const SizedBox(width: 8),
-                            Text(
-                              lot.location,
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Number of Bags',
-                                    style: TextStyle(color: Colors.grey[600]),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: SliderTheme(
-                                          data:
-                                              SliderTheme.of(context).copyWith(
-                                            activeTrackColor: Colors.blue,
-                                            inactiveTrackColor:
-                                                Colors.grey[200],
-                                            thumbColor: Colors.white,
-                                            overlayColor:
-                                                Colors.blue.withOpacity(0.1),
-                                            valueIndicatorColor: Colors.blue,
-                                            showValueIndicator:
-                                                ShowValueIndicator.always,
-                                          ),
-                                          child: Slider(
-                                            value: lot.selectedBags.toDouble(),
-                                            min: 0,
-                                            max: lot.totalBags.toDouble(),
-                                            divisions: lot.totalBags,
-                                            label: '${lot.selectedBags} bags',
-                                            onChanged: (value) =>
-                                                onBagsChanged(value.toInt()),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 80,
-                                        child: Text(
-                                          '${lot.selectedBags} / ${lot.totalBags}',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                // Vertical Divider
-                Container(
-                  width: 1,
-                  color: Colors.grey[300],
-                ),
-                // Right Section - Elements
-                Expanded(
-                  flex: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Elements',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500,
                           ),
-                        ),
-                        const SizedBox(height: 16),
-                        Wrap(
-                          spacing: 16,
-                          runSpacing: 16,
-                          children: lot.elements.entries
-                              .map((e) => _buildElementChip(e.key, e.value))
-                              .toList(),
-                        ),
-                      ],
-                    ),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.blue[50],
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              lot.location,
+                              style: TextStyle(
+                                color: Colors.blue[700],
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '150 bags in lot (4,000 lbs/bag)',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    ],
                   ),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.description_outlined),
+                      onPressed: onSpecificationView,
+                      tooltip: 'View Specifications',
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.verified_outlined),
+                      onPressed: onQualityCertificateView,
+                      tooltip: 'View Quality Certificate',
+                    ),
+                    IconButton(
+                      icon: Icon(lot.isExpanded
+                          ? Icons.expand_less
+                          : Icons.expand_more),
+                      onPressed: () => onExpandChanged(!lot.isExpanded),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-          // Bottom Section - Lot Details
-          if (lot.isExpanded) ...[
+          // Bags Selection
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(color: Colors.grey[200]!),
+              ),
+            ),
+            child: Row(
+              children: [
+                const Text('Number of Bags'),
+                const SizedBox(width: 16),
+                SizedBox(
+                  width: 200,
+                  child: Slider(
+                    value: lot.selectedBags.toDouble(),
+                    min: 0,
+                    max: 150,
+                    divisions: 150,
+                    label: lot.selectedBags.toString(),
+                    onChanged: (value) => onBagsChanged(value.toInt()),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Text(
+                  lot.selectedBags.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          // Expanded Content
+          if (lot.isExpanded)
             Container(
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 border: Border(
-                  top: BorderSide(color: Colors.grey[300]!),
+                  top: BorderSide(color: Colors.grey[200]!),
                 ),
               ),
-              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Received Date
-                  Row(
-                    children: [
-                      Icon(Icons.calendar_today,
-                          size: 16, color: Colors.grey[600]),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Received Date',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Text(
-                        lot.receivedDate,
-                        style: const TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Carrier
-                  Row(
-                    children: [
-                      Icon(Icons.local_shipping,
-                          size: 16, color: Colors.grey[600]),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Carrier',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Text(
-                        lot.carrier,
-                        style: const TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Related Documents
-                  Row(
-                    children: [
-                      Icon(Icons.description,
-                          size: 16, color: Colors.grey[600]),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Related Documents',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      TextButton.icon(
-                        onPressed: onSpecificationView,
-                        icon: const Icon(Icons.article_outlined, size: 16),
-                        label: const Text('Specification Sheet'),
-                      ),
-                      const SizedBox(width: 16),
-                      TextButton.icon(
-                        onPressed: onQualityCertificateView,
-                        icon: const Icon(Icons.verified_outlined, size: 16),
-                        label: const Text('Quality Certificate'),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Lot Notes
-                  Row(
-                    children: [
-                      Icon(Icons.notes, size: 16, color: Colors.grey[600]),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Lot Notes',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'No notes available for this lot.',
-                    style: TextStyle(color: Colors.grey[600]),
-                  ),
-                ],
-              ),
-            ),
-          ],
-          // Expand Button
-          InkWell(
-            onTap: () => onExpandChanged(!lot.isExpanded),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(color: Colors.grey[300]!),
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Lot Details',
+                  const Text(
+                    'Element Composition',
                     style: TextStyle(
-                      color: Colors.grey[600],
-                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(width: 4),
-                  Icon(
-                    lot.isExpanded ? Icons.expand_less : Icons.expand_more,
-                    size: 20,
-                    color: Colors.grey[600],
+                  const SizedBox(height: 16),
+                  Wrap(
+                    spacing: 16,
+                    runSpacing: 16,
+                    children: lot.elements.entries.map((element) {
+                      return SizedBox(
+                        width: 120,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              element.key,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '${element.value.toStringAsFixed(2)}%',
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildElementChip(String element, double value) {
-    final isOutOfSpec = value > 0.5; // Example threshold
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: isOutOfSpec ? Colors.red[50] : Colors.grey[100],
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            element,
-            style: TextStyle(
-              color: isOutOfSpec ? Colors.red[700] : Colors.grey[700],
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            '${value.toStringAsFixed(2)}%',
-            style: TextStyle(
-              color: isOutOfSpec ? Colors.red[700] : Colors.grey[700],
-              fontWeight: FontWeight.bold,
-            ),
-          ),
         ],
       ),
     );

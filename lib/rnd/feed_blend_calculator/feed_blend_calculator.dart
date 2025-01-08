@@ -10,8 +10,8 @@ class FeedBlendCalculator extends StatefulWidget {
 }
 
 class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
-  double feedRate = 7.0;
-  double sieProduction = 50.0;
+  double feedRate = 0.0;
+  double sieProduction = 0.0;
   bool showSelected = false;
   double _panelWidth = 800;
   bool _isPanelVisible = true;
