@@ -70,6 +70,41 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     // TODO: Implement quality certificate
   }
 
+  Widget _buildNavItem(IconData icon, String label, bool isActive) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: double.infinity,
+            color: isActive ? Colors.blue.withOpacity(0.2) : Colors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Column(
+                children: [
+                  Icon(
+                    icon,
+                    color: isActive ? Colors.blue : Colors.grey[400],
+                    size: 24,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      color: isActive ? Colors.blue : Colors.grey[400],
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,16 +150,61 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
             onPressed: () => setState(() => _isPanelVisible = !_isPanelVisible),
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Divider(height: 1, color: Colors.grey[300]),
+        ),
       ),
       body: Row(
         children: [
+          // Left Navigation Bar
+          Container(
+            width: 72,
+            color: const Color(0xFF1E1E1E),
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
+                // MIRA Logo Placeholder
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.blue[700],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.analytics_rounded,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                // Navigation Items
+                _buildNavItem(Icons.home, 'Home', false),
+                _buildNavItem(Icons.lightbulb_outline, 'Recs', false),
+                _buildNavItem(Icons.science_outlined, 'Simulator', true),
+                _buildNavItem(Icons.menu_book_outlined, 'Wiki', false),
+              ],
+            ),
+          ),
+          // Main Content
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Feed Parameters
+                  // Feed Parameters Title
+                  const Text(
+                    'Feed Parameters',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Feed Parameters Card
                   Card(
                     margin: EdgeInsets.zero,
                     color: const Color(0xFFFCFCFF),
@@ -227,6 +307,8 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  const Divider(height: 1),
                   const SizedBox(height: 24),
 
                   // Feed Material Assays Section
