@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'models/lot_data.dart';
+import '../models/lot_data.dart';
 import 'widgets/lot_card.dart';
 
 class FeedBlendCalculator extends StatefulWidget {
