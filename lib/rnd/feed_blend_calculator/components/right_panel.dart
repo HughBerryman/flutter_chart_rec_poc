@@ -19,6 +19,64 @@ class RightPanel extends StatelessWidget {
     required this.sieProduction,
   });
 
+  Map<String, double> _calculateWeightedAverages(List<LotData> selectedLots) {
+    final Map<String, double> weightedSums = {};
+    int totalBags = 0;
+
+    // Calculate weighted sums and total bags
+    for (final lot in selectedLots) {
+      final bags = lot.selectedBags;
+      if (bags > 0) {
+        totalBags += bags;
+        for (final entry in lot.elements.entries) {
+          weightedSums[entry.key] =
+              (weightedSums[entry.key] ?? 0) + entry.value * bags;
+        }
+      }
+    }
+
+    // Calculate weighted averages
+    if (totalBags > 0) {
+      for (final key in weightedSums.keys) {
+        weightedSums[key] = weightedSums[key]! / totalBags;
+      }
+    }
+
+    return weightedSums;
+  }
+
+  bool _hasOutOfSpecElements(Map<String, double> weightedAverages) {
+    final elementRanges = {
+      'Mo': [50.0, 95.0],
+      'Fe': [0.0, 3.5],
+      'Cu': [1.2, 2.8],
+      'Pb': [0.0, 0.08],
+      'Zn': [0.0, 0.5],
+      'As': [0.0, 0.15],
+      'Bi': [0.0, 0.1],
+      'Sb': [0.0, 0.08],
+      'Se': [0.0, 0.05],
+      'Te': [0.0, 0.03],
+      'Hg': [0.0, 0.005],
+      'Cd': [0.0, 0.01],
+      'H2O': [5.0, 10.0],
+      'Density': [45.0, 65.0],
+      'Size': [100.0, 200.0],
+      'pH': [6.0, 8.0],
+    };
+
+    for (final entry in weightedAverages.entries) {
+      final range = elementRanges[entry.key];
+      if (range != null) {
+        if (entry.value < range[0] || entry.value > range[1]) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   Widget _buildStatCard({
     required IconData icon,
     required String value,
@@ -69,6 +127,10 @@ class RightPanel extends StatelessWidget {
 
     // Calculate external Mo lbs/day based on feed rate
     final externalMoLbsDay = feedRate * 2000 * 24; // TPH to lbs/day conversion
+
+    // Calculate weighted averages and check for out-of-spec elements
+    final weightedAverages = _calculateWeightedAverages(selectedLots);
+    final hasOutOfSpecElements = _hasOutOfSpecElements(weightedAverages);
 
     return Row(
       children: [
@@ -186,46 +248,49 @@ class RightPanel extends StatelessWidget {
                             const SizedBox(height: 24),
 
                             // Out of Specification Warning
-                            Card(
-                              color: Colors.red[50],
-                              margin: EdgeInsets.zero,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Icon(Icons.warning_amber_rounded,
-                                        color: Colors.red[700], size: 24),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Out of Specification Elements',
-                                            style: TextStyle(
-                                              color: Colors.red[700],
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
+                            if (hasOutOfSpecElements)
+                              Card(
+                                color: Colors.red[50],
+                                margin: EdgeInsets.zero,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Icon(Icons.warning_amber_rounded,
+                                          color: Colors.red[700], size: 24),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Out of Specification Elements',
+                                              style: TextStyle(
+                                                color: Colors.red[700],
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            'One or more elements outside target range',
-                                            style: TextStyle(
-                                              color: Colors.red[700],
-                                              fontSize: 14,
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              'One or more elements outside target range',
+                                              style: TextStyle(
+                                                color: Colors.red[700],
+                                                fontSize: 14,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 24),
+                            if (hasOutOfSpecElements)
+                              const SizedBox(height: 24),
 
                             // Feed Composition Section
                             FeedCompositionSection(selectedLots: selectedLots),
