@@ -26,14 +26,17 @@ class FeedAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: const Color(0xFFEBF2F8),
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back, color: Colors.black),
         onPressed: () => Navigator.pop(context),
       ),
       title: Row(
         children: [
-          const Icon(Icons.science),
+          const Icon(Icons.science, color: Colors.black),
           const SizedBox(width: 8),
-          const Text('Feed Calculator'),
+          const Text(
+            'Feed Calculator',
+            style: TextStyle(color: Colors.black),
+          ),
           Text(
             ' • $selectedLotCount of $totalLotCount assays selected',
             style: const TextStyle(fontSize: 14, color: Colors.grey),
@@ -43,22 +46,41 @@ class FeedAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         TextButton.icon(
           onPressed: onViewSaved,
-          icon: const Icon(Icons.visibility),
-          label: const Text('View Saved'),
+          icon: Icon(Icons.visibility, color: Colors.grey[700]),
+          label: Text(
+            'View Saved',
+            style: TextStyle(color: Colors.grey[700]),
+          ),
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.grey[700],
+          ),
         ),
         TextButton.icon(
           onPressed: onSaveStrategy,
-          icon: const Icon(Icons.save),
-          label: const Text('Save Strategy'),
+          icon: Icon(Icons.save, color: Colors.grey[700]),
+          label: Text(
+            'Save Strategy',
+            style: TextStyle(color: Colors.grey[700]),
+          ),
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.grey[700],
+          ),
         ),
         TextButton.icon(
           onPressed: onExport,
-          icon: const Icon(Icons.file_download),
-          label: const Text('Export'),
+          icon: Icon(Icons.file_download, color: Colors.grey[700]),
+          label: Text(
+            'Export',
+            style: TextStyle(color: Colors.grey[700]),
+          ),
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.grey[700],
+          ),
         ),
         IconButton(
           icon: Icon(
             isPanelVisible ? Icons.chevron_right : Icons.chevron_left,
+            color: Colors.grey[700],
           ),
           onPressed: onPanelToggle,
         ),
