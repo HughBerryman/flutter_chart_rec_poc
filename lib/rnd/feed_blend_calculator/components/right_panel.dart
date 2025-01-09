@@ -166,7 +166,12 @@ class RightPanel extends StatelessWidget {
                                 ),
                                 _buildStatCard(
                                   icon: Icons.science,
-                                  value: externalMoLbsDay.toStringAsFixed(0),
+                                  value: externalMoLbsDay
+                                      .toStringAsFixed(0)
+                                      .replaceAllMapped(
+                                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                        (Match m) => '${m[1]},',
+                                      ),
                                   label: 'External Mo lbs/day',
                                 ),
                                 _buildStatCard(
