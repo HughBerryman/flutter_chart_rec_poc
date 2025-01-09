@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/lot_data.dart';
 import '../widgets/elements_section.dart';
+import 'feed_composition_section.dart';
 
 class RightPanel extends StatelessWidget {
   final double width;
@@ -207,98 +208,24 @@ class RightPanel extends StatelessWidget {
                             const SizedBox(height: 24),
 
                             // Feed Composition Section
-                            const Text(
-                              'Feed Composition',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-
-                            // Elements Row
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Primary Elements
-                                Expanded(
-                                  child: ElementsSection(
-                                    title: 'Primary Elements',
-                                    elements: {
-                                      'Molybdenum': {
-                                        'value': 45.00,
-                                        'range': '50% - 95%'
-                                      },
-                                      'Iron': {
-                                        'value': 4.20,
-                                        'range': '0% - 3.5%'
-                                      },
-                                      'Copper': {
-                                        'value': 3.50,
-                                        'range': '1.2% - 2.8%'
-                                      },
-                                      'Lead': {
-                                        'value': 0.15,
-                                        'range': '0% - 0.08%'
-                                      },
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(width: 16),
-                                // Secondary Elements
-                                Expanded(
-                                  child: ElementsSection(
-                                    title: 'Secondary Elements',
-                                    elements: {
-                                      'Tin': {
-                                        'value': 0.01,
-                                        'range': '0% - 0.002%'
-                                      },
-                                      'Aluminum': {
-                                        'value': 0.60,
-                                        'range': '0% - 0.4%'
-                                      },
-                                      'Chlorine': {
-                                        'value': 0.12,
-                                        'range': '0% - 0.08%'
-                                      },
-                                      'Potassium': {
-                                        'value': 0.15,
-                                        'range': '0% - 0.08%'
-                                      },
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 24),
-
-                            // Properties Section
-                            ElementsSection(
-                              title: 'Properties',
-                              elements: {
-                                'Moisture': {'value': 0.00, 'range': '0% - 7%'},
-                                'Oil': {'value': 0.00, 'range': '0% - 7%'},
-                              },
-                            ),
+                            const FeedCompositionSection(),
                           ],
                         ),
                       ),
                     ),
                   ],
                 )
-              : Center(
+              : const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.science_outlined,
-                          size: 64, color: Colors.grey[400]),
-                      const SizedBox(height: 16),
+                          size: 48, color: Colors.grey),
+                      SizedBox(height: 16),
                       Text(
-                        'Select bags from one or more assays\nto view blend details',
-                        textAlign: TextAlign.center,
+                        'Select bags from assays to view blend details',
                         style: TextStyle(
-                          color: Colors.grey[600],
+                          color: Colors.grey,
                           fontSize: 16,
                         ),
                       ),
