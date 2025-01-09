@@ -114,9 +114,8 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   Widget build(BuildContext context) {
     final selectedLotCount = lots.where((lot) => lot.selectedBags > 0).length;
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+    return Theme(
+      data: Theme.of(context).copyWith(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blue,
           surfaceTint: Colors.white,
@@ -126,12 +125,23 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
             backgroundColor: Colors.blue[700],
           ),
         ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.grey[700],
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.grey[700],
+            side: BorderSide(color: Colors.grey[300]!),
+          ),
+        ),
         popupMenuTheme: PopupMenuThemeData(
           color: Colors.white,
           surfaceTintColor: Colors.white,
         ),
       ),
-      home: Scaffold(
+      child: Scaffold(
         backgroundColor: const Color(0xFFEBF2F8),
         appBar: FeedAppBar(
           selectedLotCount: selectedLotCount,
