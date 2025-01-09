@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/lot_data.dart';
 import '../widgets/lot_card.dart';
+import '../../models/lot_data.dart';
 
 class FeedMaterialAssays extends StatelessWidget {
   final List<LotData> lots;

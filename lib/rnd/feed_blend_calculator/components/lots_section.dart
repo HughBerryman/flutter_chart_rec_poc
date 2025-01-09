@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/lot_data.dart';
 import '../widgets/lot_card.dart';
+import '../../models/lot_data.dart';
 import 'feed_material_assays.dart';
 
 class LotsSection extends StatelessWidget {
