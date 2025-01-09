@@ -72,110 +72,131 @@ class FeedMaterialAssays extends StatelessWidget {
             // Filter Row
             Row(
               children: [
-                PopupMenuButton<String>(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    popupMenuTheme: PopupMenuThemeData(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: Colors.grey[300]!),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          selectedLocation ?? 'All Locations',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Icon(Icons.arrow_drop_down, color: Colors.grey[600]),
-                      ],
+                      surfaceTintColor: Colors.white,
                     ),
                   ),
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  child: PopupMenuButton<String>(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            child: Row(
-                              children: [
-                                Icon(Icons.search,
-                                    size: 20, color: Colors.grey[600]),
-                                const SizedBox(width: 8),
-                                const Text(
-                                  'Search locations...',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
+                          Text(
+                            selectedLocation ?? 'All Locations',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black87,
                             ),
                           ),
-                          const Divider(height: 1),
+                          const SizedBox(width: 8),
+                          Icon(Icons.arrow_drop_down, color: Colors.grey[600]),
                         ],
                       ),
-                      enabled: false,
                     ),
-                    ...locations.map(
-                      (location) => PopupMenuItem(
-                        value: location,
-                        child: Text(location),
-                      ),
-                    ),
-                  ],
-                  onSelected: onLocationChanged,
-                ),
-                const SizedBox(width: 16),
-                PopupMenuButton<String>(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: Colors.grey[300]!),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          selectedSort ?? 'No sort applied',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black87,
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        enabled: false,
+                        height: 40,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: Colors.grey[200]!),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Icon(Icons.arrow_drop_down, color: Colors.grey[600]),
-                      ],
-                    ),
-                  ),
-                  itemBuilder: (context) => sortOptions
-                      .map(
-                        (sort) => PopupMenuItem(
-                          value: sort,
                           child: Row(
                             children: [
-                              Text(sort),
-                              if (sort == selectedSort)
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 8),
-                                  child: Icon(Icons.check, size: 18),
+                              Icon(Icons.search,
+                                  size: 20, color: Colors.grey[600]),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Search locations...',
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 14,
                                 ),
+                              ),
                             ],
                           ),
                         ),
-                      )
-                      .toList(),
-                  onSelected: onSortChanged,
+                      ),
+                      ...locations.map(
+                        (location) => PopupMenuItem(
+                          value: location,
+                          height: 40,
+                          child: Text(
+                            location,
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ],
+                    onSelected: onLocationChanged,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    popupMenuTheme: PopupMenuThemeData(
+                      color: Colors.white,
+                      surfaceTintColor: Colors.white,
+                    ),
+                  ),
+                  child: PopupMenuButton<String>(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            selectedSort ?? 'No sort applied',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Icon(Icons.arrow_drop_down, color: Colors.grey[600]),
+                        ],
+                      ),
+                    ),
+                    itemBuilder: (context) => sortOptions
+                        .map(
+                          (sort) => PopupMenuItem(
+                            value: sort,
+                            height: 40,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  sort,
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                                if (sort == selectedSort)
+                                  Icon(Icons.check,
+                                      size: 18, color: Colors.blue[700]),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onSelected: onSortChanged,
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Switch(
