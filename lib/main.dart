@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFFEBF2F8),
         elevation: 0,
-        title: const Text('UI Test Selector'),
+        title: const Text('Concept Ideation'),
       ),
       body: Center(
         child: Column(
