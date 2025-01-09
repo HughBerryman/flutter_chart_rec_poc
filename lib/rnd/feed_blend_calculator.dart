@@ -18,7 +18,7 @@ class FeedBlendCalculator extends StatefulWidget {
 }
 
 class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
-  double feedRate = 0.0;
+  double feedRate = 5.0;
   double sieProduction = 0.0;
   bool _isPanelVisible = true;
   bool showSelected = false;
@@ -207,6 +207,8 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                       onWidthChanged: (width) =>
                           setState(() => _panelWidth = width),
                       lots: lots.where((lot) => lot.selectedBags > 0).toList(),
+                      feedRate: feedRate,
+                      sieProduction: sieProduction,
                     ),
                 ],
               ),

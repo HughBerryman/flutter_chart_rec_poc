@@ -7,12 +7,16 @@ class RightPanel extends StatelessWidget {
   final double width;
   final ValueChanged<double> onWidthChanged;
   final List<LotData> lots;
+  final double feedRate;
+  final double sieProduction;
 
   const RightPanel({
     super.key,
     required this.width,
     required this.onWidthChanged,
     required this.lots,
+    required this.feedRate,
+    required this.sieProduction,
   });
 
   Widget _buildStatCard({
@@ -56,6 +60,15 @@ class RightPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedLots = lots.where((lot) => lot.selectedBags > 0).toList();
     final hasSelectedLots = selectedLots.isNotEmpty;
+
+    // Calculate total bags and tons
+    final totalBags =
+        selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags);
+    final totalTons =
+        totalBags * 4000 / 2000; // 4000 lbs per bag, 2000 lbs per ton
+
+    // Calculate external Mo lbs/day based on feed rate
+    final externalMoLbsDay = feedRate * 2000 * 24; // TPH to lbs/day conversion
 
     return Row(
       children: [
@@ -148,20 +161,19 @@ class RightPanel extends StatelessWidget {
                               children: [
                                 _buildStatCard(
                                   icon: Icons.inventory_2,
-                                  value: selectedLots
-                                      .fold<int>(0,
-                                          (sum, lot) => sum + lot.selectedBags)
-                                      .toString(),
+                                  value: totalBags.toString(),
                                   label: 'Bags Selected',
                                 ),
                                 _buildStatCard(
                                   icon: Icons.science,
-                                  value: '133,600',
+                                  value: externalMoLbsDay.toStringAsFixed(0),
                                   label: 'External Mo lbs/day',
                                 ),
                                 _buildStatCard(
                                   icon: Icons.balance,
-                                  value: '61',
+                                  value:
+                                      (totalTons + (sieProduction * 24 / 2000))
+                                          .toStringAsFixed(1),
                                   label: 'Total Tons (SIE Mo + External)',
                                 ),
                               ],
