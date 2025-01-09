@@ -691,22 +691,25 @@ class LotCard extends StatelessWidget {
                 ),
               ),
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Lot Details',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontWeight: FontWeight.w500,
+              child: Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Lot Details',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  Icon(
-                    lot.isExpanded ? Icons.expand_less : Icons.expand_more,
-                    size: 20,
-                    color: Colors.grey[600],
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    Icon(
+                      lot.isExpanded ? Icons.expand_less : Icons.expand_more,
+                      size: 20,
+                      color: Colors.grey[600],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
