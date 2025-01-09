@@ -193,19 +193,19 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
           children: [
             Expanded(
               child: _buildAccordion('Primary Elements', {
-                'Molybdenum': {'value': 45.00, 'range': '50.0 - 95.0'},
-                'Iron': {'value': 4.20, 'range': '0.0 - 3.5'},
-                'Copper': {'value': 3.50, 'range': '1.2 - 2.8'},
-                'Lead': {'value': 0.15, 'range': '0.0 - 0.08'},
+                'Molybdenum': {'value': 45.00, 'range': '50.0% - 95.0%'},
+                'Iron': {'value': 4.20, 'range': '0.0% - 3.5%'},
+                'Copper': {'value': 3.50, 'range': '1.2% - 2.8%'},
+                'Lead': {'value': 0.15, 'range': '0.0% - 0.08%'},
               }),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _buildAccordion('Secondary Elements', {
-                'Zinc': {'value': 0.35, 'range': '0.0 - 0.5'},
-                'Arsenic': {'value': 0.12, 'range': '0.0 - 0.15'},
-                'Bismuth': {'value': 0.08, 'range': '0.0 - 0.1'},
-                'Antimony': {'value': 0.05, 'range': '0.0 - 0.08'},
+                'Zinc': {'value': 0.35, 'range': '0.0% - 0.5%'},
+                'Arsenic': {'value': 0.12, 'range': '0.0% - 0.15%'},
+                'Bismuth': {'value': 0.08, 'range': '0.0% - 0.1%'},
+                'Antimony': {'value': 0.05, 'range': '0.0% - 0.08%'},
               }),
             ),
           ],
@@ -216,19 +216,19 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
           children: [
             Expanded(
               child: _buildAccordion('Trace Elements', {
-                'Selenium': {'value': 0.02, 'range': '0.0 - 0.05'},
-                'Tellurium': {'value': 0.01, 'range': '0.0 - 0.03'},
-                'Mercury': {'value': 0.001, 'range': '0.0 - 0.005'},
-                'Cadmium': {'value': 0.003, 'range': '0.0 - 0.01'},
+                'Selenium': {'value': 0.02, 'range': '0.0% - 0.05%'},
+                'Tellurium': {'value': 0.01, 'range': '0.0% - 0.03%'},
+                'Mercury': {'value': 0.001, 'range': '0.0% - 0.005%'},
+                'Cadmium': {'value': 0.003, 'range': '0.0% - 0.01%'},
               }),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _buildAccordion('Physical Properties', {
-                'Moisture': {'value': 8.5, 'range': '5.0 - 10.0'},
-                'Bulk Density': {'value': 55.2, 'range': '45.0 - 65.0'},
-                'Particle Size': {'value': 150.0, 'range': '100.0 - 200.0'},
-                'pH': {'value': 6.8, 'range': '6.0 - 8.0'},
+                'Moisture': {'value': 8.5, 'range': '5.0% - 10.0%'},
+                'Bulk Density': {'value': 55.2, 'range': '45.0% - 65.0%'},
+                'Particle Size': {'value': 150.0, 'range': '100.0% - 200.0%'},
+                'pH': {'value': 6.8, 'range': '6.0% - 8.0%'},
               }),
             ),
           ],
