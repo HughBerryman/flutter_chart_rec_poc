@@ -101,12 +101,11 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
     final isExpanded = _expandedSections[title] ?? false;
     final hasWarning = elements.values.any((element) {
       final value = element['value'] as double;
-      final range = element['range'] as String;
-      final limits = range
+      final range = (element['range'] as String)
           .split(' - ')
           .map((e) => double.parse(e.replaceAll('%', '')))
           .toList();
-      return value < limits[0] || value > limits[1];
+      return value < range[0] || value > range[1];
     });
 
     return Card(
@@ -114,14 +113,23 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
+      color: Colors.white,
+      surfaceTintColor: Colors.white,
       child: Column(
         children: [
           // Header
           InkWell(
             onTap: () => setState(() => _expandedSections[title] = !isExpanded),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: Padding(
+            child: Container(
               padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: isExpanded
+                      ? BorderSide(color: Colors.grey[200]!)
+                      : BorderSide.none,
+                ),
+              ),
               child: Row(
                 children: [
                   Icon(
@@ -133,6 +141,7 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
                                 ? Icons.biotech
                                 : Icons.straighten,
                     size: 24,
+                    color: Colors.grey[700],
                   ),
                   const SizedBox(width: 12),
                   Text(
@@ -158,7 +167,7 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
           // Content
           if (isExpanded)
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
               child: Column(
                 children: elements.entries.map((entry) {
                   return _buildElementRow(
