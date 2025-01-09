@@ -15,7 +15,31 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'UI Tester',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+          surfaceTint: Colors.white,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue[700],
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 12,
+            ),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.grey[700],
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.grey[700],
+            side: BorderSide(color: Colors.grey[300]!),
+          ),
+        ),
         scaffoldBackgroundColor: const Color(0xFFEBF2F8),
       ),
       home: const HomeScreen(), // HomeScreen will help select between UIs
