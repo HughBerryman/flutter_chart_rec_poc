@@ -82,7 +82,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     showDialog(
       context: context,
       builder: (context) => Dialog(
-        backgroundColor: const Color(0xFFFCFCFF),
+        backgroundColor: Colors.white,
         child: Container(
           width: 600,
           constraints: const BoxConstraints(maxHeight: 800),
@@ -91,8 +91,13 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header with close button
-              Padding(
+              Container(
                 padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: Colors.grey[200]!),
+                  ),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -110,7 +115,6 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                   ],
                 ),
               ),
-              const Divider(height: 1),
 
               // Scrollable content
               Flexible(
@@ -194,11 +198,11 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   ) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-      child: Card(
-        margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: Colors.grey[200]!),
+          border: Border.all(color: Colors.grey[200]!),
         ),
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -228,15 +232,16 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                   Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.delete_outline),
+                        icon:
+                            Icon(Icons.delete_outline, color: Colors.grey[700]),
                         onPressed: () {},
                         tooltip: 'Delete',
                       ),
                       const SizedBox(width: 8),
-                      ElevatedButton(
+                      FilledButton(
                         onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Colors.blue[700],
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 12),
@@ -266,17 +271,24 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.inventory_2, size: 16),
+                      Icon(Icons.inventory_2,
+                          size: 16, color: Colors.grey[600]),
                       const SizedBox(width: 8),
-                      Text('$bags bags'),
+                      Text(
+                        '$bags bags',
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
                     ],
                   ),
                   const SizedBox(width: 24),
                   Row(
                     children: [
-                      const Icon(Icons.balance, size: 16),
+                      Icon(Icons.balance, size: 16, color: Colors.grey[600]),
                       const SizedBox(width: 8),
-                      Text('$tons tons'),
+                      Text(
+                        '$tons tons',
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
                     ],
                   ),
                 ],
@@ -303,155 +315,167 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     showDialog(
       context: context,
       builder: (context) => Dialog(
-        backgroundColor: const Color(0xFFFCFCFF),
+        backgroundColor: Colors.white,
         child: Container(
           width: 600,
-          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Save Blend Strategy',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: Colors.grey[200]!),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Save Blend Strategy',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 24),
-
-              // Strategy Name Field
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Text(
-                        'Strategy Name',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+              Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Strategy Name Field
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Text(
+                              'Strategy Name',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              '*',
+                              style: TextStyle(
+                                color: Colors.red[700],
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '*',
-                        style: TextStyle(
-                          color: Colors.red[700],
-                          fontSize: 16,
+                        const SizedBox(height: 8),
+                        TextField(
+                          onChanged: (value) => strategyName = value,
+                          decoration: InputDecoration(
+                            hintText: 'Enter a name for this strategy',
+                            hintStyle: TextStyle(color: Colors.grey[500]),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(color: Colors.blue[700]!),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    onChanged: (value) => strategyName = value,
-                    decoration: InputDecoration(
-                      hintText: 'Enter a name for this strategy',
-                      hintStyle: TextStyle(color: Colors.grey[500]),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        borderSide: BorderSide(color: Colors.blue[700]!),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
-              // Description Field
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Description (optional)',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                    // Description Field
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Description (optional)',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        TextField(
+                          onChanged: (value) => description = value,
+                          decoration: InputDecoration(
+                            hintText: 'Add a description',
+                            hintStyle: TextStyle(color: Colors.grey[500]),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(color: Colors.blue[700]!),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    onChanged: (value) => description = value,
-                    decoration: InputDecoration(
-                      hintText: 'Add a description',
-                      hintStyle: TextStyle(color: Colors.grey[500]),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        borderSide: BorderSide(color: Colors.blue[700]!),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
-              // Action Buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
-                      ),
+                    // Action Buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 12,
+                            ),
+                          ),
+                          child: const Text('Cancel'),
+                        ),
+                        const SizedBox(width: 12),
+                        FilledButton(
+                          onPressed: () {
+                            if (strategyName?.isNotEmpty == true) {
+                              // TODO: Implement save strategy logic
+                              Navigator.pop(context);
+                            }
+                          },
+                          style: FilledButton.styleFrom(
+                            backgroundColor: Colors.blue[700],
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 12,
+                            ),
+                          ),
+                          child: const Text('Save Strategy'),
+                        ),
+                      ],
                     ),
-                    child: const Text('Cancel'),
-                  ),
-                  const SizedBox(width: 12),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (strategyName?.isNotEmpty == true) {
-                        // TODO: Implement save strategy logic
-                        Navigator.pop(context);
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[700],
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: const Text('Save Strategy'),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -472,7 +496,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     showDialog(
       context: context,
       builder: (context) => Dialog(
-        backgroundColor: const Color(0xFFFCFCFF),
+        backgroundColor: Colors.white,
         child: Container(
           width: 1000,
           height: 600,
@@ -481,12 +505,17 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
               // Left side - Export options
               Expanded(
                 flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Colors.grey[200]!),
+                        ),
+                      ),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
@@ -502,108 +531,121 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 32),
-
-                      // Export Format
-                      const Text(
-                        'Export Format',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Radio(
-                                value: true,
-                                groupValue: pdfSelected,
-                                onChanged: (bool? value) {
-                                  if (value != null) {
-                                    setState(() => pdfSelected = value);
-                                  }
-                                },
-                                activeColor: Colors.blue[700],
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Export Format
+                            const Text(
+                              'Export Format',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
-                              const Text('PDF Report'),
-                            ],
-                          ),
-                          const SizedBox(width: 32),
-                          Row(
-                            children: [
-                              Radio(
-                                value: false,
-                                groupValue: pdfSelected,
-                                onChanged: (bool? value) {
-                                  if (value != null) {
-                                    setState(() => pdfSelected = !value);
-                                  }
-                                },
-                                activeColor: Colors.blue[700],
-                              ),
-                              const Text('Excel Workbook'),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 32),
-
-                      // Content Sections
-                      const Text(
-                        'Content Sections',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      ...sections.entries.map((section) => Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
                               children: [
-                                Text(
-                                  section.key,
-                                  style: const TextStyle(fontSize: 16),
+                                Row(
+                                  children: [
+                                    Radio(
+                                      value: true,
+                                      groupValue: pdfSelected,
+                                      onChanged: (bool? value) {
+                                        if (value != null) {
+                                          setState(() => pdfSelected = value);
+                                        }
+                                      },
+                                      activeColor: Colors.blue[700],
+                                    ),
+                                    const Text('PDF Report'),
+                                  ],
                                 ),
-                                Switch(
-                                  value: section.value,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      sections[section.key] = value;
-                                    });
-                                  },
-                                  activeColor: Colors.blue[700],
-                                  activeTrackColor: Colors.blue[100],
-                                  inactiveThumbColor: Colors.grey[400],
-                                  inactiveTrackColor: Colors.grey[300],
+                                const SizedBox(width: 32),
+                                Row(
+                                  children: [
+                                    Radio(
+                                      value: false,
+                                      groupValue: pdfSelected,
+                                      onChanged: (bool? value) {
+                                        if (value != null) {
+                                          setState(() => pdfSelected = !value);
+                                        }
+                                      },
+                                      activeColor: Colors.blue[700],
+                                    ),
+                                    const Text('Excel Workbook'),
+                                  ],
                                 ),
                               ],
                             ),
-                          )),
-                      const Spacer(),
+                            const SizedBox(height: 32),
 
-                      // Export Button
-                      SizedBox(
+                            // Content Sections
+                            const Text(
+                              'Content Sections',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            ...sections.entries.map((section) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        section.key,
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      Switch(
+                                        value: section.value,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            sections[section.key] = value;
+                                          });
+                                        },
+                                        activeColor: Colors.blue[700],
+                                        activeTrackColor: Colors.blue[100],
+                                        inactiveThumbColor: Colors.grey[400],
+                                        inactiveTrackColor: Colors.grey[300],
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(color: Colors.grey[200]!),
+                        ),
+                      ),
+                      child: SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton.icon(
+                        child: FilledButton.icon(
                           onPressed: () {
                             // TODO: Implement export functionality
                             Navigator.pop(context);
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            foregroundColor: Colors.white,
+                          style: FilledButton.styleFrom(
+                            backgroundColor: Colors.blue[700],
                             padding: const EdgeInsets.symmetric(vertical: 16),
                           ),
                           icon: const Icon(Icons.file_download),
                           label: const Text('Export Report'),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               // Right side - Preview
@@ -618,91 +660,82 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Preview section
+                    Container(
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Colors.grey[200]!),
+                        ),
+                      ),
+                      child: const Row(
+                        children: [
+                          Text(
+                            'Export Preview',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Expanded(
                       child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(24),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(24),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Export Preview',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 24),
-                                  // Preview placeholder
-                                  Container(
-                                    height: 300,
-                                    decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Colors.grey[300]!),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.description_outlined,
-                                              size: 48,
-                                              color: Colors.grey[400]),
-                                          const SizedBox(height: 16),
-                                          Text(
-                                            'Preview will appear here',
-                                            style: TextStyle(
-                                              color: Colors.grey[600],
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ],
+                            // Preview placeholder
+                            Container(
+                              height: 300,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey[300]!),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.description_outlined,
+                                        size: 48, color: Colors.grey[400]),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      'Preview will appear here',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: 14,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                            const Divider(height: 1),
+                            const SizedBox(height: 24),
                             // Export Settings
-                            Padding(
-                              padding: const EdgeInsets.all(24),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Export Settings',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  _buildExportSetting('Page Size', 'A4'),
-                                  _buildExportSetting(
-                                      'Orientation', 'Portrait'),
-                                  _buildExportSetting('Quality', 'High'),
-                                  const SizedBox(height: 16),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: OutlinedButton.icon(
-                                      onPressed: () {
-                                        // TODO: Implement settings configuration
-                                      },
-                                      style: OutlinedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16),
-                                      ),
-                                      icon: const Icon(Icons.settings),
-                                      label: const Text('Configure Settings'),
-                                    ),
-                                  ),
-                                ],
+                            const Text(
+                              'Export Settings',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            _buildExportSetting('Page Size', 'A4'),
+                            _buildExportSetting('Orientation', 'Portrait'),
+                            _buildExportSetting('Quality', 'High'),
+                            const SizedBox(height: 16),
+                            SizedBox(
+                              width: double.infinity,
+                              child: OutlinedButton.icon(
+                                onPressed: () {
+                                  // TODO: Implement settings configuration
+                                },
+                                style: OutlinedButton.styleFrom(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                ),
+                                icon: const Icon(Icons.settings),
+                                label: const Text('Configure Settings'),
                               ),
                             ),
                           ],
