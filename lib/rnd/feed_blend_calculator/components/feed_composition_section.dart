@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import '../../models/lot_data.dart';
 
 class FeedCompositionSection extends StatefulWidget {
-  const FeedCompositionSection({super.key});
+  final List<LotData> selectedLots;
+
+  const FeedCompositionSection({
+    super.key,
+    required this.selectedLots,
+  });
 
   @override
   State<FeedCompositionSection> createState() => _FeedCompositionSectionState();
@@ -14,6 +20,31 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
     'Trace Elements': true,
     'Physical Properties': true,
   };
+
+  Map<String, double> _calculateWeightedAverages() {
+    final Map<String, double> weightedSums = {};
+    int totalBags = 0;
+
+    // Calculate weighted sums and total bags
+    for (final lot in widget.selectedLots) {
+      final bags = lot.selectedBags;
+      if (bags > 0) {
+        totalBags += bags;
+        for (final entry in lot.elements.entries) {
+          weightedSums[entry.key] = (weightedSums[entry.key] ?? 0) + entry.value * bags;
+        }
+      }
+    }
+
+    // Calculate weighted averages
+    if (totalBags > 0) {
+      for (final key in weightedSums.keys) {
+        weightedSums[key] = weightedSums[key]! / totalBags;
+      }
+    }
+
+    return weightedSums;
+  }
 
   Widget _buildElementRow(String name, double value, String range) {
     final limits = range
@@ -185,6 +216,8 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
 
   @override
   Widget build(BuildContext context) {
+    final weightedAverages = _calculateWeightedAverages();
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -202,19 +235,19 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
           children: [
             Expanded(
               child: _buildAccordion('Primary Elements', {
-                'Molybdenum': {'value': 45.00, 'range': '50.0% - 95.0%'},
-                'Iron': {'value': 4.20, 'range': '0.0% - 3.5%'},
-                'Copper': {'value': 3.50, 'range': '1.2% - 2.8%'},
-                'Lead': {'value': 0.15, 'range': '0.0% - 0.08%'},
+                'Molybdenum': {'value': weightedAverages['Mo'] ?? 0.0, 'range': '50.0% - 95.0%'},
+                'Iron': {'value': weightedAverages['Fe'] ?? 0.0, 'range': '0.0% - 3.5%'},
+                'Copper': {'value': weightedAverages['Cu'] ?? 0.0, 'range': '1.2% - 2.8%'},
+                'Lead': {'value': weightedAverages['Pb'] ?? 0.0, 'range': '0.0% - 0.08%'},
               }),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _buildAccordion('Secondary Elements', {
-                'Zinc': {'value': 0.35, 'range': '0.0% - 0.5%'},
-                'Arsenic': {'value': 0.12, 'range': '0.0% - 0.15%'},
-                'Bismuth': {'value': 0.08, 'range': '0.0% - 0.1%'},
-                'Antimony': {'value': 0.05, 'range': '0.0% - 0.08%'},
+                'Zinc': {'value': weightedAverages['Zn'] ?? 0.0, 'range': '0.0% - 0.5%'},
+                'Arsenic': {'value': weightedAverages['As'] ?? 0.0, 'range': '0.0% - 0.15%'},
+                'Bismuth': {'value': weightedAverages['Bi'] ?? 0.0, 'range': '0.0% - 0.1%'},
+                'Antimony': {'value': weightedAverages['Sb'] ?? 0.0, 'range': '0.0% - 0.08%'},
               }),
             ),
           ],
@@ -225,19 +258,19 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
           children: [
             Expanded(
               child: _buildAccordion('Trace Elements', {
-                'Selenium': {'value': 0.02, 'range': '0.0% - 0.05%'},
-                'Tellurium': {'value': 0.01, 'range': '0.0% - 0.03%'},
-                'Mercury': {'value': 0.001, 'range': '0.0% - 0.005%'},
-                'Cadmium': {'value': 0.003, 'range': '0.0% - 0.01%'},
+                'Selenium': {'value': weightedAverages['Se'] ?? 0.0, 'range': '0.0% - 0.05%'},
+                'Tellurium': {'value': weightedAverages['Te'] ?? 0.0, 'range': '0.0% - 0.03%'},
+                'Mercury': {'value': weightedAverages['Hg'] ?? 0.0, 'range': '0.0% - 0.005%'},
+                'Cadmium': {'value': weightedAverages['Cd'] ?? 0.0, 'range': '0.0% - 0.01%'},
               }),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _buildAccordion('Physical Properties', {
-                'Moisture': {'value': 8.5, 'range': '5.0% - 10.0%'},
-                'Bulk Density': {'value': 55.2, 'range': '45.0% - 65.0%'},
-                'Particle Size': {'value': 150.0, 'range': '100.0% - 200.0%'},
-                'pH': {'value': 6.8, 'range': '6.0% - 8.0%'},
+                'Moisture': {'value': weightedAverages['H2O'] ?? 0.0, 'range': '5.0% - 10.0%'},
+                'Bulk Density': {'value': weightedAverages['Density'] ?? 0.0, 'range': '45.0% - 65.0%'},
+                'Particle Size': {'value': weightedAverages['Size'] ?? 0.0, 'range': '100.0% - 200.0%'},
+                'pH': {'value': weightedAverages['pH'] ?? 0.0, 'range': '6.0% - 8.0%'},
               }),
             ),
           ],

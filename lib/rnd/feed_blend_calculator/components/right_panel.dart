@@ -148,7 +148,10 @@ class RightPanel extends StatelessWidget {
                               children: [
                                 _buildStatCard(
                                   icon: Icons.inventory_2,
-                                  value: '36',
+                                  value: selectedLots
+                                      .fold<int>(0,
+                                          (sum, lot) => sum + lot.selectedBags)
+                                      .toString(),
                                   label: 'Bags Selected',
                                 ),
                                 _buildStatCard(
@@ -208,7 +211,7 @@ class RightPanel extends StatelessWidget {
                             const SizedBox(height: 24),
 
                             // Feed Composition Section
-                            const FeedCompositionSection(),
+                            FeedCompositionSection(selectedLots: selectedLots),
                           ],
                         ),
                       ),
