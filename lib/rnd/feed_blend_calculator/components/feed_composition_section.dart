@@ -10,13 +10,16 @@ class FeedCompositionSection extends StatefulWidget {
 class _FeedCompositionSectionState extends State<FeedCompositionSection> {
   final Map<String, bool> _expandedSections = {
     'Primary Elements': true,
-    'Secondary Elements': false,
-    'Trace Elements': false,
-    'Physical Properties': false,
+    'Secondary Elements': true,
+    'Trace Elements': true,
+    'Physical Properties': true,
   };
 
   Widget _buildElementRow(String name, double value, String range) {
-    final limits = range.split(' - ').map((e) => double.parse(e.replaceAll('%', ''))).toList();
+    final limits = range
+        .split(' - ')
+        .map((e) => double.parse(e.replaceAll('%', '')))
+        .toList();
     final isOutOfSpec = value < limits[0] || value > limits[1];
     final progress = (value - limits[0]) / (limits[1] - limits[0]);
 
@@ -93,12 +96,16 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
     );
   }
 
-  Widget _buildAccordion(String title, Map<String, Map<String, dynamic>> elements) {
+  Widget _buildAccordion(
+      String title, Map<String, Map<String, dynamic>> elements) {
     final isExpanded = _expandedSections[title] ?? false;
     final hasWarning = elements.values.any((element) {
       final value = element['value'] as double;
       final range = element['range'] as String;
-      final limits = range.split(' - ').map((e) => double.parse(e.replaceAll('%', ''))).toList();
+      final limits = range
+          .split(' - ')
+          .map((e) => double.parse(e.replaceAll('%', '')))
+          .toList();
       return value < limits[0] || value > limits[1];
     });
 
@@ -118,10 +125,13 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
               child: Row(
                 children: [
                   Icon(
-                    title == 'Primary Elements' ? Icons.science :
-                    title == 'Secondary Elements' ? Icons.science_outlined :
-                    title == 'Trace Elements' ? Icons.biotech :
-                    Icons.straighten,
+                    title == 'Primary Elements'
+                        ? Icons.science
+                        : title == 'Secondary Elements'
+                            ? Icons.science_outlined
+                            : title == 'Trace Elements'
+                                ? Icons.biotech
+                                : Icons.straighten,
                     size: 24,
                   ),
                   const SizedBox(width: 12),
@@ -134,7 +144,8 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
                   ),
                   const Spacer(),
                   if (hasWarning)
-                    Icon(Icons.warning_amber_rounded, size: 20, color: Colors.orange[700]),
+                    Icon(Icons.warning_amber_rounded,
+                        size: 20, color: Colors.orange[700]),
                   const SizedBox(width: 8),
                   Icon(
                     isExpanded ? Icons.expand_less : Icons.expand_more,
@@ -176,30 +187,52 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
           ),
         ),
         const SizedBox(height: 16),
-        _buildAccordion('Primary Elements', {
-          'Molybdenum': {'value': 45.00, 'range': '50.0 - 95.0'},
-          'Iron': {'value': 4.20, 'range': '0.0 - 3.5'},
-          'Copper': {'value': 3.50, 'range': '1.2 - 2.8'},
-          'Lead': {'value': 0.15, 'range': '0.0 - 0.08'},
-        }),
-        _buildAccordion('Secondary Elements', {
-          'Zinc': {'value': 0.35, 'range': '0.0 - 0.5'},
-          'Arsenic': {'value': 0.12, 'range': '0.0 - 0.15'},
-          'Bismuth': {'value': 0.08, 'range': '0.0 - 0.1'},
-          'Antimony': {'value': 0.05, 'range': '0.0 - 0.08'},
-        }),
-        _buildAccordion('Trace Elements', {
-          'Selenium': {'value': 0.02, 'range': '0.0 - 0.05'},
-          'Tellurium': {'value': 0.01, 'range': '0.0 - 0.03'},
-          'Mercury': {'value': 0.001, 'range': '0.0 - 0.005'},
-          'Cadmium': {'value': 0.003, 'range': '0.0 - 0.01'},
-        }),
-        _buildAccordion('Physical Properties', {
-          'Moisture': {'value': 8.5, 'range': '5.0 - 10.0'},
-          'Bulk Density': {'value': 55.2, 'range': '45.0 - 65.0'},
-          'Particle Size': {'value': 150.0, 'range': '100.0 - 200.0'},
-          'pH': {'value': 6.8, 'range': '6.0 - 8.0'},
-        }),
+        // First row
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _buildAccordion('Primary Elements', {
+                'Molybdenum': {'value': 45.00, 'range': '50.0 - 95.0'},
+                'Iron': {'value': 4.20, 'range': '0.0 - 3.5'},
+                'Copper': {'value': 3.50, 'range': '1.2 - 2.8'},
+                'Lead': {'value': 0.15, 'range': '0.0 - 0.08'},
+              }),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _buildAccordion('Secondary Elements', {
+                'Zinc': {'value': 0.35, 'range': '0.0 - 0.5'},
+                'Arsenic': {'value': 0.12, 'range': '0.0 - 0.15'},
+                'Bismuth': {'value': 0.08, 'range': '0.0 - 0.1'},
+                'Antimony': {'value': 0.05, 'range': '0.0 - 0.08'},
+              }),
+            ),
+          ],
+        ),
+        // Second row
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _buildAccordion('Trace Elements', {
+                'Selenium': {'value': 0.02, 'range': '0.0 - 0.05'},
+                'Tellurium': {'value': 0.01, 'range': '0.0 - 0.03'},
+                'Mercury': {'value': 0.001, 'range': '0.0 - 0.005'},
+                'Cadmium': {'value': 0.003, 'range': '0.0 - 0.01'},
+              }),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _buildAccordion('Physical Properties', {
+                'Moisture': {'value': 8.5, 'range': '5.0 - 10.0'},
+                'Bulk Density': {'value': 55.2, 'range': '45.0 - 65.0'},
+                'Particle Size': {'value': 150.0, 'range': '100.0 - 200.0'},
+                'pH': {'value': 6.8, 'range': '6.0 - 8.0'},
+              }),
+            ),
+          ],
+        ),
       ],
     );
   }
