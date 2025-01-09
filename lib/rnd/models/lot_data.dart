@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class LotData {
   final String id;
   final String location;
-  final Map<String, double> elements;
+  Map<String, double> elements;
   int selectedBags;
   bool isExpanded;
 
@@ -14,6 +14,11 @@ class LotData {
     this.selectedBags = 0,
     this.isExpanded = false,
   });
+
+  void updateAssayValues(Map<String, double> newValues) {
+    elements.clear();
+    elements.addAll(newValues);
+  }
 }
 
 // Sample data for testing

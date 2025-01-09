@@ -7,6 +7,7 @@ class LotCard extends StatelessWidget {
   final ValueChanged<bool> onExpandChanged;
   final VoidCallback onSpecificationView;
   final VoidCallback onQualityCertificateView;
+  final Function(Map<String, double>) onAssayValuesChanged;
 
   const LotCard({
     super.key,
@@ -15,6 +16,7 @@ class LotCard extends StatelessWidget {
     required this.onExpandChanged,
     required this.onSpecificationView,
     required this.onQualityCertificateView,
+    required this.onAssayValuesChanged,
   });
 
   void _showSpecificationSheet(BuildContext context) {
@@ -371,6 +373,138 @@ class LotCard extends StatelessWidget {
     );
   }
 
+  void _showEditAssayModal(BuildContext context) {
+    final Map<String, double> editedValues = Map.from(lot.elements);
+    final Map<String, String> elementLabels = {
+      'Mo': 'Molybdenum',
+      'Fe': 'Iron',
+      'Cu': 'Copper',
+      'Pb': 'Lead',
+      'Sn': 'Tin',
+      'Al': 'Aluminum',
+      'Cl': 'Chlorine',
+      'K': 'Potassium',
+    };
+
+    final Map<String, String> elementRanges = {
+      'Mo': '50.0% - 95.0%',
+      'Fe': '0.0% - 3.5%',
+      'Cu': '1.2% - 2.8%',
+      'Pb': '0.0% - 0.08%',
+      'Sn': '0.0% - 0.002%',
+      'Al': '0.0% - 0.4%',
+      'Cl': '0.0% - 0.08%',
+      'K': '0.0% - 0.08%',
+    };
+
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: Container(
+          width: 600,
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Edit Assay Values - ${lot.id}',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...lot.elements.entries.map((entry) {
+                        final controller = TextEditingController(
+                          text: entry.value.toString(),
+                        );
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 24),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                elementLabels[entry.key] ?? entry.key,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                'Target range: ${elementRanges[entry.key] ?? "N/A"}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              TextField(
+                                controller: controller,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        decimal: true),
+                                decoration: InputDecoration(
+                                  suffixText: '%',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                onChanged: (value) {
+                                  final parsedValue = double.tryParse(value);
+                                  if (parsedValue != null) {
+                                    editedValues[entry.key] = parsedValue;
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                      const SizedBox(height: 24),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancel'),
+                          ),
+                          const SizedBox(width: 16),
+                          FilledButton(
+                            onPressed: () {
+                              onAssayValuesChanged(editedValues);
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Save Changes'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -391,31 +525,40 @@ class LotCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              lot.id,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.blue[50],
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                lot.location,
-                                style: TextStyle(
-                                  color: Colors.blue[700],
-                                  fontSize: 12,
+                            Row(
+                              children: [
+                                Text(
+                                  lot.id,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(width: 8),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue[50],
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    lot.location,
+                                    style: TextStyle(
+                                      color: Colors.blue[700],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () => _showEditAssayModal(context),
+                              tooltip: 'Edit Assay Values',
                             ),
                           ],
                         ),
@@ -695,7 +838,20 @@ class LotCard extends StatelessWidget {
   }
 
   Widget _buildElementChip(String element, double value) {
-    final isOutOfSpec = value > 0.5; // Example threshold
+    final Map<String, List<double>> elementRanges = {
+      'Mo': [50.0, 95.0],
+      'Fe': [0.0, 3.5],
+      'Cu': [1.2, 2.8],
+      'Pb': [0.0, 0.08],
+      'Sn': [0.0, 0.002],
+      'Al': [0.0, 0.4],
+      'Cl': [0.0, 0.08],
+      'K': [0.0, 0.08],
+    };
+
+    final range = elementRanges[element];
+    final isOutOfSpec = range != null && (value < range[0] || value > range[1]);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(

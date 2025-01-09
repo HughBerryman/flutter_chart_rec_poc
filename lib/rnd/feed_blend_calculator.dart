@@ -51,19 +51,22 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
 
   void _updateLotBags(String lotId, int bags) {
     setState(() {
-      final lotIndex = lots.indexWhere((lot) => lot.id == lotId);
-      if (lotIndex != -1) {
-        lots[lotIndex].selectedBags = bags;
-      }
+      final lot = lots.firstWhere((lot) => lot.id == lotId);
+      lot.selectedBags = bags;
     });
   }
 
   void _toggleLotExpanded(String lotId, bool isExpanded) {
     setState(() {
-      final index = lots.indexWhere((lot) => lot.id == lotId);
-      if (index != -1) {
-        lots[index].isExpanded = isExpanded;
-      }
+      final lot = lots.firstWhere((lot) => lot.id == lotId);
+      lot.isExpanded = isExpanded;
+    });
+  }
+
+  void _updateLotAssayValues(String lotId, Map<String, double> newValues) {
+    setState(() {
+      final lot = lots.firstWhere((lot) => lot.id == lotId);
+      lot.updateAssayValues(newValues);
     });
   }
 
@@ -788,18 +791,15 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                           showSelected: showSelected,
                           selectedLocation: selectedLocation,
                           selectedSort: selectedSort,
-                          locations: locations,
-                          sortOptions: sortOptions,
-                          onBagsChanged: _updateLotBags,
-                          onLotExpanded: _toggleLotExpanded,
-                          onSpecificationView: _showSpecificationSheet,
-                          onQualityCertificateView: _showQualityCertificate,
+                          onShowSelectedChanged: (value) =>
+                              setState(() => showSelected = value),
                           onLocationChanged: (value) =>
                               setState(() => selectedLocation = value),
                           onSortChanged: (value) =>
                               setState(() => selectedSort = value),
-                          onShowSelectedToggle: () =>
-                              setState(() => showSelected = !showSelected),
+                          onBagsChanged: _updateLotBags,
+                          onExpandChanged: _toggleLotExpanded,
+                          onAssayValuesChanged: _updateLotAssayValues,
                         ),
                       ),
                     ],

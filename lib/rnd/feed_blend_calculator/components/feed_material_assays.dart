@@ -12,6 +12,7 @@ class FeedMaterialAssays extends StatelessWidget {
   final ValueChanged<String?> onSortChanged;
   final Function(String, int) onBagsChanged;
   final Function(String, bool) onExpandChanged;
+  final Function(String, Map<String, double>) onAssayValuesChanged;
 
   const FeedMaterialAssays({
     super.key,
@@ -24,6 +25,7 @@ class FeedMaterialAssays extends StatelessWidget {
     required this.onSortChanged,
     required this.onBagsChanged,
     required this.onExpandChanged,
+    required this.onAssayValuesChanged,
   });
 
   final List<String> locations = const [
@@ -190,6 +192,10 @@ class FeedMaterialAssays extends StatelessWidget {
                 onBagsChanged: (bags) => onBagsChanged(lot.id, bags),
                 onExpandChanged: (isExpanded) =>
                     onExpandChanged(lot.id, isExpanded),
+                onSpecificationView: () {},
+                onQualityCertificateView: () {},
+                onAssayValuesChanged: (values) =>
+                    onAssayValuesChanged(lot.id, values),
               ),
             )),
       ],
