@@ -667,12 +667,14 @@ class LotCard extends StatelessWidget {
                   flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Wrap(
-                      spacing: 16,
-                      runSpacing: 16,
-                      children: lot.elements.entries
-                          .map((e) => _buildElementChip(e.key, e.value))
-                          .toList(),
+                    child: Center(
+                      child: Wrap(
+                        spacing: 16,
+                        runSpacing: 16,
+                        children: lot.elements.entries
+                            .map((e) => _buildElementChip(e.key, e.value))
+                            .toList(),
+                      ),
                     ),
                   ),
                 ),
