@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'feed_blend_calculator/components/feed_parameters.dart';
+import 'feed_blend_calculator/components/feed_parameters_section.dart';
 import 'feed_blend_calculator/components/right_panel.dart';
-import 'feed_blend_calculator/widgets/lot_card.dart';
+import 'feed_blend_calculator/components/left_navigation.dart';
+import 'feed_blend_calculator/components/feed_app_bar.dart';
+import 'feed_blend_calculator/components/lots_section.dart';
 import 'models/lot_data.dart';
 
 class FeedBlendCalculator extends StatefulWidget {
@@ -739,110 +741,25 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: double.infinity,
-            color: isActive ? Colors.blue.withOpacity(0.2) : Colors.transparent,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Column(
-                children: [
-                  Icon(
-                    icon,
-                    color: isActive ? Colors.blue : Colors.grey[400],
-                    size: 24,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    label,
-                    style: TextStyle(
-                      color: isActive ? Colors.blue : Colors.grey[400],
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final selectedLotCount = lots.where((lot) => lot.selectedBags > 0).length;
+
     return Scaffold(
       backgroundColor: const Color(0xFFEBF2F8),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFEBF2F8),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Row(
-          children: [
-            const Icon(Icons.science),
-            const SizedBox(width: 8),
-            const Text('Feed Calculator'),
-            Text(
-              ' • ${lots.where((lot) => lot.selectedBags > 0).length} of ${lots.length} assays selected',
-              style: const TextStyle(fontSize: 14, color: Colors.grey),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton.icon(
-            onPressed: _showSavedStrategies,
-            icon: const Icon(Icons.visibility),
-            label: const Text('View Saved'),
-          ),
-          TextButton.icon(
-            onPressed: _showSaveStrategy,
-            icon: const Icon(Icons.save),
-            label: const Text('Save Strategy'),
-          ),
-          TextButton.icon(
-            onPressed: _showExportDialog,
-            icon: const Icon(Icons.file_download),
-            label: const Text('Export'),
-          ),
-          IconButton(
-            icon: Icon(
-              _isPanelVisible ? Icons.chevron_right : Icons.chevron_left,
-            ),
-            onPressed: () => setState(() => _isPanelVisible = !_isPanelVisible),
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Divider(height: 1, color: Colors.grey[300]),
-        ),
+      appBar: FeedAppBar(
+        selectedLotCount: selectedLotCount,
+        totalLotCount: lots.length,
+        onViewSaved: _showSavedStrategies,
+        onSaveStrategy: _showSaveStrategy,
+        onExport: _showExportDialog,
+        isPanelVisible: _isPanelVisible,
+        onPanelToggle: () => setState(() => _isPanelVisible = !_isPanelVisible),
       ),
       body: Row(
         children: [
           // Left navigation
-          Container(
-            width: 72,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                right: BorderSide(color: Colors.grey[200]!),
-              ),
-            ),
-            child: Column(
-              children: [
-                _buildNavItem(Icons.inventory_2, 'Assays', true),
-                _buildNavItem(Icons.science, 'Elements', false),
-                _buildNavItem(Icons.analytics, 'Analysis', false),
-              ],
-            ),
-          ),
+          const LeftNavigation(),
 
           // Main content
           Expanded(
@@ -854,193 +771,35 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Feed parameters section
-                      Container(
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Feed Parameters',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            FeedParameters(
-                              feedRate: feedRate,
-                              sieProduction: sieProduction,
-                              onFeedRateChanged: (value) =>
-                                  setState(() => feedRate = value),
-                              onSieProductionChanged: (value) =>
-                                  setState(() => sieProduction = value),
-                            ),
-                          ],
-                        ),
+                      FeedParametersSection(
+                        feedRate: feedRate,
+                        sieProduction: sieProduction,
+                        onFeedRateChanged: (value) =>
+                            setState(() => feedRate = value),
+                        onSieProductionChanged: (value) =>
+                            setState(() => sieProduction = value),
                       ),
                       const Divider(height: 1),
 
                       // Lots section
                       Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.all(24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Header with filters
-                              Row(
-                                children: [
-                                  const Text(
-                                    'Available Assays',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  // Location filter
-                                  Container(
-                                    height: 40,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(4),
-                                      border:
-                                          Border.all(color: Colors.grey[300]!),
-                                    ),
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<String>(
-                                        value: selectedLocation,
-                                        hint: const Text('All Locations'),
-                                        items: [
-                                          const DropdownMenuItem(
-                                            value: null,
-                                            child: Text('All Locations'),
-                                          ),
-                                          ...locations.map((location) {
-                                            return DropdownMenuItem(
-                                              value: location,
-                                              child: Text(location),
-                                            );
-                                          }).toList(),
-                                        ],
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedLocation = value;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  // Sort filter
-                                  Container(
-                                    height: 40,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(4),
-                                      border:
-                                          Border.all(color: Colors.grey[300]!),
-                                    ),
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<String>(
-                                        value: selectedSort,
-                                        hint: const Text('Sort by'),
-                                        items: [
-                                          const DropdownMenuItem(
-                                            value: null,
-                                            child: Text('Sort by'),
-                                          ),
-                                          ...sortOptions.map((option) {
-                                            return DropdownMenuItem(
-                                              value: option,
-                                              child: Text(option),
-                                            );
-                                          }).toList(),
-                                        ],
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedSort = value;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  // Show selected toggle
-                                  Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: showSelected
-                                          ? Colors.blue[50]
-                                          : Colors.white,
-                                      borderRadius: BorderRadius.circular(4),
-                                      border: Border.all(
-                                        color: showSelected
-                                            ? Colors.blue[700]!
-                                            : Colors.grey[300]!,
-                                      ),
-                                    ),
-                                    child: TextButton.icon(
-                                      onPressed: () {
-                                        setState(() {
-                                          showSelected = !showSelected;
-                                        });
-                                      },
-                                      icon: Icon(
-                                        Icons.check_circle_outline,
-                                        color: showSelected
-                                            ? Colors.blue[700]
-                                            : Colors.grey[700],
-                                        size: 20,
-                                      ),
-                                      label: Text(
-                                        'Show Selected',
-                                        style: TextStyle(
-                                          color: showSelected
-                                              ? Colors.blue[700]
-                                              : Colors.grey[700],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 24),
-
-                              // Lots list
-                              Expanded(
-                                child: ListView.builder(
-                                  itemCount: lots.length,
-                                  itemBuilder: (context, index) {
-                                    final lot = lots[index];
-                                    if (showSelected && lot.selectedBags == 0) {
-                                      return const SizedBox.shrink();
-                                    }
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 16),
-                                      child: LotCard(
-                                        lot: lot,
-                                        onBagsChanged: (bags) =>
-                                            _updateLotBags(lot.id, bags),
-                                        onExpandChanged: (isExpanded) =>
-                                            _toggleLotExpanded(
-                                                lot.id, isExpanded),
-                                        onSpecificationView: () =>
-                                            _showSpecificationSheet(lot.id),
-                                        onQualityCertificateView: () =>
-                                            _showQualityCertificate(lot.id),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
+                        child: LotsSection(
+                          lots: lots,
+                          showSelected: showSelected,
+                          selectedLocation: selectedLocation,
+                          selectedSort: selectedSort,
+                          locations: locations,
+                          sortOptions: sortOptions,
+                          onBagsChanged: _updateLotBags,
+                          onLotExpanded: _toggleLotExpanded,
+                          onSpecificationView: _showSpecificationSheet,
+                          onQualityCertificateView: _showQualityCertificate,
+                          onLocationChanged: (value) =>
+                              setState(() => selectedLocation = value),
+                          onSortChanged: (value) =>
+                              setState(() => selectedSort = value),
+                          onShowSelectedToggle: () =>
+                              setState(() => showSelected = !showSelected),
                         ),
                       ),
                     ],
