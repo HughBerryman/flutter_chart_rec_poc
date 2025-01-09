@@ -114,76 +114,95 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   Widget build(BuildContext context) {
     final selectedLotCount = lots.where((lot) => lot.selectedBags > 0).length;
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFEBF2F8),
-      appBar: FeedAppBar(
-        selectedLotCount: selectedLotCount,
-        totalLotCount: lots.length,
-        onViewSaved: _showSavedStrategies,
-        onSaveStrategy: _showSaveStrategy,
-        onExport: _showExportDialog,
-        isPanelVisible: _isPanelVisible,
-        onPanelToggle: () => setState(() => _isPanelVisible = !_isPanelVisible),
-      ),
-      body: Row(
-        children: [
-          // Left navigation
-          const LeftNavigation(),
-
-          // Main content
-          Expanded(
-            child: Row(
-              children: [
-                // Left side - Feed parameters and lots
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Feed parameters section
-                      FeedParametersSection(
-                        feedRate: feedRate,
-                        sieProduction: sieProduction,
-                        onFeedRateChanged: (value) =>
-                            setState(() => feedRate = value),
-                        onSieProductionChanged: (value) =>
-                            setState(() => sieProduction = value),
-                      ),
-                      const Divider(height: 1),
-
-                      // Lots section
-                      Expanded(
-                        child: LotsSection(
-                          lots: lots,
-                          showSelected: showSelected,
-                          selectedLocation: selectedLocation,
-                          selectedSort: selectedSort,
-                          onShowSelectedChanged: (value) =>
-                              setState(() => showSelected = value),
-                          onLocationChanged: (value) =>
-                              setState(() => selectedLocation = value),
-                          onSortChanged: (value) =>
-                              setState(() => selectedSort = value),
-                          onBagsChanged: _updateLotBags,
-                          onExpandChanged: _toggleLotExpanded,
-                          onAssayValuesChanged: _updateLotAssayValues,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Right panel
-                if (_isPanelVisible)
-                  RightPanel(
-                    width: _panelWidth,
-                    onWidthChanged: (width) =>
-                        setState(() => _panelWidth = width),
-                    lots: lots.where((lot) => lot.selectedBags > 0).toList(),
-                  ),
-              ],
-            ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+          surfaceTint: Colors.white,
+        ),
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            backgroundColor: Colors.blue[700],
           ),
-        ],
+        ),
+        popupMenuTheme: PopupMenuThemeData(
+          color: Colors.white,
+          surfaceTintColor: Colors.white,
+        ),
+      ),
+      home: Scaffold(
+        backgroundColor: const Color(0xFFEBF2F8),
+        appBar: FeedAppBar(
+          selectedLotCount: selectedLotCount,
+          totalLotCount: lots.length,
+          onViewSaved: _showSavedStrategies,
+          onSaveStrategy: _showSaveStrategy,
+          onExport: _showExportDialog,
+          isPanelVisible: _isPanelVisible,
+          onPanelToggle: () =>
+              setState(() => _isPanelVisible = !_isPanelVisible),
+        ),
+        body: Row(
+          children: [
+            // Left navigation
+            const LeftNavigation(),
+
+            // Main content
+            Expanded(
+              child: Row(
+                children: [
+                  // Left side - Feed parameters and lots
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Feed parameters section
+                        FeedParametersSection(
+                          feedRate: feedRate,
+                          sieProduction: sieProduction,
+                          onFeedRateChanged: (value) =>
+                              setState(() => feedRate = value),
+                          onSieProductionChanged: (value) =>
+                              setState(() => sieProduction = value),
+                        ),
+                        const Divider(height: 1),
+
+                        // Lots section
+                        Expanded(
+                          child: LotsSection(
+                            lots: lots,
+                            showSelected: showSelected,
+                            selectedLocation: selectedLocation,
+                            selectedSort: selectedSort,
+                            onShowSelectedChanged: (value) =>
+                                setState(() => showSelected = value),
+                            onLocationChanged: (value) =>
+                                setState(() => selectedLocation = value),
+                            onSortChanged: (value) =>
+                                setState(() => selectedSort = value),
+                            onBagsChanged: _updateLotBags,
+                            onExpandChanged: _toggleLotExpanded,
+                            onAssayValuesChanged: _updateLotAssayValues,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Right panel
+                  if (_isPanelVisible)
+                    RightPanel(
+                      width: _panelWidth,
+                      onWidthChanged: (width) =>
+                          setState(() => _panelWidth = width),
+                      lots: lots.where((lot) => lot.selectedBags > 0).toList(),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

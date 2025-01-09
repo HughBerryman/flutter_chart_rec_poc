@@ -48,6 +48,11 @@ class FeedMaterialAssays extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final filteredLots =
+        selectedLocation == 'All Locations' || selectedLocation == null
+            ? lots
+            : lots.where((lot) => lot.location == selectedLocation).toList();
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -62,7 +67,7 @@ class FeedMaterialAssays extends StatelessWidget {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '1 of 60 assays selected',
+                  '${lots.where((lot) => lot.selectedBags > 0).length} of ${lots.length} assays selected',
                   style: TextStyle(color: Colors.grey[600]),
                 ),
               ],
@@ -208,20 +213,71 @@ class FeedMaterialAssays extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Lot Cards
-            ...lots.map((lot) => Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: LotCard(
-                    lot: lot,
-                    onBagsChanged: (bags) => onBagsChanged(lot.id, bags),
-                    onExpandChanged: (isExpanded) =>
-                        onExpandChanged(lot.id, isExpanded),
-                    onSpecificationView: () {},
-                    onQualityCertificateView: () {},
-                    onAssayValuesChanged: (values) =>
-                        onAssayValuesChanged(lot.id, values),
+            // Empty State or Lot Cards
+            if (filteredLots.isEmpty)
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 48),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.filter_list_off,
+                        size: 48,
+                        color: Colors.grey[400],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'No lots found in ${selectedLocation}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Try adjusting your filters or viewing all locations',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      FilledButton.tonalIcon(
+                        onPressed: () => onLocationChanged('All Locations'),
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
+                          ),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                          foregroundColor: Theme.of(context)
+                              .colorScheme
+                              .onSecondaryContainer,
+                        ),
+                        icon: const Icon(Icons.filter_list),
+                        label: const Text('Reset Filters'),
+                      ),
+                    ],
                   ),
-                )),
+                ),
+              )
+            else
+              ...filteredLots.map((lot) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: LotCard(
+                      lot: lot,
+                      onBagsChanged: (bags) => onBagsChanged(lot.id, bags),
+                      onExpandChanged: (isExpanded) =>
+                          onExpandChanged(lot.id, isExpanded),
+                      onSpecificationView: () {},
+                      onQualityCertificateView: () {},
+                      onAssayValuesChanged: (values) =>
+                          onAssayValuesChanged(lot.id, values),
+                    ),
+                  )),
           ],
         ),
       ),
