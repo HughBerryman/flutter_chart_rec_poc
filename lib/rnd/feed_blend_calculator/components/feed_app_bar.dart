@@ -34,7 +34,7 @@ class FeedAppBar extends StatelessWidget implements PreferredSizeWidget {
           const Icon(Icons.science, color: Colors.black),
           const SizedBox(width: 8),
           const Text(
-            'Feed Calculator',
+            'Leach Feed Calculator',
             style: TextStyle(color: Colors.black),
           ),
           Text(
