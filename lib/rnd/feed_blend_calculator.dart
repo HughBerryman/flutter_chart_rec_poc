@@ -23,6 +23,8 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   bool _isPanelVisible = true;
   bool showSelected = false;
   List<LotData> lots = [];
+  DateTime? projectedStartDate;
+  DateTime? projectedEndDate;
 
   @override
   void initState() {
@@ -110,6 +112,13 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     );
   }
 
+  void _updateProjectedDates({DateTime? startDate, DateTime? endDate}) {
+    setState(() {
+      if (startDate != null) projectedStartDate = startDate;
+      if (endDate != null) projectedEndDate = endDate;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final selectedLotCount = lots.where((lot) => lot.selectedBags > 0).length;
@@ -171,10 +180,13 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                         FeedParametersSection(
                           feedRate: feedRate,
                           sieProduction: sieProduction,
+                          projectedStartDate: projectedStartDate,
+                          projectedEndDate: projectedEndDate,
                           onFeedRateChanged: (value) =>
                               setState(() => feedRate = value),
                           onSieProductionChanged: (value) =>
                               setState(() => sieProduction = value),
+                          onProjectedDatesChanged: _updateProjectedDates,
                         ),
                         const Divider(height: 1),
 
