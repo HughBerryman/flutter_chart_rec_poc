@@ -154,9 +154,9 @@ class FeedParameters extends StatelessWidget {
                                   ),
                                   child: Slider(
                                     value: feedRate,
-                                    min: 0,
-                                    max: 15,
-                                    divisions: 150,
+                                    min: 4,
+                                    max: 9,
+                                    divisions: 50,
                                     label: '${feedRate.toStringAsFixed(1)} TPH',
                                     onChanged: onFeedRateChanged,
                                   ),
