@@ -217,75 +217,66 @@ class _FeedParametersState extends State<FeedParameters> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      OutlinedButton(
-                        onPressed: widget.projectedStartDate != null
-                            ? () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text('Set Goal Duration'),
-                                    content: TextField(
-                                      controller: _durationController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Duration in Days',
-                                        hintText: 'Enter number of days',
-                                        suffixText: 'days',
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
-                                      keyboardType:
-                                          const TextInputType.numberWithOptions(
-                                        decimal: true,
-                                      ),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          widget.onGoalDurationChanged(null);
-                                          _durationController.clear();
-                                        },
-                                        child: const Text('Clear'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: const Text('Cancel'),
-                                      ),
-                                      FilledButton(
-                                        onPressed: () {
-                                          final value = double.tryParse(
-                                              _durationController.text);
-                                          if (value != null && value > 0) {
-                                            widget.onGoalDurationChanged(value);
-                                          }
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('Set'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                            : null,
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 40),
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          side: BorderSide(color: Colors.grey[300]!),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.timer,
-                                size: 16, color: Colors.grey[700]),
-                            const SizedBox(width: 8),
-                            Text(
-                              widget.goalDurationDays != null
-                                  ? '${widget.goalDurationDays!.toStringAsFixed(1)} days'
-                                  : 'Set duration',
-                              style: TextStyle(color: Colors.grey[700]),
+                      SizedBox(
+                        height: 40,
+                        child: TextFormField(
+                          controller: _durationController,
+                          decoration: InputDecoration(
+                            hintText: 'Enter days',
+                            suffixText: 'days',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
                             ),
-                          ],
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 12),
+                            suffixIcon: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    final current = double.tryParse(
+                                            _durationController.text) ??
+                                        0;
+                                    final newValue = current + 1;
+                                    _durationController.text =
+                                        newValue.toString();
+                                    widget.onGoalDurationChanged(newValue);
+                                  },
+                                  child: Icon(Icons.arrow_drop_up,
+                                      size: 18, color: Colors.grey[700]),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    final current = double.tryParse(
+                                            _durationController.text) ??
+                                        0;
+                                    if (current > 1) {
+                                      final newValue = current - 1;
+                                      _durationController.text =
+                                          newValue.toString();
+                                      widget.onGoalDurationChanged(newValue);
+                                    }
+                                  },
+                                  child: Icon(Icons.arrow_drop_down,
+                                      size: 18, color: Colors.grey[700]),
+                                ),
+                              ],
+                            ),
+                          ),
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: false,
+                          ),
+                          onChanged: (value) {
+                            if (value.isEmpty) {
+                              widget.onGoalDurationChanged(null);
+                            } else {
+                              final parsed = double.tryParse(value);
+                              if (parsed != null && parsed > 0) {
+                                widget.onGoalDurationChanged(parsed);
+                              }
+                            }
+                          },
                         ),
                       ),
                     ],
