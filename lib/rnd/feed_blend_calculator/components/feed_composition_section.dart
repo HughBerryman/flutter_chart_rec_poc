@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/lot_data.dart';
 
-class FeedCompositionSection extends StatefulWidget {
+class FeedCompositionSection extends StatelessWidget {
   final List<LotData> selectedLots;
 
   const FeedCompositionSection({
@@ -9,23 +9,193 @@ class FeedCompositionSection extends StatefulWidget {
     required this.selectedLots,
   });
 
-  @override
-  State<FeedCompositionSection> createState() => _FeedCompositionSectionState();
-}
+  Widget _buildEmptyAccordion(
+      BuildContext context, String title, String message) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      color: Colors.white,
+      surfaceTintColor: Colors.white,
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          title: Row(
+            children: [
+              Icon(
+                title == 'Specification Status'
+                    ? Icons.check_circle
+                    : title == 'Leach Chemistry'
+                        ? Icons.science
+                        : Icons.inventory_2,
+                size: 24,
+                color: title == 'Specification Status'
+                    ? Colors.green[700]
+                    : Colors.grey[700],
+              ),
+              const SizedBox(width: 12),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: title == 'Specification Status'
+                      ? Colors.green[700]
+                      : Colors.black,
+                ),
+              ),
+            ],
+          ),
+          children: [
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: Colors.grey[200]!),
+                ),
+              ),
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.info_outline, size: 48, color: Colors.grey[400]),
+                  const SizedBox(height: 16),
+                  Text(
+                    message,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-class _FeedCompositionSectionState extends State<FeedCompositionSection> {
-  final Map<String, bool> _expandedSections = {
-    'Specification Status': true,
-    'Leach Chemistry': true,
-    'Bag Information': true,
-  };
+  Widget _buildAccordion(BuildContext context, String title, Widget content,
+      {bool? hasOutOfSpec}) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      color: Colors.white,
+      surfaceTintColor: Colors.white,
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          title: Row(
+            children: [
+              if (title == 'Specification Status')
+                Icon(
+                  hasOutOfSpec == true
+                      ? Icons.warning_amber_rounded
+                      : Icons.check_circle,
+                  size: 24,
+                  color: hasOutOfSpec == true
+                      ? Colors.red[700]
+                      : Colors.green[700],
+                )
+              else
+                Icon(
+                  title == 'Leach Chemistry'
+                      ? Icons.science
+                      : Icons.inventory_2,
+                  size: 24,
+                  color: Colors.grey[700],
+                ),
+              const SizedBox(width: 12),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: title == 'Specification Status'
+                      ? (hasOutOfSpec == true
+                          ? Colors.red[700]
+                          : Colors.green[700])
+                      : Colors.black,
+                ),
+              ),
+            ],
+          ),
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: Colors.grey[200]!),
+                ),
+              ),
+              child: content,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (selectedLots.isEmpty) {
+      return Column(
+        children: [
+          _buildEmptyAccordion(
+            context,
+            'Specification Status',
+            'Select bags from assays to view specification status',
+          ),
+          _buildEmptyAccordion(
+            context,
+            'Leach Chemistry',
+            'Select bags from assays to view leach chemistry details',
+          ),
+          _buildEmptyAccordion(
+            context,
+            'Bag Information',
+            'Select bags from assays to view bag details and locations',
+          ),
+        ],
+      );
+    }
+
+    final weightedAverages = _calculateWeightedAverages();
+    final hasOutOfSpec = _hasOutOfSpecElements(weightedAverages);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildAccordion(
+          context,
+          'Specification Status',
+          _buildSpecificationStatus(weightedAverages),
+          hasOutOfSpec: hasOutOfSpec,
+        ),
+        _buildAccordion(
+          context,
+          'Leach Chemistry',
+          _buildLeachChemistry(weightedAverages),
+        ),
+        _buildAccordion(
+          context,
+          'Bag Information',
+          _buildBagInformation(),
+        ),
+      ],
+    );
+  }
 
   Map<String, double> _calculateWeightedAverages() {
     final Map<String, double> weightedSums = {};
     int totalBags = 0;
 
-    // Calculate weighted sums and total bags
-    for (final lot in widget.selectedLots) {
+    for (final lot in selectedLots) {
       final bags = lot.selectedBags;
       if (bags > 0) {
         totalBags += bags;
@@ -36,7 +206,6 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
       }
     }
 
-    // Calculate weighted averages
     if (totalBags > 0) {
       for (final key in weightedSums.keys) {
         weightedSums[key] = weightedSums[key]! / totalBags;
@@ -46,12 +215,210 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
     return weightedSums;
   }
 
+  bool _hasOutOfSpecElements(Map<String, double> weightedAverages) {
+    final elementRanges = {
+      'Mo': [48.0, double.infinity],
+      'Fe': [0.0, 4.0],
+      'Cu': [0.0, 3.0],
+      'Pb': [0.0, 0.1],
+      'As': [0.0, 0.05],
+      'Insol': [0.0, 5.0],
+      'Oil': [0.0, 5.0],
+      'H2O': [0.0, 8.0],
+    };
+
+    for (final entry in weightedAverages.entries) {
+      final range = elementRanges[entry.key];
+      if (range != null && (entry.value < range[0] || entry.value > range[1])) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  Widget _buildSpecificationStatus(Map<String, double> weightedAverages) {
+    final elementRanges = {
+      'Mo': [48.0, double.infinity],
+      'Fe': [0.0, 4.0],
+      'Cu': [0.0, 3.0],
+      'Pb': [0.0, 0.1],
+      'As': [0.0, 0.05],
+      'Insol': [0.0, 5.0],
+      'Oil': [0.0, 5.0],
+      'H2O': [0.0, 8.0],
+    };
+
+    final outOfSpecElements = <String>[];
+    final inSpecElements = <String>[];
+
+    for (final entry in weightedAverages.entries) {
+      final range = elementRanges[entry.key];
+      if (range != null) {
+        if (entry.value < range[0] || entry.value > range[1]) {
+          outOfSpecElements.add(entry.key);
+        } else {
+          inSpecElements.add(entry.key);
+        }
+      }
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (outOfSpecElements.isNotEmpty) ...[
+          Row(
+            children: [
+              Icon(Icons.warning_amber_rounded,
+                  size: 16, color: Colors.red[700]),
+              const SizedBox(width: 8),
+              Text(
+                'Out of spec',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.red[700],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: outOfSpecElements.map((element) {
+              final value = weightedAverages[element]!;
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.red[50],
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Text(
+                  '$element: ${value.toStringAsFixed(2)}%',
+                  style: TextStyle(
+                    color: Colors.red[700],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 16),
+        ],
+        if (inSpecElements.isNotEmpty) ...[
+          Row(
+            children: [
+              Icon(Icons.check_circle, size: 16, color: Colors.green[700]),
+              const SizedBox(width: 8),
+              Text(
+                'In spec',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.green[700],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: inSpecElements.map((element) {
+              final value = weightedAverages[element]!;
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.green[50],
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Text(
+                  '$element: ${value.toStringAsFixed(2)}%',
+                  style: TextStyle(
+                    color: Colors.green[700],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildLeachChemistry(Map<String, double> weightedAverages) {
+    final moValue = weightedAverages['Mo'] ?? 0.0;
+    final cuValue = weightedAverages['Cu'] ?? 0.0;
+    final combinedValue = moValue + cuValue;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildElementRow(
+          'Combined Mo + Cu',
+          combinedValue,
+          '51.0 - 100.0',
+          note: 'Critical for maintaining optimal pHe and leach efficiency',
+        ),
+        _buildElementRow(
+          'Copper Content',
+          cuValue,
+          '0.0 - 3.0',
+          note: 'Sufficient copper needed for optimal pHe (potential and pH)',
+        ),
+        _buildElementRow(
+          'Iron Content',
+          weightedAverages['Fe'] ?? 0.0,
+          '0.0 - 4.0',
+          note: 'Ferric ratio indicates leach chemistry health',
+        ),
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.blue[50],
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.info_outline, color: Colors.blue[700], size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Process Considerations',
+                    style: TextStyle(
+                      color: Colors.blue[700],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '• Low pHe operation can lead to scaling/plugging of ferric lines\n'
+                '• High impurity levels (Cu/Pb/As) can impact leach efficiency\n'
+                '• Ferric ratio (Fe³⁺/Fe²⁺) indicates oxidation effectiveness',
+                style: TextStyle(
+                  color: Colors.blue[700],
+                  height: 1.5,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildElementRow(String name, double value, String range,
       {String? note}) {
-    final limits = range
-        .split(' - ')
-        .map((e) => double.parse(e.replaceAll('%', '')))
-        .toList();
+    final limits = range.split(' - ').map((e) => double.parse(e)).toList();
     final isOutOfSpec = value < limits[0] || value > limits[1];
     final progress = (value - limits[0]) / (limits[1] - limits[0]);
 
@@ -91,7 +458,7 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
               ),
               const SizedBox(width: 8),
               Text(
-                '($range)',
+                '($range%)',
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey[600],
@@ -137,276 +504,11 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
     );
   }
 
-  Widget _buildAccordion(String title, Widget content, {bool? hasOutOfSpec}) {
-    final isExpanded = _expandedSections[title] ?? false;
-
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      color: Colors.white,
-      surfaceTintColor: Colors.white,
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () => setState(() => _expandedSections[title] = !isExpanded),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: isExpanded
-                      ? BorderSide(color: Colors.grey[200]!)
-                      : BorderSide.none,
-                ),
-              ),
-              child: Row(
-                children: [
-                  if (title == 'Specification Status')
-                    Icon(
-                      hasOutOfSpec == true
-                          ? Icons.warning_amber_rounded
-                          : Icons.check_circle,
-                      size: 24,
-                      color: hasOutOfSpec == true
-                          ? Colors.red[700]
-                          : Colors.green[700],
-                    )
-                  else
-                    Icon(
-                      title == 'Leach Chemistry'
-                          ? Icons.science
-                          : Icons.inventory_2,
-                      size: 24,
-                      color: Colors.grey[700],
-                    ),
-                  const SizedBox(width: 12),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: title == 'Specification Status'
-                          ? (hasOutOfSpec == true
-                              ? Colors.red[700]
-                              : Colors.green[700])
-                          : Colors.black,
-                    ),
-                  ),
-                  const Spacer(),
-                  Icon(
-                    isExpanded ? Icons.expand_less : Icons.expand_more,
-                    color: Colors.grey[700],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          if (isExpanded)
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: content,
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSpecificationStatus(Map<String, double> weightedAverages) {
-    final elementRanges = {
-      'Mo': [48.0, double.infinity],
-      'Fe': [0.0, 4.0],
-      'Cu': [0.0, 3.0],
-      'Pb': [0.0, 0.1],
-      'As': [0.0, 0.05],
-      'Insol': [0.0, 5.0],
-      'Oil': [0.0, 5.0],
-      'H2O': [0.0, 8.0],
-    };
-
-    final outOfSpecElements = <String>[];
-    final inSpecElements = <String>[];
-
-    for (final entry in weightedAverages.entries) {
-      final range = elementRanges[entry.key];
-      if (range != null) {
-        if (entry.value < range[0] || entry.value > range[1]) {
-          outOfSpecElements.add(entry.key);
-        } else {
-          inSpecElements.add(entry.key);
-        }
-      }
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (outOfSpecElements.isNotEmpty) ...[
-          Row(
-            children: [
-              Icon(
-                Icons.warning_amber_rounded,
-                size: 16,
-                color: Colors.red[700],
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'Out of spec',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.red[700],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Wrap(
-            alignment: WrapAlignment.start,
-            spacing: 8,
-            runSpacing: 8,
-            children: outOfSpecElements.map((element) {
-              final value = weightedAverages[element]!;
-              return Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.red[50],
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Text(
-                  '$element: ${value.toStringAsFixed(2)}%',
-                  style: TextStyle(
-                    color: Colors.red[700],
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-          const SizedBox(height: 16),
-        ],
-        if (inSpecElements.isNotEmpty) ...[
-          Row(
-            children: [
-              Icon(
-                Icons.check_circle,
-                size: 16,
-                color: Colors.green[700],
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'In spec',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.green[700],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Wrap(
-            alignment: WrapAlignment.start,
-            spacing: 8,
-            runSpacing: 8,
-            children: inSpecElements.map((element) {
-              final value = weightedAverages[element]!;
-              return Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.green[50],
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Text(
-                  '$element: ${value.toStringAsFixed(2)}%',
-                  style: TextStyle(
-                    color: Colors.green[700],
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      ],
-    );
-  }
-
-  Widget _buildLeachChemistry(Map<String, double> weightedAverages) {
-    final moValue = weightedAverages['Mo'] ?? 0.0;
-    final cuValue = weightedAverages['Cu'] ?? 0.0;
-    final combinedValue = moValue + cuValue;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildElementRow(
-          'Combined Mo + Cu',
-          combinedValue,
-          '51.0% - 100.0%',
-          note: 'Critical for maintaining optimal pHe and leach efficiency',
-        ),
-        _buildElementRow(
-          'Copper Content',
-          cuValue,
-          '0.0% - 3.0%',
-          note: 'Sufficient copper needed for optimal pHe (potential and pH)',
-        ),
-        _buildElementRow(
-          'Iron Content',
-          weightedAverages['Fe'] ?? 0.0,
-          '0.0% - 4.0%',
-          note: 'Ferric ratio indicates leach chemistry health',
-        ),
-        const SizedBox(height: 16),
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.blue[50],
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.info_outline, color: Colors.blue[700], size: 20),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Process Considerations',
-                    style: TextStyle(
-                      color: Colors.blue[700],
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '• Low pHe operation can lead to scaling/plugging of ferric lines\n'
-                '• High impurity levels (Cu/Pb/As) can impact leach efficiency\n'
-                '• Ferric ratio (Fe³⁺/Fe²⁺) indicates oxidation effectiveness',
-                style: TextStyle(
-                  color: Colors.blue[700],
-                  height: 1.5,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildBagInformation() {
     final lotGroups = <String, List<LotData>>{};
     int totalBags = 0;
 
-    // Group lots by location and count total bags
-    for (final lot in widget.selectedLots) {
+    for (final lot in selectedLots) {
       if (lot.selectedBags > 0) {
         lotGroups.putIfAbsent(lot.location, () => []).add(lot);
         totalBags += lot.selectedBags;
@@ -505,44 +607,6 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
             ],
           );
         }).toList(),
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final weightedAverages = _calculateWeightedAverages();
-    final hasOutOfSpec = weightedAverages.entries.any((entry) {
-      final range = {
-        'Mo': [48.0, double.infinity],
-        'Fe': [0.0, 4.0],
-        'Cu': [0.0, 3.0],
-        'Pb': [0.0, 0.1],
-        'As': [0.0, 0.05],
-        'Insol': [0.0, 5.0],
-        'Oil': [0.0, 5.0],
-        'H2O': [0.0, 8.0],
-      }[entry.key];
-      return range != null &&
-          (entry.value < range[0] || entry.value > range[1]);
-    });
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildAccordion(
-          'Specification Status',
-          _buildSpecificationStatus(weightedAverages),
-          hasOutOfSpec: hasOutOfSpec,
-        ),
-        _buildAccordion(
-          'Leach Chemistry',
-          _buildLeachChemistry(weightedAverages),
-        ),
-        _buildAccordion(
-          'Bag Information',
-          _buildBagInformation(),
-        ),
       ],
     );
   }

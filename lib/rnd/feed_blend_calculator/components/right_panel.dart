@@ -298,22 +298,121 @@ class RightPanel extends StatelessWidget {
                     ),
                   ],
                 )
-              : const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.science_outlined,
-                          size: 48, color: Colors.grey),
-                      SizedBox(height: 16),
-                      Text(
-                        'Select bags from assays to view blend details',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16,
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.science),
+                              SizedBox(width: 8),
+                              Text(
+                                'Assay Details',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'No assays selected',
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Stats Row with default values
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _buildStatCard(
+                                  icon: Icons.calendar_today,
+                                  value: projectedStartDate != null
+                                      ? "${projectedStartDate!.month}/${projectedStartDate!.day}/${projectedStartDate!.year}"
+                                      : 'Not Set',
+                                  label: 'Start Date',
+                                ),
+                                _buildStatCard(
+                                  icon: Icons.science,
+                                  value: '${sieProduction.toStringAsFixed(1)}k',
+                                  label: 'SIE Mo Production',
+                                ),
+                                _buildStatCard(
+                                  icon: Icons.inventory_2,
+                                  value: '0',
+                                  label: 'External Bags',
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _buildStatCard(
+                                  icon: Icons.science,
+                                  value: '0',
+                                  label: 'External Mo lbs/day',
+                                ),
+                                _buildStatCard(
+                                  icon: Icons.speed,
+                                  value: '${feedRate.toStringAsFixed(1)}k',
+                                  label: 'Target Feed Rate',
+                                ),
+                                _buildStatCard(
+                                  icon: Icons.timer,
+                                  value: '0.0',
+                                  label: 'Projected Run Time (hrs)',
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _buildStatCard(
+                                  icon: Icons.balance,
+                                  value: (sieProduction * 24 / 2000)
+                                      .toStringAsFixed(1),
+                                  label: 'Total Tons (SIE Mo + External)',
+                                ),
+                                _buildStatCard(
+                                  icon: Icons.access_time,
+                                  value: '24',
+                                  label: 'Leach Circuit Hours',
+                                ),
+                                const Spacer(),
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+
+                            // Feed Composition Section with empty state
+                            const Text(
+                              'Feed Composition',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            FeedCompositionSection(selectedLots: const []),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
         ),
       ],
