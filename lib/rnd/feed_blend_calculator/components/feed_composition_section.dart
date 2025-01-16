@@ -127,11 +127,9 @@ class FeedCompositionSection extends StatelessWidget {
           title: Row(
             children: [
               Icon(
-                title == 'Primary Elements'
+                title == 'Primary Elements' || title == 'Leach Chemistry'
                     ? Icons.science
-                    : title == 'Leach Chemistry'
-                        ? Icons.science
-                        : Icons.inventory_2,
+                    : Icons.inventory_2,
                 size: 20,
                 color: Colors.grey[700],
               ),
@@ -144,7 +142,8 @@ class FeedCompositionSection extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              if (title == 'Primary Elements' && hasOutOfSpec == true) ...[
+              if ((title == 'Primary Elements' || title == 'Leach Chemistry') &&
+                  hasOutOfSpec == true) ...[
                 const Spacer(),
                 Icon(
                   Icons.warning_amber_rounded,
@@ -206,6 +205,7 @@ class FeedCompositionSection extends StatelessWidget {
 
     final weightedAverages = _calculateWeightedAverages();
     final hasOutOfSpec = _hasOutOfSpecElements(weightedAverages);
+    final hasOutOfSpecLeach = _hasOutOfSpecLeachChemistry(weightedAverages);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,6 +227,7 @@ class FeedCompositionSection extends StatelessWidget {
                 context,
                 'Leach Chemistry',
                 _buildLeachChemistry(weightedAverages),
+                hasOutOfSpec: hasOutOfSpecLeach,
               ),
             ),
           ],
@@ -284,6 +285,20 @@ class FeedCompositionSection extends StatelessWidget {
     }
 
     return false;
+  }
+
+  bool _hasOutOfSpecLeachChemistry(Map<String, double> weightedAverages) {
+    final moValue = weightedAverages['Mo'] ?? 0.0;
+    final cuValue = weightedAverages['Cu'] ?? 0.0;
+    final feValue = weightedAverages['Fe'] ?? 0.0;
+    final combinedValue = moValue + cuValue;
+
+    return combinedValue < 51.0 ||
+        combinedValue > 100.0 ||
+        cuValue < 0.0 ||
+        cuValue > 3.0 ||
+        feValue < 0.0 ||
+        feValue > 4.0;
   }
 
   Widget _buildSpecificationStatus(Map<String, double> weightedAverages) {
