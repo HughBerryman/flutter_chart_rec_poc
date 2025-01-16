@@ -108,6 +108,47 @@ class RightPanel extends StatelessWidget {
     );
   }
 
+  Widget _buildCompactStatCard({
+    required IconData icon,
+    required String value,
+    required String label,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 16, color: Colors.grey[700]),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildInfoRow({
     required IconData icon,
     required String label,
@@ -339,6 +380,7 @@ class RightPanel extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
+                        color: const Color(0xFFEBF2F8),
                         border: Border(
                           top: BorderSide(color: const Color(0xFFE5E7EB)),
                         ),
@@ -374,336 +416,375 @@ class RightPanel extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Schedule Section
-                            const Text(
-                              'Schedule Projections',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                            Card(
+                              margin: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.grey[200]!),
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: _buildScheduleItem(
-                                          icon: Icons.calendar_today,
-                                          title: 'Start Date',
-                                          value: projectedStartDate != null
-                                              ? "${projectedStartDate!.month}/${projectedStartDate!.day}/${projectedStartDate!.year}"
-                                              : 'Not Set',
+                              color: Colors.white,
+                              surfaceTintColor: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Schedule Row
+                                    Row(
+                                      children: [
+                                        Icon(Icons.calendar_today,
+                                            size: 20, color: Colors.grey[700]),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          'Schedule Projection',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.grey[800],
+                                          ),
                                         ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: _buildScheduleItem(
+                                            icon: Icons.calendar_today,
+                                            title: 'Start',
+                                            value: projectedStartDate != null
+                                                ? "${projectedStartDate!.month}/${projectedStartDate!.day}/${projectedStartDate!.year}"
+                                                : 'Not Set',
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          child: _buildScheduleItem(
+                                            icon: Icons.timer,
+                                            title: 'Duration',
+                                            value: () {
+                                              final runTimeHours =
+                                                  ((selectedLots.fold<int>(
+                                                              0,
+                                                              (sum, lot) =>
+                                                                  sum +
+                                                                  lot.selectedBags) *
+                                                          4000) /
+                                                      (feedRate * 1000) *
+                                                      24);
+                                              final days = runTimeHours / 24;
+                                              return '${days.toStringAsFixed(1)} days';
+                                            }(),
+                                            tooltip: () {
+                                              final totalBags =
+                                                  selectedLots.fold<int>(
+                                                      0,
+                                                      (sum, lot) =>
+                                                          sum +
+                                                          lot.selectedBags);
+                                              return 'Calculation: ($totalBags bags × 4000 lbs) ÷ (${feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
+                                            }(),
+                                            sublabel: targetEndDate != null &&
+                                                    projectedStartDate != null
+                                                ? () {
+                                                    final runTimeHours =
+                                                        ((selectedLots.fold<
+                                                                        int>(
+                                                                    0,
+                                                                    (sum, lot) =>
+                                                                        sum +
+                                                                        lot.selectedBags) *
+                                                                4000) /
+                                                            (feedRate * 1000) *
+                                                            24);
+                                                    final projectedEndDate =
+                                                        projectedStartDate!.add(
+                                                      Duration(
+                                                          hours: runTimeHours
+                                                              .round()),
+                                                    );
+                                                    final diff =
+                                                        projectedEndDate
+                                                            .difference(
+                                                                targetEndDate!)
+                                                            .inDays;
+                                                    final percentDiff = (diff
+                                                                .abs() /
+                                                            targetEndDate!
+                                                                .difference(
+                                                                    projectedStartDate!)
+                                                                .inDays *
+                                                            100)
+                                                        .round();
+                                                    if (percentDiff > 10) {
+                                                      return diff > 0
+                                                          ? '⚠️ ${percentDiff}% longer than target'
+                                                          : '⚠️ ${percentDiff}% shorter than target';
+                                                    }
+                                                    return '✓ Within 10% of target';
+                                                  }()
+                                                : 'Based on current feed rate',
+                                            valueColor: targetEndDate != null &&
+                                                    projectedStartDate != null
+                                                ? () {
+                                                    final runTimeHours =
+                                                        ((selectedLots.fold<
+                                                                        int>(
+                                                                    0,
+                                                                    (sum, lot) =>
+                                                                        sum +
+                                                                        lot.selectedBags) *
+                                                                4000) /
+                                                            (feedRate * 1000) *
+                                                            24);
+                                                    final projectedEndDate =
+                                                        projectedStartDate!.add(
+                                                      Duration(
+                                                          hours: runTimeHours
+                                                              .round()),
+                                                    );
+                                                    final diff =
+                                                        projectedEndDate
+                                                            .difference(
+                                                                targetEndDate!)
+                                                            .inDays;
+                                                    final percentDiff = (diff
+                                                                .abs() /
+                                                            targetEndDate!
+                                                                .difference(
+                                                                    projectedStartDate!)
+                                                                .inDays *
+                                                            100)
+                                                        .round();
+                                                    if (percentDiff > 10) {
+                                                      return Colors.red[700];
+                                                    }
+                                                    return Colors.green[700];
+                                                  }()
+                                                : null,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          child: _buildScheduleItem(
+                                            icon: Icons.event,
+                                            title: 'End',
+                                            value: () {
+                                              if (projectedStartDate == null)
+                                                return 'Not Set';
+                                              final runTimeHours =
+                                                  ((selectedLots.fold<int>(
+                                                              0,
+                                                              (sum, lot) =>
+                                                                  sum +
+                                                                  lot.selectedBags) *
+                                                          4000) /
+                                                      (feedRate * 1000) *
+                                                      24);
+                                              final endDate =
+                                                  projectedStartDate!.add(
+                                                Duration(
+                                                    hours:
+                                                        runTimeHours.round()),
+                                              );
+                                              return "${endDate.month}/${endDate.day}/${endDate.year}";
+                                            }(),
+                                            sublabel: targetEndDate != null
+                                                ? () {
+                                                    final runTimeHours =
+                                                        ((selectedLots.fold<
+                                                                        int>(
+                                                                    0,
+                                                                    (sum, lot) =>
+                                                                        sum +
+                                                                        lot.selectedBags) *
+                                                                4000) /
+                                                            (feedRate * 1000) *
+                                                            24);
+                                                    final projectedEndDate =
+                                                        projectedStartDate!.add(
+                                                      Duration(
+                                                          hours: runTimeHours
+                                                              .round()),
+                                                    );
+                                                    final diff =
+                                                        projectedEndDate
+                                                            .difference(
+                                                                targetEndDate!)
+                                                            .inDays;
+                                                    if (diff == 0)
+                                                      return '✓ Matches target';
+                                                    return diff > 0
+                                                        ? '⚠️ ${diff.abs()} days after target'
+                                                        : '⚠️ ${diff.abs()} days before target';
+                                                  }()
+                                                : 'Based on duration',
+                                            valueColor: targetEndDate != null
+                                                ? () {
+                                                    final runTimeHours =
+                                                        ((selectedLots.fold<
+                                                                        int>(
+                                                                    0,
+                                                                    (sum, lot) =>
+                                                                        sum +
+                                                                        lot.selectedBags) *
+                                                                4000) /
+                                                            (feedRate * 1000) *
+                                                            24);
+                                                    final projectedEndDate =
+                                                        projectedStartDate!.add(
+                                                      Duration(
+                                                          hours: runTimeHours
+                                                              .round()),
+                                                    );
+                                                    return projectedEndDate
+                                                            .isAtSameMomentAs(
+                                                                targetEndDate!)
+                                                        ? Colors.green[700]
+                                                        : Colors.red[700];
+                                                  }()
+                                                : null,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 16),
+                                      child: Divider(
+                                        color: Color(0xFFE5E7EB),
                                       ),
-                                      const SizedBox(width: 24),
-                                      Expanded(
-                                        child: _buildScheduleItem(
-                                          icon: Icons.timer,
-                                          title: 'Projected Run Time',
-                                          value: () {
-                                            final runTimeHours =
-                                                ((selectedLots.fold<int>(
-                                                            0,
-                                                            (sum, lot) =>
-                                                                sum +
-                                                                lot.selectedBags) *
-                                                        4000) /
-                                                    (feedRate * 1000) *
-                                                    24);
-                                            final days = runTimeHours / 24;
-                                            return '${days.toStringAsFixed(1)} days';
-                                          }(),
-                                          tooltip: () {
-                                            final totalBags =
-                                                selectedLots.fold<int>(
+                                    ),
+                                    // Production Row
+                                    Row(
+                                      children: [
+                                        Icon(Icons.speed,
+                                            size: 20, color: Colors.grey[700]),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          'Production Rates',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.grey[800],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: _buildCompactStatCard(
+                                            icon: Icons.speed,
+                                            value:
+                                                '${feedRate.toStringAsFixed(1)} TPH',
+                                            label: 'Feed Rate',
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          child: _buildCompactStatCard(
+                                            icon: Icons.science,
+                                            value:
+                                                '${sieProduction.toStringAsFixed(1)}k',
+                                            label: 'SIE Mo Production',
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          child: _buildCompactStatCard(
+                                            icon: Icons.science,
+                                            value: (feedRate * 2000 * 24)
+                                                .toStringAsFixed(0)
+                                                .replaceAllMapped(
+                                                  RegExp(
+                                                      r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                                  (Match m) => '${m[1]},',
+                                                ),
+                                            label: 'External Mo lbs/day',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 16),
+                                      child: Divider(
+                                        color: Color(0xFFE5E7EB),
+                                      ),
+                                    ),
+                                    // Material Details Row
+                                    Row(
+                                      children: [
+                                        Icon(Icons.science,
+                                            size: 20, color: Colors.grey[700]),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          'Material Details',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.grey[800],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: _buildInfoRow(
+                                            icon: Icons.inventory_2,
+                                            label: 'External Bags',
+                                            value: selectedLots
+                                                .fold<int>(
                                                     0,
                                                     (sum, lot) =>
-                                                        sum + lot.selectedBags);
-                                            return 'Calculation: ($totalBags bags × 4000 lbs) ÷ (${feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
-                                          }(),
-                                          sublabel: targetEndDate != null &&
-                                                  projectedStartDate != null
-                                              ? () {
-                                                  final runTimeHours =
-                                                      ((selectedLots.fold<int>(
-                                                                  0,
-                                                                  (sum, lot) =>
-                                                                      sum +
-                                                                      lot.selectedBags) *
-                                                              4000) /
-                                                          (feedRate * 1000) *
-                                                          24);
-                                                  final projectedEndDate =
-                                                      projectedStartDate!.add(
-                                                    Duration(
-                                                        hours: runTimeHours
-                                                            .round()),
-                                                  );
-                                                  final diff = projectedEndDate
-                                                      .difference(
-                                                          targetEndDate!)
-                                                      .inDays;
-                                                  final percentDiff = (diff
-                                                              .abs() /
-                                                          targetEndDate!
-                                                              .difference(
-                                                                  projectedStartDate!)
-                                                              .inDays *
-                                                          100)
-                                                      .round();
-                                                  if (percentDiff > 10) {
-                                                    return diff > 0
-                                                        ? '⚠️ ${percentDiff}% longer than target duration'
-                                                        : '⚠️ ${percentDiff}% shorter than target duration';
-                                                  }
-                                                  return '✓ Within 10% of target duration';
-                                                }()
-                                              : 'Based on 24hr leach circuit with current feed rate and bag count',
-                                          valueColor: targetEndDate != null &&
-                                                  projectedStartDate != null
-                                              ? () {
-                                                  final runTimeHours =
-                                                      ((selectedLots.fold<int>(
-                                                                  0,
-                                                                  (sum, lot) =>
-                                                                      sum +
-                                                                      lot.selectedBags) *
-                                                              4000) /
-                                                          (feedRate * 1000) *
-                                                          24);
-                                                  final projectedEndDate =
-                                                      projectedStartDate!.add(
-                                                    Duration(
-                                                        hours: runTimeHours
-                                                            .round()),
-                                                  );
-                                                  final diff = projectedEndDate
-                                                      .difference(
-                                                          targetEndDate!)
-                                                      .inDays;
-                                                  final percentDiff = (diff
-                                                              .abs() /
-                                                          targetEndDate!
-                                                              .difference(
-                                                                  projectedStartDate!)
-                                                              .inDays *
-                                                          100)
-                                                      .round();
-                                                  if (percentDiff > 10) {
-                                                    return Colors.red[700];
-                                                  }
-                                                  return Colors.green[700];
-                                                }()
-                                              : null,
+                                                        sum + lot.selectedBags)
+                                                .toString(),
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 24),
-                                      Expanded(
-                                        child: _buildScheduleItem(
-                                          icon: Icons.event,
-                                          title: 'Projected End Date',
-                                          value: () {
-                                            final runTimeHours =
-                                                ((selectedLots.fold<int>(
-                                                            0,
-                                                            (sum, lot) =>
-                                                                sum +
-                                                                lot.selectedBags) *
-                                                        4000) /
-                                                    (feedRate * 1000) *
-                                                    24);
-                                            final endDate =
-                                                projectedStartDate!.add(
-                                              Duration(
-                                                  hours: runTimeHours.round()),
-                                            );
-                                            return "${endDate.month}/${endDate.day}/${endDate.year}";
-                                          }(),
-                                          sublabel: targetEndDate != null
-                                              ? () {
-                                                  final runTimeHours =
-                                                      ((selectedLots.fold<int>(
-                                                                  0,
-                                                                  (sum, lot) =>
-                                                                      sum +
-                                                                      lot.selectedBags) *
-                                                              4000) /
-                                                          (feedRate * 1000) *
-                                                          24);
-                                                  final projectedEndDate =
-                                                      projectedStartDate!.add(
-                                                    Duration(
-                                                        hours: runTimeHours
-                                                            .round()),
-                                                  );
-                                                  final diff = projectedEndDate
-                                                      .difference(
-                                                          targetEndDate!)
-                                                      .inDays;
-                                                  if (diff == 0)
-                                                    return '✓ Matches target end date (${targetEndDate!.month}/${targetEndDate!.day}/${targetEndDate!.year})';
-                                                  return diff > 0
-                                                      ? '⚠️ ${diff.abs()} days after target end (${targetEndDate!.month}/${targetEndDate!.day}/${targetEndDate!.year})'
-                                                      : '⚠️ ${diff.abs()} days before target end (${targetEndDate!.month}/${targetEndDate!.day}/${targetEndDate!.year})';
-                                                }()
-                                              : 'Based on projected run time',
-                                          valueColor: targetEndDate != null
-                                              ? () {
-                                                  final runTimeHours =
-                                                      ((selectedLots.fold<int>(
-                                                                  0,
-                                                                  (sum, lot) =>
-                                                                      sum +
-                                                                      lot.selectedBags) *
-                                                              4000) /
-                                                          (feedRate * 1000) *
-                                                          24);
-                                                  final projectedEndDate =
-                                                      projectedStartDate!.add(
-                                                    Duration(
-                                                        hours: runTimeHours
-                                                            .round()),
-                                                  );
-                                                  return projectedEndDate
-                                                          .isAtSameMomentAs(
-                                                              targetEndDate!)
-                                                      ? Colors.green[700]
-                                                      : Colors.red[700];
-                                                }()
-                                              : null,
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          child: _buildInfoRow(
+                                            icon: Icons.balance,
+                                            label: 'Total Tons',
+                                            value:
+                                                '${((selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags) * 4000 / 2000) + (sieProduction * 24 / 2000)).toStringAsFixed(1)}',
+                                            sublabel: 'SIE Mo + External',
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             const SizedBox(height: 16),
-
-                            // Production Rate Settings Section
-                            const Text(
-                              'Production Rate Settings',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.grey[200]!),
-                              ),
-                              child: Column(
+                            Theme(
+                              data: Theme.of(context)
+                                  .copyWith(dividerColor: Colors.transparent),
+                              child: ExpansionTile(
+                                title: Row(
+                                  children: [
+                                    Icon(Icons.science,
+                                        size: 20, color: Colors.grey[700]),
+                                    const SizedBox(width: 8),
+                                    const Text(
+                                      'Feed Composition',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: _buildStatCard(
-                                          icon: Icons.speed,
-                                          value:
-                                              '${feedRate.toStringAsFixed(1)} TPH',
-                                          label: 'Target Feed Rate',
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: _buildStatCard(
-                                          icon: Icons.science,
-                                          value:
-                                              '${sieProduction.toStringAsFixed(1)}k',
-                                          label: 'SIE Mo Production',
-                                        ),
-                                      ),
-                                      const Expanded(child: SizedBox()),
-                                    ],
-                                  ),
+                                  FeedCompositionSection(
+                                      selectedLots: selectedLots),
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 16),
-
-                            // Feed Material Details Section
-                            const Text(
-                              'Feed Material Details',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.grey[200]!),
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: _buildStatCard(
-                                          icon: Icons.inventory_2,
-                                          value: selectedLots
-                                              .fold<int>(
-                                                  0,
-                                                  (sum, lot) =>
-                                                      sum + lot.selectedBags)
-                                              .toString(),
-                                          label: 'External Bags',
-                                        ),
-                                      ),
-                                      const Expanded(child: SizedBox()),
-                                      const Expanded(child: SizedBox()),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 16),
-                                  _buildInfoRow(
-                                    icon: Icons.science,
-                                    label: 'External Mo lbs/day',
-                                    value: (feedRate * 2000 * 24)
-                                        .toStringAsFixed(0)
-                                        .replaceAllMapped(
-                                          RegExp(
-                                              r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                                          (Match m) => '${m[1]},',
-                                        ),
-                                  ),
-                                  _buildInfoRow(
-                                    icon: Icons.balance,
-                                    label: 'Total Tons',
-                                    value:
-                                        '${((selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags) * 4000 / 2000) + (sieProduction * 24 / 2000)).toStringAsFixed(1)}',
-                                    sublabel: 'SIE Mo + External',
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-
-                            // Feed Composition Section
-                            const Text(
-                              'Feed Composition',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            FeedCompositionSection(selectedLots: selectedLots),
                           ],
                         ),
                       ),
