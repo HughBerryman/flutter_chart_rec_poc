@@ -113,6 +113,7 @@ class RightPanel extends StatelessWidget {
     required String value,
     required String label,
     String? sublabel,
+    String? tooltip,
     Color? valueColor,
   }) {
     return Container(
@@ -146,14 +147,30 @@ class RightPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: valueColor ?? Colors.grey[800],
-                  ),
-                  overflow: TextOverflow.ellipsis,
+                Row(
+                  children: [
+                    Text(
+                      value,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: valueColor ?? Colors.grey[800],
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (tooltip != null) ...[
+                      const SizedBox(width: 4),
+                      Tooltip(
+                        message: tooltip,
+                        child: Icon(
+                          Icons.info_outline,
+                          size: 16,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                    ],
+                    const Spacer(),
+                  ],
                 ),
                 if (sublabel != null) ...[
                   const SizedBox(height: 4),
@@ -506,6 +523,15 @@ class RightPanel extends StatelessWidget {
                                                       24);
                                               final days = runTimeHours / 24;
                                               return '${days.toStringAsFixed(1)} days';
+                                            }(),
+                                            tooltip: () {
+                                              final totalBags =
+                                                  selectedLots.fold<int>(
+                                                      0,
+                                                      (sum, lot) =>
+                                                          sum +
+                                                          lot.selectedBags);
+                                              return 'Calculation: ($totalBags bags × 4000 lbs) ÷ (${feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
                                             }(),
                                             sublabel: targetEndDate != null &&
                                                     projectedStartDate != null
