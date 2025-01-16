@@ -31,7 +31,7 @@ class FeedMaterialAssays extends StatelessWidget {
   final List<String> locations = const [
     'All Locations',
     'Morenci',
-    'Sierra Verde',
+    'Cerro Verde',
     'Bagdad',
     'Sierrita',
     'Miami',
@@ -240,14 +240,18 @@ class FeedMaterialAssays extends StatelessWidget {
                                             ),
                                             padding: const EdgeInsets.all(8.0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
                                               children: [
                                                 TextButton(
                                                   onPressed: () {
                                                     setState(() {
-                                                      localSelectedLocations = {'All Locations'};
+                                                      localSelectedLocations = {
+                                                        'All Locations'
+                                                      };
                                                     });
-                                                    onLocationsChanged(localSelectedLocations);
+                                                    onLocationsChanged(
+                                                        localSelectedLocations);
                                                   },
                                                   child: Text(
                                                     'Clear All',

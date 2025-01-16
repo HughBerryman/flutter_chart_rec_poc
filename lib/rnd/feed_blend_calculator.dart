@@ -39,7 +39,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   final List<String> locations = [
     'All Locations',
     'Morenci',
-    'Sierra Verde',
+    'Cerro Verde',
     'Bagdad',
     'Sierrita',
     'Miami',
