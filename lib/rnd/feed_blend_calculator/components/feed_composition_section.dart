@@ -428,45 +428,52 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
               ),
               const SizedBox(height: 12),
-              ...entry.value
-                  .map((lot) => Padding(
-                        padding: const EdgeInsets.only(bottom: 12, left: 8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.qr_code,
-                                    size: 16, color: Colors.grey[700]),
-                                const SizedBox(width: 8),
-                                Text(
-                                  lot.id,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                const SizedBox(width: 12),
-                                Text(
-                                  '${lot.selectedBags} bags',
-                                  style: TextStyle(color: Colors.grey[600]),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 24),
-                              child: Text(
-                                'Barcodes: ${lot.getBarcodeRange()}',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                          ],
+              ...entry.value.map((lot) {
+                final isLastInLocation = entry.value.last == lot;
+                return Padding(
+                  padding: EdgeInsets.only(
+                    bottom: isLastInLocation ? 0 : 12,
+                    left: 8,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.qr_code,
+                              size: 16, color: Colors.grey[700]),
+                          const SizedBox(width: 8),
+                          Text(
+                            lot.id,
+                            style: const TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            '${lot.selectedBags} bags',
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 24),
+                        child: Text(
+                          'Barcodes: ${lot.getBarcodeRange()}',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 13,
+                          ),
                         ),
-                      ))
-                  .toList(),
-              const Divider(height: 24),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+              if (entry.key != lotGroups.keys.last) ...[
+                const SizedBox(height: 12),
+                const Divider(),
+                const SizedBox(height: 12),
+              ],
             ],
           );
         }).toList(),
