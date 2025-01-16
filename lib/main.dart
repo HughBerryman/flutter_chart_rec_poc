@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'rnd/rec_selector.dart';
 import 'rnd/chart_app.dart';
 import 'rnd/feed_blend_calculator.dart';
@@ -50,6 +51,14 @@ class MyApp extends StatelessWidget {
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  Future<void> _launchWidgetbook() async {
+    final Uri url = Uri.parse(
+        'https://cdn.widgetbook.io/52cd824d-bf7d-486d-9afb-ccbdfaf82437/00c181cf-dada-4a5a-9cd7-84921d6d3dd5/builds/cedb9e22-4506-46ec-ab49-e9a332a9b690/index.html');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,24 +85,21 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             OutlinedButton(
               onPressed: () {
-                // Navigate to the UI from chart_app.dart
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ChartApp()), // Use the widget from chart_app.dart
+                  MaterialPageRoute(builder: (context) => ChartApp()),
                 );
               },
               style: OutlinedButton.styleFrom(
                 side: BorderSide(color: Theme.of(context).primaryColor),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
               child: const Text('Show Chart App UI'),
             ),
             const SizedBox(height: 20),
             OutlinedButton(
               onPressed: () {
-                // Navigate to the UI from rec_selector.dart
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const RecSelector()),
@@ -101,9 +107,20 @@ class HomeScreen extends StatelessWidget {
               },
               style: OutlinedButton.styleFrom(
                 side: BorderSide(color: Theme.of(context).primaryColor),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
               child: const Text('Show Rec Selector UI'),
+            ),
+            const SizedBox(height: 20),
+            OutlinedButton(
+              onPressed: _launchWidgetbook,
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Theme.of(context).primaryColor),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
+              child: const Text('Open Widgetbook POC'),
             ),
             const SizedBox(height: 20),
           ],
