@@ -220,13 +220,13 @@ class RightPanel extends StatelessWidget {
             child: Container(
               width: 8,
               height: double.infinity,
-              color: Colors.grey[200],
+              color: const Color(0xFFE5E7EB),
               child: Center(
                 child: Container(
                   width: 2,
                   height: 32,
                   decoration: BoxDecoration(
-                    color: Colors.grey[400],
+                    color: const Color(0xFF9CA3AF),
                     borderRadius: BorderRadius.circular(1),
                   ),
                 ),
@@ -246,7 +246,7 @@ class RightPanel extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(color: Colors.grey[200]!),
+                    top: BorderSide(color: const Color(0xFFE5E7EB)),
                   ),
                 ),
                 child: Column(
