@@ -658,7 +658,7 @@ class RightPanel extends StatelessWidget {
                                         Expanded(
                                           child: _buildCompactStatCard(
                                             icon: Icons.event,
-                                            label: 'End',
+                                            label: 'Projected End',
                                             value: () {
                                               if (projectedStartDate == null)
                                                 return 'Not Set';
