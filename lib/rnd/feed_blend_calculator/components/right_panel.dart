@@ -10,6 +10,7 @@ class RightPanel extends StatelessWidget {
   final double feedRate;
   final double sieProduction;
   final DateTime? projectedStartDate;
+  final double? goalDurationDays;
 
   const RightPanel({
     super.key,
@@ -19,6 +20,7 @@ class RightPanel extends StatelessWidget {
     required this.feedRate,
     required this.sieProduction,
     this.projectedStartDate,
+    this.goalDurationDays,
   });
 
   Map<String, double> _calculateWeightedAverages(List<LotData> selectedLots) {
@@ -334,10 +336,43 @@ class RightPanel extends StatelessWidget {
                                 _buildInfoRow(
                                   icon: Icons.timer,
                                   label: 'Projected Run Time',
-                                  value:
-                                      '${((selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags) * 4000) / (feedRate * 1000) * 24).toStringAsFixed(1)} hrs',
-                                  sublabel:
-                                      'Based on current feed rate and bag count',
+                                  value: () {
+                                    final runTimeHours =
+                                        ((selectedLots.fold<int>(
+                                                    0,
+                                                    (sum, lot) =>
+                                                        sum +
+                                                        lot.selectedBags) *
+                                                4000) /
+                                            (feedRate * 1000) *
+                                            24);
+                                    final days = runTimeHours / 24;
+                                    return '${days.toStringAsFixed(1)} days (${runTimeHours.toStringAsFixed(1)} hrs)';
+                                  }(),
+                                  sublabel: goalDurationDays != null
+                                      ? () {
+                                          final runTimeDays =
+                                              ((selectedLots.fold<int>(
+                                                          0,
+                                                          (sum, lot) =>
+                                                              sum +
+                                                              lot.selectedBags) *
+                                                      4000) /
+                                                  (feedRate * 1000));
+                                          final diff =
+                                              (runTimeDays - goalDurationDays!)
+                                                  .abs();
+                                          final percentDiff =
+                                              (diff / goalDurationDays!) * 100;
+                                          if (percentDiff > 10) {
+                                            return runTimeDays >
+                                                    goalDurationDays!
+                                                ? '⚠️ ${percentDiff.toStringAsFixed(0)}% longer than goal'
+                                                : '⚠️ ${percentDiff.toStringAsFixed(0)}% shorter than goal';
+                                          }
+                                          return '✓ Within 10% of goal duration';
+                                        }()
+                                      : 'Based on current feed rate and bag count',
                                 ),
                                 if (projectedStartDate != null) ...[
                                   _buildInfoRow(

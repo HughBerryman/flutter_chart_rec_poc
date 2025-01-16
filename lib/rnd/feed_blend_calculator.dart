@@ -18,13 +18,13 @@ class FeedBlendCalculator extends StatefulWidget {
 }
 
 class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
-  double feedRate = 5.0;
-  double sieProduction = 40.0;
+  double _feedRate = 5.0;
+  double _sieProduction = 40.0;
+  DateTime? _projectedStartDate;
+  double? _goalDurationDays;
   bool _isPanelVisible = true;
   bool showSelected = false;
   List<LotData> lots = [];
-  DateTime? projectedStartDate;
-  DateTime? projectedEndDate;
 
   @override
   void initState() {
@@ -32,9 +32,8 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     lots = sampleLots;
     // Set optimistic defaults
     final now = DateTime.now();
-    projectedStartDate = now;
-    projectedEndDate =
-        now.add(const Duration(days: 7)); // Default to 1-week projection
+    _projectedStartDate = now;
+    _goalDurationDays = 7; // Default to 1-week projection
   }
 
   double _panelWidth = 800;
@@ -117,13 +116,6 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     );
   }
 
-  void _updateProjectedDates({DateTime? startDate, DateTime? endDate}) {
-    setState(() {
-      if (startDate != null) projectedStartDate = startDate;
-      if (endDate != null) projectedEndDate = endDate;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final selectedLotCount = lots.where((lot) => lot.selectedBags > 0).length;
@@ -183,15 +175,22 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                       children: [
                         // Feed parameters section
                         FeedParametersSection(
-                          feedRate: feedRate,
-                          sieProduction: sieProduction,
-                          projectedStartDate: projectedStartDate,
-                          projectedEndDate: projectedEndDate,
-                          onFeedRateChanged: (value) =>
-                              setState(() => feedRate = value),
-                          onSieProductionChanged: (value) =>
-                              setState(() => sieProduction = value),
-                          onProjectedDatesChanged: _updateProjectedDates,
+                          feedRate: _feedRate,
+                          sieProduction: _sieProduction,
+                          projectedStartDate: _projectedStartDate,
+                          goalDurationDays: _goalDurationDays,
+                          onFeedRateChanged: (value) {
+                            setState(() => _feedRate = value);
+                          },
+                          onSieProductionChanged: (value) {
+                            setState(() => _sieProduction = value);
+                          },
+                          onStartDateChanged: (date) {
+                            setState(() => _projectedStartDate = date);
+                          },
+                          onGoalDurationChanged: (days) {
+                            setState(() => _goalDurationDays = days);
+                          },
                         ),
                         const Divider(height: 1),
 
@@ -231,9 +230,10 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                       onWidthChanged: (width) =>
                           setState(() => _panelWidth = width),
                       lots: lots.where((lot) => lot.selectedBags > 0).toList(),
-                      feedRate: feedRate,
-                      sieProduction: sieProduction,
-                      projectedStartDate: projectedStartDate,
+                      feedRate: _feedRate,
+                      sieProduction: _sieProduction,
+                      projectedStartDate: _projectedStartDate,
+                      goalDurationDays: _goalDurationDays,
                     ),
                 ],
               ),

@@ -5,27 +5,28 @@ class FeedParametersSection extends StatelessWidget {
   final double feedRate;
   final double sieProduction;
   final DateTime? projectedStartDate;
-  final DateTime? projectedEndDate;
+  final double? goalDurationDays;
   final ValueChanged<double> onFeedRateChanged;
   final ValueChanged<double> onSieProductionChanged;
-  final void Function({DateTime? startDate, DateTime? endDate})
-      onProjectedDatesChanged;
+  final ValueChanged<DateTime?> onStartDateChanged;
+  final ValueChanged<double?> onGoalDurationChanged;
 
   const FeedParametersSection({
     super.key,
     required this.feedRate,
     required this.sieProduction,
     this.projectedStartDate,
-    this.projectedEndDate,
+    this.goalDurationDays,
     required this.onFeedRateChanged,
     required this.onSieProductionChanged,
-    required this.onProjectedDatesChanged,
+    required this.onStartDateChanged,
+    required this.onGoalDurationChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,15 +37,16 @@ class FeedParametersSection extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
           FeedParameters(
             feedRate: feedRate,
             sieProduction: sieProduction,
             projectedStartDate: projectedStartDate,
-            projectedEndDate: projectedEndDate,
+            goalDurationDays: goalDurationDays,
             onFeedRateChanged: onFeedRateChanged,
             onSieProductionChanged: onSieProductionChanged,
-            onProjectedDatesChanged: onProjectedDatesChanged,
+            onStartDateChanged: onStartDateChanged,
+            onGoalDurationChanged: onGoalDurationChanged,
           ),
         ],
       ),
