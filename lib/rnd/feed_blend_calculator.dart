@@ -21,7 +21,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   double _feedRate = 5.0;
   double _sieProduction = 40.0;
   DateTime? _projectedStartDate;
-  double? _goalDurationDays;
+  DateTime? _targetEndDate;
   bool _isPanelVisible = true;
   bool showSelected = false;
   List<LotData> lots = [];
@@ -33,7 +33,6 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     // Set optimistic defaults
     final now = DateTime.now();
     _projectedStartDate = now;
-    _goalDurationDays = 7; // Default to 1-week projection
   }
 
   double _panelWidth = 800;
@@ -178,7 +177,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                           feedRate: _feedRate,
                           sieProduction: _sieProduction,
                           projectedStartDate: _projectedStartDate,
-                          goalDurationDays: _goalDurationDays,
+                          targetEndDate: _targetEndDate,
                           onFeedRateChanged: (value) {
                             setState(() => _feedRate = value);
                           },
@@ -188,8 +187,8 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                           onStartDateChanged: (date) {
                             setState(() => _projectedStartDate = date);
                           },
-                          onGoalDurationChanged: (days) {
-                            setState(() => _goalDurationDays = days);
+                          onTargetEndDateChanged: (date) {
+                            setState(() => _targetEndDate = date);
                           },
                         ),
                         const Divider(height: 1),
@@ -227,13 +226,13 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                   if (_isPanelVisible)
                     RightPanel(
                       width: _panelWidth,
-                      onWidthChanged: (width) =>
-                          setState(() => _panelWidth = width),
+                      onWidthChanged: (value) =>
+                          setState(() => _panelWidth = value),
                       lots: lots.where((lot) => lot.selectedBags > 0).toList(),
                       feedRate: _feedRate,
                       sieProduction: _sieProduction,
                       projectedStartDate: _projectedStartDate,
-                      goalDurationDays: _goalDurationDays,
+                      targetEndDate: _targetEndDate,
                     ),
                 ],
               ),

@@ -5,22 +5,22 @@ class FeedParameters extends StatefulWidget {
   final double feedRate;
   final double sieProduction;
   final DateTime? projectedStartDate;
-  final double? goalDurationDays;
+  final DateTime? targetEndDate;
   final ValueChanged<double> onFeedRateChanged;
   final ValueChanged<double> onSieProductionChanged;
   final ValueChanged<DateTime?> onStartDateChanged;
-  final ValueChanged<double?> onGoalDurationChanged;
+  final ValueChanged<DateTime?> onTargetEndDateChanged;
 
   const FeedParameters({
     super.key,
     required this.feedRate,
     required this.sieProduction,
     this.projectedStartDate,
-    this.goalDurationDays,
+    this.targetEndDate,
     required this.onFeedRateChanged,
     required this.onSieProductionChanged,
     required this.onStartDateChanged,
-    required this.onGoalDurationChanged,
+    required this.onTargetEndDateChanged,
   });
 
   @override
@@ -28,27 +28,18 @@ class FeedParameters extends StatefulWidget {
 }
 
 class _FeedParametersState extends State<FeedParameters> {
-  late final TextEditingController _durationController;
-
   @override
   void initState() {
     super.initState();
-    _durationController = TextEditingController(
-      text: widget.goalDurationDays?.toString() ?? '',
-    );
   }
 
   @override
   void didUpdateWidget(FeedParameters oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.goalDurationDays != widget.goalDurationDays) {
-      _durationController.text = widget.goalDurationDays?.toString() ?? '';
-    }
   }
 
   @override
   void dispose() {
-    _durationController.dispose();
     super.dispose();
   }
 
@@ -84,12 +75,12 @@ class _FeedParametersState extends State<FeedParameters> {
                   showValueIndicator: ShowValueIndicator.always,
                 ),
                 child: Slider(
-                  value: value,
-                  min: min,
-                  max: max,
-                  divisions: 100,
-                  label: '${value.toStringAsFixed(1)} TPH',
-                  onChanged: onChanged,
+                  value: widget.feedRate,
+                  min: 4.0,
+                  max: 9.0,
+                  divisions: 50,
+                  label: '${widget.feedRate.toStringAsFixed(1)} TPH',
+                  onChanged: widget.onFeedRateChanged,
                 ),
               ),
             ),
@@ -100,7 +91,7 @@ class _FeedParametersState extends State<FeedParameters> {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Text(
-                '${value.toStringAsFixed(1)} TPH',
+                '${widget.feedRate.toStringAsFixed(1)} TPH',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Colors.blue[700],
@@ -210,73 +201,53 @@ class _FeedParametersState extends State<FeedParameters> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Goal Duration (Optional)',
+                        'Target End Date (Optional)',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      SizedBox(
-                        height: 40,
-                        child: TextFormField(
-                          controller: _durationController,
-                          decoration: InputDecoration(
-                            hintText: 'Enter days',
-                            suffixText: 'days',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4),
+                      OutlinedButton(
+                        onPressed: () async {
+                          final date = await showDatePicker(
+                            context: context,
+                            initialDate: widget.targetEndDate ??
+                                (widget.projectedStartDate
+                                        ?.add(const Duration(days: 4)) ??
+                                    DateTime.now()
+                                        .add(const Duration(days: 4))),
+                            firstDate:
+                                widget.projectedStartDate ?? DateTime.now(),
+                            lastDate:
+                                DateTime.now().add(const Duration(days: 365)),
+                          );
+                          if (date != null) {
+                            widget.onTargetEndDateChanged(date);
+                          }
+                        },
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 40),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          side: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.calendar_today,
+                              size: 16,
+                              color: Colors.grey[700],
                             ),
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 12),
-                            suffixIcon: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    final current = double.tryParse(
-                                            _durationController.text) ??
-                                        0;
-                                    final newValue = current + 1;
-                                    _durationController.text =
-                                        newValue.toString();
-                                    widget.onGoalDurationChanged(newValue);
-                                  },
-                                  child: Icon(Icons.arrow_drop_up,
-                                      size: 18, color: Colors.grey[700]),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    final current = double.tryParse(
-                                            _durationController.text) ??
-                                        0;
-                                    if (current > 1) {
-                                      final newValue = current - 1;
-                                      _durationController.text =
-                                          newValue.toString();
-                                      widget.onGoalDurationChanged(newValue);
-                                    }
-                                  },
-                                  child: Icon(Icons.arrow_drop_down,
-                                      size: 18, color: Colors.grey[700]),
-                                ),
-                              ],
+                            const SizedBox(width: 8),
+                            Text(
+                              widget.targetEndDate != null
+                                  ? "${widget.targetEndDate!.month}/${widget.targetEndDate!.day}/${widget.targetEndDate!.year}"
+                                  : 'Select date',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                              ),
                             ),
-                          ),
-                          keyboardType: const TextInputType.numberWithOptions(
-                            decimal: false,
-                          ),
-                          onChanged: (value) {
-                            if (value.isEmpty) {
-                              widget.onGoalDurationChanged(null);
-                            } else {
-                              final parsed = double.tryParse(value);
-                              if (parsed != null && parsed > 0) {
-                                widget.onGoalDurationChanged(parsed);
-                              }
-                            }
-                          },
+                          ],
                         ),
                       ),
                     ],

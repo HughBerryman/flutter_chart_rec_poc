@@ -5,22 +5,22 @@ class FeedParametersSection extends StatelessWidget {
   final double feedRate;
   final double sieProduction;
   final DateTime? projectedStartDate;
-  final double? goalDurationDays;
+  final DateTime? targetEndDate;
   final ValueChanged<double> onFeedRateChanged;
   final ValueChanged<double> onSieProductionChanged;
   final ValueChanged<DateTime?> onStartDateChanged;
-  final ValueChanged<double?> onGoalDurationChanged;
+  final ValueChanged<DateTime?> onTargetEndDateChanged;
 
   const FeedParametersSection({
     super.key,
     required this.feedRate,
     required this.sieProduction,
     this.projectedStartDate,
-    this.goalDurationDays,
+    this.targetEndDate,
     required this.onFeedRateChanged,
     required this.onSieProductionChanged,
     required this.onStartDateChanged,
-    required this.onGoalDurationChanged,
+    required this.onTargetEndDateChanged,
   });
 
   @override
@@ -42,11 +42,11 @@ class FeedParametersSection extends StatelessWidget {
             feedRate: feedRate,
             sieProduction: sieProduction,
             projectedStartDate: projectedStartDate,
-            goalDurationDays: goalDurationDays,
+            targetEndDate: targetEndDate,
             onFeedRateChanged: onFeedRateChanged,
             onSieProductionChanged: onSieProductionChanged,
             onStartDateChanged: onStartDateChanged,
-            onGoalDurationChanged: onGoalDurationChanged,
+            onTargetEndDateChanged: onTargetEndDateChanged,
           ),
         ],
       ),
