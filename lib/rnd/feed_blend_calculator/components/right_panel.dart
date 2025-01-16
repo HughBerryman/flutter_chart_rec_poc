@@ -760,31 +760,23 @@ class RightPanel extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 16),
-                            Theme(
-                              data: Theme.of(context)
-                                  .copyWith(dividerColor: Colors.transparent),
-                              child: ExpansionTile(
-                                title: Row(
-                                  children: [
-                                    Icon(Icons.science,
-                                        size: 20, color: Colors.grey[700]),
-                                    const SizedBox(width: 8),
-                                    const Text(
-                                      'Feed Composition',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                            const SizedBox(height: 32),
+                            Row(
+                              children: [
+                                Icon(Icons.science,
+                                    size: 20, color: Colors.grey[700]),
+                                const SizedBox(width: 8),
+                                const Text(
+                                  'Feed Composition',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                children: [
-                                  FeedCompositionSection(
-                                      selectedLots: selectedLots),
-                                ],
-                              ),
+                              ],
                             ),
+                            const SizedBox(height: 16),
+                            FeedCompositionSection(selectedLots: selectedLots),
                           ],
                         ),
                       ),
