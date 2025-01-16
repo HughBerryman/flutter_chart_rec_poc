@@ -186,8 +186,8 @@ class FeedCompositionSection extends StatelessWidget {
               Expanded(
                 child: _buildEmptyAccordion(
                   context,
-                  'Specification Status',
-                  'Select bags from assays to view specification status',
+                  'Elements',
+                  'Select bags from assays to view element composition',
                 ),
               ),
               const SizedBox(width: 12),
@@ -221,7 +221,7 @@ class FeedCompositionSection extends StatelessWidget {
             Expanded(
               child: _buildAccordion(
                 context,
-                'Specification Status',
+                'Elements',
                 _buildSpecificationStatus(weightedAverages),
                 hasOutOfSpec: hasOutOfSpec,
               ),
