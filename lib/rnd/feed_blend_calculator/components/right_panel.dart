@@ -873,6 +873,31 @@ class _RightPanelState extends State<RightPanel> {
                                                     ),
                                                   ),
                                                   const Spacer(),
+                                                  if (!_isProductionRatesExpanded) ...[
+                                                    Text(
+                                                      () {
+                                                        final externalTons =
+                                                            selectedLots.fold<
+                                                                    double>(
+                                                                0,
+                                                                (sum, lot) =>
+                                                                    sum +
+                                                                    (lot.selectedBags *
+                                                                        lot.lbsPerBag /
+                                                                        2000));
+                                                        final sieTons = widget
+                                                                .sieProduction *
+                                                            24 /
+                                                            2000;
+                                                        return '${(externalTons + sieTons).toStringAsFixed(1)} total tons';
+                                                      }(),
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.grey[600],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                  ],
                                                   Icon(
                                                     _isProductionRatesExpanded
                                                         ? Icons.expand_less
@@ -976,6 +1001,16 @@ class _RightPanelState extends State<RightPanel> {
                                                     ),
                                                   ),
                                                   const Spacer(),
+                                                  if (!_isFeedMaterialExpanded) ...[
+                                                    Text(
+                                                      '${selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags)} external bags',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.grey[600],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                  ],
                                                   Icon(
                                                     _isFeedMaterialExpanded
                                                         ? Icons.expand_less
