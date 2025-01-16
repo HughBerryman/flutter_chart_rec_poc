@@ -517,15 +517,22 @@ class RightPanel extends StatelessWidget {
                                             icon: Icons.timer,
                                             label: 'Duration',
                                             value: () {
+                                              final externalTons =
+                                                  selectedLots.fold<int>(
+                                                          0,
+                                                          (sum, lot) =>
+                                                              sum +
+                                                              lot.selectedBags) *
+                                                      4000 /
+                                                      2000;
+                                              final sieTons =
+                                                  sieProduction * 24 / 2000;
+                                              final totalTons =
+                                                  externalTons + sieTons;
                                               final runTimeHours =
-                                                  ((selectedLots.fold<int>(
-                                                              0,
-                                                              (sum, lot) =>
-                                                                  sum +
-                                                                  lot.selectedBags) *
-                                                          4000) /
+                                                  (totalTons * 2000) /
                                                       (feedRate * 1000) *
-                                                      24);
+                                                      24;
                                               final days = runTimeHours / 24;
                                               return '${days.toStringAsFixed(1)} days';
                                             }(),
@@ -536,21 +543,29 @@ class RightPanel extends StatelessWidget {
                                                       (sum, lot) =>
                                                           sum +
                                                           lot.selectedBags);
-                                              return 'Calculation: ($totalBags bags × 4000 lbs) ÷ (${feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
+                                              return 'Calculation: ($totalBags bags × 4000 lbs + ${sieProduction.toStringAsFixed(1)}k × 24 hrs) ÷ (${feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
                                             }(),
                                             sublabel: targetEndDate != null &&
                                                     projectedStartDate != null
                                                 ? () {
+                                                    final externalTons =
+                                                        selectedLots.fold<int>(
+                                                                0,
+                                                                (sum, lot) =>
+                                                                    sum +
+                                                                    lot.selectedBags) *
+                                                            4000 /
+                                                            2000;
+                                                    final sieTons =
+                                                        sieProduction *
+                                                            24 /
+                                                            2000;
+                                                    final totalTons =
+                                                        externalTons + sieTons;
                                                     final runTimeHours =
-                                                        ((selectedLots.fold<
-                                                                        int>(
-                                                                    0,
-                                                                    (sum, lot) =>
-                                                                        sum +
-                                                                        lot.selectedBags) *
-                                                                4000) /
+                                                        (totalTons * 2000) /
                                                             (feedRate * 1000) *
-                                                            24);
+                                                            24;
                                                     final projectedEndDate =
                                                         projectedStartDate!.add(
                                                       Duration(
@@ -588,16 +603,24 @@ class RightPanel extends StatelessWidget {
                                             valueColor: targetEndDate != null &&
                                                     projectedStartDate != null
                                                 ? () {
+                                                    final externalTons =
+                                                        selectedLots.fold<int>(
+                                                                0,
+                                                                (sum, lot) =>
+                                                                    sum +
+                                                                    lot.selectedBags) *
+                                                            4000 /
+                                                            2000;
+                                                    final sieTons =
+                                                        sieProduction *
+                                                            24 /
+                                                            2000;
+                                                    final totalTons =
+                                                        externalTons + sieTons;
                                                     final runTimeHours =
-                                                        ((selectedLots.fold<
-                                                                        int>(
-                                                                    0,
-                                                                    (sum, lot) =>
-                                                                        sum +
-                                                                        lot.selectedBags) *
-                                                                4000) /
+                                                        (totalTons * 2000) /
                                                             (feedRate * 1000) *
-                                                            24);
+                                                            24;
                                                     final projectedEndDate =
                                                         projectedStartDate!.add(
                                                       Duration(
@@ -639,15 +662,22 @@ class RightPanel extends StatelessWidget {
                                             value: () {
                                               if (projectedStartDate == null)
                                                 return 'Not Set';
+                                              final externalTons =
+                                                  selectedLots.fold<int>(
+                                                          0,
+                                                          (sum, lot) =>
+                                                              sum +
+                                                              lot.selectedBags) *
+                                                      4000 /
+                                                      2000;
+                                              final sieTons =
+                                                  sieProduction * 24 / 2000;
+                                              final totalTons =
+                                                  externalTons + sieTons;
                                               final runTimeHours =
-                                                  ((selectedLots.fold<int>(
-                                                              0,
-                                                              (sum, lot) =>
-                                                                  sum +
-                                                                  lot.selectedBags) *
-                                                          4000) /
+                                                  (totalTons * 2000) /
                                                       (feedRate * 1000) *
-                                                      24);
+                                                      24;
                                               final endDate =
                                                   projectedStartDate!.add(
                                                 Duration(
@@ -658,16 +688,24 @@ class RightPanel extends StatelessWidget {
                                             }(),
                                             sublabel: targetEndDate != null
                                                 ? () {
+                                                    final externalTons =
+                                                        selectedLots.fold<int>(
+                                                                0,
+                                                                (sum, lot) =>
+                                                                    sum +
+                                                                    lot.selectedBags) *
+                                                            4000 /
+                                                            2000;
+                                                    final sieTons =
+                                                        sieProduction *
+                                                            24 /
+                                                            2000;
+                                                    final totalTons =
+                                                        externalTons + sieTons;
                                                     final runTimeHours =
-                                                        ((selectedLots.fold<
-                                                                        int>(
-                                                                    0,
-                                                                    (sum, lot) =>
-                                                                        sum +
-                                                                        lot.selectedBags) *
-                                                                4000) /
+                                                        (totalTons * 2000) /
                                                             (feedRate * 1000) *
-                                                            24);
+                                                            24;
                                                     final projectedEndDate =
                                                         projectedStartDate!.add(
                                                       Duration(
@@ -704,16 +742,24 @@ class RightPanel extends StatelessWidget {
                                                 : 'Based on duration',
                                             valueColor: targetEndDate != null
                                                 ? () {
+                                                    final externalTons =
+                                                        selectedLots.fold<int>(
+                                                                0,
+                                                                (sum, lot) =>
+                                                                    sum +
+                                                                    lot.selectedBags) *
+                                                            4000 /
+                                                            2000;
+                                                    final sieTons =
+                                                        sieProduction *
+                                                            24 /
+                                                            2000;
+                                                    final totalTons =
+                                                        externalTons + sieTons;
                                                     final runTimeHours =
-                                                        ((selectedLots.fold<
-                                                                        int>(
-                                                                    0,
-                                                                    (sum, lot) =>
-                                                                        sum +
-                                                                        lot.selectedBags) *
-                                                                4000) /
+                                                        (totalTons * 2000) /
                                                             (feedRate * 1000) *
-                                                            24);
+                                                            24;
                                                     final projectedEndDate =
                                                         projectedStartDate!.add(
                                                       Duration(
