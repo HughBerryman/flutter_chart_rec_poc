@@ -410,7 +410,7 @@ class RightPanel extends StatelessWidget {
 
                             // Schedule Section
                             _buildSection(
-                              title: 'Schedule',
+                              title: 'Schedule Projections',
                               children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -567,10 +567,10 @@ class RightPanel extends StatelessWidget {
                                                     .difference(targetEndDate!)
                                                     .inDays;
                                                 if (diff == 0)
-                                                  return '✓ Matches target end date';
+                                                  return '✓ Matches target end date (${targetEndDate!.month}/${targetEndDate!.day}/${targetEndDate!.year})';
                                                 return diff > 0
-                                                    ? '⚠️ ${diff.abs()} days after target end'
-                                                    : '⚠️ ${diff.abs()} days before target end';
+                                                    ? '⚠️ ${diff.abs()} days after target end (${targetEndDate!.month}/${targetEndDate!.day}/${targetEndDate!.year})'
+                                                    : '⚠️ ${diff.abs()} days before target end (${targetEndDate!.month}/${targetEndDate!.day}/${targetEndDate!.year})';
                                               }()
                                             : 'Based on projected run time',
                                         valueColor: targetEndDate != null
