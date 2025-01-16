@@ -614,7 +614,7 @@ class LotCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '150 bags in lot (4,000 lbs/bag)',
+                          '150 bags in lot (${lot.lbsPerBag.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}) lbs/bag)',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                         const SizedBox(height: 16),
@@ -691,22 +691,25 @@ class LotCard extends StatelessWidget {
                 ),
               ),
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Lot Details',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontWeight: FontWeight.w500,
+              child: Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Lot Details',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  Icon(
-                    lot.isExpanded ? Icons.expand_less : Icons.expand_more,
-                    size: 20,
-                    color: Colors.grey[600],
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    Icon(
+                      lot.isExpanded ? Icons.expand_less : Icons.expand_more,
+                      size: 20,
+                      color: Colors.grey[600],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -891,14 +894,14 @@ class LotCard extends StatelessWidget {
 
   Widget _buildElementChip(String element, double value) {
     final Map<String, List<double>> elementRanges = {
-      'Mo': [50.0, 95.0],
-      'Fe': [0.0, 3.5],
-      'Cu': [1.2, 2.8],
-      'Pb': [0.0, 0.08],
-      'Sn': [0.0, 0.002],
-      'Al': [0.0, 0.4],
-      'Cl': [0.0, 0.08],
-      'K': [0.0, 0.08],
+      'Mo': [48.0, double.infinity],
+      'Fe': [0.0, 4.0],
+      'Cu': [0.0, 3.0],
+      'Pb': [0.0, 0.1],
+      'As': [0.0, 0.05],
+      'Insol': [0.0, 5.0],
+      'Oil': [0.0, 5.0],
+      'H2O': [0.0, 8.0],
     };
 
     final range = elementRanges[element];

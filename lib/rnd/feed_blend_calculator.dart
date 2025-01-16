@@ -18,8 +18,10 @@ class FeedBlendCalculator extends StatefulWidget {
 }
 
 class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
-  double feedRate = 5.0;
-  double sieProduction = 0.0;
+  double _feedRate = 5.0;
+  double _sieProduction = 40.0;
+  DateTime? _projectedStartDate;
+  DateTime? _targetEndDate;
   bool _isPanelVisible = true;
   bool showSelected = false;
   List<LotData> lots = [];
@@ -28,16 +30,20 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   void initState() {
     super.initState();
     lots = sampleLots;
+    // Set optimistic defaults
+    final now = DateTime.now();
+    _projectedStartDate = now;
+    _targetEndDate = now.add(const Duration(days: 4));
   }
 
   double _panelWidth = 800;
-  String? selectedLocation;
+  Set<String> selectedLocations = {'All Locations'};
   String? selectedSort;
 
   final List<String> locations = [
     'All Locations',
     'Morenci',
-    'Sierra Verde',
+    'Cerro Verde',
     'Bagdad',
     'Sierrita',
     'Miami',
@@ -169,12 +175,22 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                       children: [
                         // Feed parameters section
                         FeedParametersSection(
-                          feedRate: feedRate,
-                          sieProduction: sieProduction,
-                          onFeedRateChanged: (value) =>
-                              setState(() => feedRate = value),
-                          onSieProductionChanged: (value) =>
-                              setState(() => sieProduction = value),
+                          feedRate: _feedRate,
+                          sieProduction: _sieProduction,
+                          projectedStartDate: _projectedStartDate,
+                          targetEndDate: _targetEndDate,
+                          onFeedRateChanged: (value) {
+                            setState(() => _feedRate = value);
+                          },
+                          onSieProductionChanged: (value) {
+                            setState(() => _sieProduction = value);
+                          },
+                          onStartDateChanged: (date) {
+                            setState(() => _projectedStartDate = date);
+                          },
+                          onTargetEndDateChanged: (date) {
+                            setState(() => _targetEndDate = date);
+                          },
                         ),
                         const Divider(height: 1),
 
@@ -183,12 +199,19 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                           child: LotsSection(
                             lots: lots,
                             showSelected: showSelected,
-                            selectedLocation: selectedLocation,
+                            selectedLocations: selectedLocations,
                             selectedSort: selectedSort,
                             onShowSelectedChanged: (value) =>
                                 setState(() => showSelected = value),
-                            onLocationChanged: (value) =>
-                                setState(() => selectedLocation = value),
+                            onLocationsChanged: (locations) {
+                              setState(() {
+                                if (locations.contains('All Locations')) {
+                                  selectedLocations = {'All Locations'};
+                                } else {
+                                  selectedLocations = locations;
+                                }
+                              });
+                            },
                             onSortChanged: (value) =>
                                 setState(() => selectedSort = value),
                             onBagsChanged: _updateLotBags,
@@ -204,11 +227,13 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                   if (_isPanelVisible)
                     RightPanel(
                       width: _panelWidth,
-                      onWidthChanged: (width) =>
-                          setState(() => _panelWidth = width),
+                      onWidthChanged: (value) =>
+                          setState(() => _panelWidth = value),
                       lots: lots.where((lot) => lot.selectedBags > 0).toList(),
-                      feedRate: feedRate,
-                      sieProduction: sieProduction,
+                      feedRate: _feedRate,
+                      sieProduction: _sieProduction,
+                      projectedStartDate: _projectedStartDate,
+                      targetEndDate: _targetEndDate,
                     ),
                 ],
               ),

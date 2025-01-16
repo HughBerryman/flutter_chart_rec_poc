@@ -5,10 +5,10 @@ import '../../models/lot_data.dart';
 class FeedMaterialAssays extends StatelessWidget {
   final List<LotData> lots;
   final bool showSelected;
-  final String? selectedLocation;
+  final Set<String> selectedLocations;
   final String? selectedSort;
   final ValueChanged<bool> onShowSelectedChanged;
-  final ValueChanged<String?> onLocationChanged;
+  final void Function(Set<String>) onLocationsChanged;
   final ValueChanged<String?> onSortChanged;
   final Function(String, int) onBagsChanged;
   final Function(String, bool) onExpandChanged;
@@ -18,10 +18,10 @@ class FeedMaterialAssays extends StatelessWidget {
     super.key,
     required this.lots,
     required this.showSelected,
-    required this.selectedLocation,
+    required this.selectedLocations,
     required this.selectedSort,
     required this.onShowSelectedChanged,
-    required this.onLocationChanged,
+    required this.onLocationsChanged,
     required this.onSortChanged,
     required this.onBagsChanged,
     required this.onExpandChanged,
@@ -31,7 +31,7 @@ class FeedMaterialAssays extends StatelessWidget {
   final List<String> locations = const [
     'All Locations',
     'Morenci',
-    'Sierra Verde',
+    'Cerro Verde',
     'Bagdad',
     'Sierrita',
     'Miami',
@@ -48,10 +48,11 @@ class FeedMaterialAssays extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final filteredLots =
-        selectedLocation == 'All Locations' || selectedLocation == null
-            ? lots
-            : lots.where((lot) => lot.location == selectedLocation).toList();
+    final filteredLots = selectedLocations.contains('All Locations')
+        ? lots
+        : lots
+            .where((lot) => selectedLocations.contains(lot.location))
+            .toList();
 
     return SingleChildScrollView(
       child: Padding(
@@ -84,7 +85,195 @@ class FeedMaterialAssays extends StatelessWidget {
                       surfaceTintColor: Colors.white,
                     ),
                   ),
-                  child: PopupMenuButton<String>(
+                  child: InkWell(
+                    onTap: () {
+                      final RenderBox button =
+                          context.findRenderObject() as RenderBox;
+                      final RenderBox overlay = Navigator.of(context)
+                          .overlay!
+                          .context
+                          .findRenderObject() as RenderBox;
+                      final RelativeRect position = RelativeRect.fromRect(
+                        Rect.fromPoints(
+                          button.localToGlobal(Offset.zero, ancestor: overlay),
+                          button.localToGlobal(
+                              button.size.bottomRight(Offset.zero),
+                              ancestor: overlay),
+                        ),
+                        Offset.zero & overlay.size,
+                      );
+
+                      showDialog(
+                        context: context,
+                        barrierColor: Colors.transparent,
+                        builder: (BuildContext context) {
+                          Set<String> localSelectedLocations =
+                              Set<String>.from(selectedLocations);
+                          return StatefulBuilder(
+                            builder: (context, setState) => Stack(
+                              children: [
+                                Positioned(
+                                  top: position.top,
+                                  left: position.left,
+                                  child: Material(
+                                    color: Colors.white,
+                                    elevation: 8,
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: Container(
+                                      width: 250,
+                                      constraints:
+                                          const BoxConstraints(maxHeight: 400),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey[200]!),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                const SizedBox(width: 12),
+                                                Icon(Icons.search,
+                                                    size: 20,
+                                                    color: Colors.grey[600]),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  'Search locations...',
+                                                  style: TextStyle(
+                                                    color: Colors.grey[600],
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Flexible(
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: locations
+                                                    .map(
+                                                      (location) => InkWell(
+                                                        onTap: () {
+                                                          if (location ==
+                                                              'All Locations') {
+                                                            setState(() {
+                                                              localSelectedLocations =
+                                                                  {
+                                                                'All Locations'
+                                                              };
+                                                            });
+                                                            onLocationsChanged(
+                                                                localSelectedLocations);
+                                                          } else {
+                                                            setState(() {
+                                                              localSelectedLocations
+                                                                  .remove(
+                                                                      'All Locations');
+                                                              if (localSelectedLocations
+                                                                  .contains(
+                                                                      location)) {
+                                                                localSelectedLocations
+                                                                    .remove(
+                                                                        location);
+                                                                if (localSelectedLocations
+                                                                    .isEmpty) {
+                                                                  localSelectedLocations
+                                                                      .add(
+                                                                          'All Locations');
+                                                                }
+                                                              } else {
+                                                                localSelectedLocations
+                                                                    .add(
+                                                                        location);
+                                                              }
+                                                            });
+                                                            onLocationsChanged(
+                                                                localSelectedLocations);
+                                                          }
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      16),
+                                                          child: Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child: Text(
+                                                                  location,
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          14),
+                                                                ),
+                                                              ),
+                                                              if (localSelectedLocations
+                                                                  .contains(
+                                                                      location))
+                                                                Icon(
+                                                                    Icons.check,
+                                                                    size: 18,
+                                                                    color: Colors
+                                                                            .blue[
+                                                                        700]),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                    .toList(),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                top: BorderSide(
+                                                    color: Colors.grey[200]!),
+                                              ),
+                                            ),
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      localSelectedLocations = {
+                                                        'All Locations'
+                                                      };
+                                                    });
+                                                    onLocationsChanged(
+                                                        localSelectedLocations);
+                                                  },
+                                                  child: Text(
+                                                    'Clear All',
+                                                    style: TextStyle(
+                                                      color: Colors.grey[700],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8),
@@ -97,7 +286,13 @@ class FeedMaterialAssays extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            selectedLocation ?? 'All Locations',
+                            selectedLocations.contains('All Locations')
+                                ? 'All Locations'
+                                : selectedLocations.isEmpty
+                                    ? 'Select locations'
+                                    : selectedLocations.length == 1
+                                        ? selectedLocations.first
+                                        : '${selectedLocations.length} locations selected',
                             style: const TextStyle(
                               fontSize: 14,
                               color: Colors.black87,
@@ -108,44 +303,6 @@ class FeedMaterialAssays extends StatelessWidget {
                         ],
                       ),
                     ),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        enabled: false,
-                        height: 40,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: Colors.grey[200]!),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.search,
-                                  size: 20, color: Colors.grey[600]),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Search locations...',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      ...locations.map(
-                        (location) => PopupMenuItem(
-                          value: location,
-                          height: 40,
-                          child: Text(
-                            location,
-                            style: const TextStyle(fontSize: 14),
-                          ),
-                        ),
-                      ),
-                    ],
-                    onSelected: onLocationChanged,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -228,7 +385,9 @@ class FeedMaterialAssays extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'No lots found in ${selectedLocation}',
+                        selectedLocations.contains('All Locations')
+                            ? 'No lots found'
+                            : 'No lots found in selected locations',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[600],
@@ -245,39 +404,34 @@ class FeedMaterialAssays extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
                       FilledButton.tonalIcon(
-                        onPressed: () => onLocationChanged('All Locations'),
+                        onPressed: () => onLocationsChanged({'All Locations'}),
                         style: FilledButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 12,
-                          ),
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondaryContainer,
-                          foregroundColor: Theme.of(context)
-                              .colorScheme
-                              .onSecondaryContainer,
+                              horizontal: 24, vertical: 12),
                         ),
-                        icon: const Icon(Icons.filter_list),
-                        label: const Text('Reset Filters'),
+                        icon: const Icon(Icons.filter_list_off),
+                        label: const Text('View All Locations'),
                       ),
                     ],
                   ),
                 ),
               )
             else
-              ...filteredLots.map((lot) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: LotCard(
-                      lot: lot,
-                      onBagsChanged: (bags) => onBagsChanged(lot.id, bags),
-                      onExpandChanged: (isExpanded) =>
-                          onExpandChanged(lot.id, isExpanded),
-                      onSpecificationView: () {},
-                      onQualityCertificateView: () {},
-                      onAssayValuesChanged: (values) =>
-                          onAssayValuesChanged(lot.id, values),
-                    ),
-                  )),
+              ...filteredLots.map(
+                (lot) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: LotCard(
+                    lot: lot,
+                    onBagsChanged: (bags) => onBagsChanged(lot.id, bags),
+                    onExpandChanged: (isExpanded) =>
+                        onExpandChanged(lot.id, isExpanded),
+                    onAssayValuesChanged: (values) =>
+                        onAssayValuesChanged(lot.id, values),
+                    onSpecificationView: () {},
+                    onQualityCertificateView: () {},
+                  ),
+                ),
+              ),
           ],
         ),
       ),

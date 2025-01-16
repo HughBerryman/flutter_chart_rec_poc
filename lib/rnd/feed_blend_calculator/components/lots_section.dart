@@ -6,10 +6,10 @@ import 'feed_material_assays.dart';
 class LotsSection extends StatelessWidget {
   final List<LotData> lots;
   final bool showSelected;
-  final String? selectedLocation;
+  final Set<String> selectedLocations;
   final String? selectedSort;
   final ValueChanged<bool> onShowSelectedChanged;
-  final ValueChanged<String?> onLocationChanged;
+  final void Function(Set<String>) onLocationsChanged;
   final ValueChanged<String?> onSortChanged;
   final Function(String, int) onBagsChanged;
   final Function(String, bool) onExpandChanged;
@@ -19,10 +19,10 @@ class LotsSection extends StatelessWidget {
     super.key,
     required this.lots,
     required this.showSelected,
-    required this.selectedLocation,
+    required this.selectedLocations,
     required this.selectedSort,
     required this.onShowSelectedChanged,
-    required this.onLocationChanged,
+    required this.onLocationsChanged,
     required this.onSortChanged,
     required this.onBagsChanged,
     required this.onExpandChanged,
@@ -34,10 +34,10 @@ class LotsSection extends StatelessWidget {
     return FeedMaterialAssays(
       lots: lots,
       showSelected: showSelected,
-      selectedLocation: selectedLocation,
+      selectedLocations: selectedLocations,
       selectedSort: selectedSort,
       onShowSelectedChanged: onShowSelectedChanged,
-      onLocationChanged: onLocationChanged,
+      onLocationsChanged: onLocationsChanged,
       onSortChanged: onSortChanged,
       onBagsChanged: onBagsChanged,
       onExpandChanged: onExpandChanged,
