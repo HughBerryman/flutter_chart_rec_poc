@@ -745,13 +745,26 @@ class RightPanel extends StatelessWidget {
                                           child: _buildCompactStatCard(
                                             icon: Icons.science,
                                             label: 'External Mo lbs/day',
-                                            value: (feedRate * 2000 * 24)
-                                                .toStringAsFixed(0)
-                                                .replaceAllMapped(
-                                                  RegExp(
-                                                      r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                                                  (Match m) => '${m[1]},',
-                                                ),
+                                            value: () {
+                                              final totalBags =
+                                                  selectedLots.fold<int>(
+                                                      0,
+                                                      (sum, lot) =>
+                                                          sum +
+                                                          lot.selectedBags);
+                                              final lbsPerDay =
+                                                  (totalBags * 4000 / 24)
+                                                      .round();
+                                              return lbsPerDay
+                                                  .toString()
+                                                  .replaceAllMapped(
+                                                    RegExp(
+                                                        r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                                    (Match m) => '${m[1]},',
+                                                  );
+                                            }(),
+                                            tooltip:
+                                                'Calculation: (External Bags × 4000 lbs) ÷ 24 hrs',
                                           ),
                                         ),
                                       ],
