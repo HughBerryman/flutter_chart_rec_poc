@@ -180,15 +180,25 @@ class FeedCompositionSection extends StatelessWidget {
     if (selectedLots.isEmpty) {
       return Column(
         children: [
-          _buildEmptyAccordion(
-            context,
-            'Specification Status',
-            'Select bags from assays to view specification status',
-          ),
-          _buildEmptyAccordion(
-            context,
-            'Leach Chemistry',
-            'Select bags from assays to view leach chemistry details',
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: _buildEmptyAccordion(
+                  context,
+                  'Specification Status',
+                  'Select bags from assays to view specification status',
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildEmptyAccordion(
+                  context,
+                  'Leach Chemistry',
+                  'Select bags from assays to view leach chemistry details',
+                ),
+              ),
+            ],
           ),
           _buildEmptyAccordion(
             context,
@@ -205,16 +215,26 @@ class FeedCompositionSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildAccordion(
-          context,
-          'Specification Status',
-          _buildSpecificationStatus(weightedAverages),
-          hasOutOfSpec: hasOutOfSpec,
-        ),
-        _buildAccordion(
-          context,
-          'Leach Chemistry',
-          _buildLeachChemistry(weightedAverages),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _buildAccordion(
+                context,
+                'Specification Status',
+                _buildSpecificationStatus(weightedAverages),
+                hasOutOfSpec: hasOutOfSpec,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildAccordion(
+                context,
+                'Leach Chemistry',
+                _buildLeachChemistry(weightedAverages),
+              ),
+            ),
+          ],
         ),
         _buildAccordion(
           context,
