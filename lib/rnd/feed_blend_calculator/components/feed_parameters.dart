@@ -11,16 +11,18 @@ class FeedParameters extends StatelessWidget {
   final void Function({DateTime? startDate, DateTime? endDate})
       onProjectedDatesChanged;
 
-  const FeedParameters({
+  FeedParameters({
     super.key,
     required this.feedRate,
     required this.sieProduction,
-    this.projectedStartDate,
-    this.projectedEndDate,
+    DateTime? projectedStartDate,
+    DateTime? projectedEndDate,
     required this.onFeedRateChanged,
     required this.onSieProductionChanged,
     required this.onProjectedDatesChanged,
-  });
+  })  : projectedStartDate = projectedStartDate ?? DateTime.now(),
+        projectedEndDate =
+            projectedEndDate ?? DateTime.now().add(const Duration(days: 4));
 
   Future<void> _selectDate(BuildContext context,
       {bool isStartDate = true}) async {

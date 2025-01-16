@@ -19,7 +19,7 @@ class FeedBlendCalculator extends StatefulWidget {
 
 class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   double feedRate = 5.0;
-  double sieProduction = 0.0;
+  double sieProduction = 40.0;
   bool _isPanelVisible = true;
   bool showSelected = false;
   List<LotData> lots = [];
