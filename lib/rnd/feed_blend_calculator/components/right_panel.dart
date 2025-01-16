@@ -112,6 +112,8 @@ class RightPanel extends StatelessWidget {
     required IconData icon,
     required String value,
     required String label,
+    String? sublabel,
+    Color? valueColor,
   }) {
     return Container(
       padding: const EdgeInsets.all(12),
@@ -120,6 +122,7 @@ class RightPanel extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.grey[200]!),
       ),
+      height: 120,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -127,21 +130,51 @@ class RightPanel extends StatelessWidget {
             children: [
               Icon(icon, size: 16, color: Colors.grey[700]),
               const SizedBox(width: 8),
-              Text(
-                label,
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 14,
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 14,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: valueColor ?? Colors.grey[800],
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (sublabel != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    sublabel,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 12,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ] else ...[
+                  const SizedBox(height: 4),
+                  const Text(
+                    '\u200B', // Zero-width space to maintain consistent height
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ],
             ),
           ),
         ],
@@ -448,9 +481,9 @@ class RightPanel extends StatelessWidget {
                                     Row(
                                       children: [
                                         Expanded(
-                                          child: _buildScheduleItem(
+                                          child: _buildCompactStatCard(
                                             icon: Icons.calendar_today,
-                                            title: 'Start',
+                                            label: 'Start',
                                             value: projectedStartDate != null
                                                 ? "${projectedStartDate!.month}/${projectedStartDate!.day}/${projectedStartDate!.year}"
                                                 : 'Not Set',
@@ -458,9 +491,9 @@ class RightPanel extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 16),
                                         Expanded(
-                                          child: _buildScheduleItem(
+                                          child: _buildCompactStatCard(
                                             icon: Icons.timer,
-                                            title: 'Duration',
+                                            label: 'Duration',
                                             value: () {
                                               final runTimeHours =
                                                   ((selectedLots.fold<int>(
@@ -473,15 +506,6 @@ class RightPanel extends StatelessWidget {
                                                       24);
                                               final days = runTimeHours / 24;
                                               return '${days.toStringAsFixed(1)} days';
-                                            }(),
-                                            tooltip: () {
-                                              final totalBags =
-                                                  selectedLots.fold<int>(
-                                                      0,
-                                                      (sum, lot) =>
-                                                          sum +
-                                                          lot.selectedBags);
-                                              return 'Calculation: ($totalBags bags × 4000 lbs) ÷ (${feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
                                             }(),
                                             sublabel: targetEndDate != null &&
                                                     projectedStartDate != null
@@ -565,9 +589,9 @@ class RightPanel extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 16),
                                         Expanded(
-                                          child: _buildScheduleItem(
+                                          child: _buildCompactStatCard(
                                             icon: Icons.event,
-                                            title: 'End',
+                                            label: 'End',
                                             value: () {
                                               if (projectedStartDate == null)
                                                 return 'Not Set';
@@ -676,24 +700,25 @@ class RightPanel extends StatelessWidget {
                                         Expanded(
                                           child: _buildCompactStatCard(
                                             icon: Icons.speed,
+                                            label: 'Feed Rate',
                                             value:
                                                 '${feedRate.toStringAsFixed(1)} TPH',
-                                            label: 'Feed Rate',
                                           ),
                                         ),
                                         const SizedBox(width: 16),
                                         Expanded(
                                           child: _buildCompactStatCard(
                                             icon: Icons.science,
+                                            label: 'SIE Mo Production',
                                             value:
                                                 '${sieProduction.toStringAsFixed(1)}k',
-                                            label: 'SIE Mo Production',
                                           ),
                                         ),
                                         const SizedBox(width: 16),
                                         Expanded(
                                           child: _buildCompactStatCard(
                                             icon: Icons.science,
+                                            label: 'External Mo lbs/day',
                                             value: (feedRate * 2000 * 24)
                                                 .toStringAsFixed(0)
                                                 .replaceAllMapped(
@@ -701,7 +726,6 @@ class RightPanel extends StatelessWidget {
                                                       r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                                                   (Match m) => '${m[1]},',
                                                 ),
-                                            label: 'External Mo lbs/day',
                                           ),
                                         ),
                                       ],
@@ -733,7 +757,7 @@ class RightPanel extends StatelessWidget {
                                     Row(
                                       children: [
                                         Expanded(
-                                          child: _buildInfoRow(
+                                          child: _buildCompactStatCard(
                                             icon: Icons.inventory_2,
                                             label: 'External Bags',
                                             value: selectedLots
@@ -746,7 +770,7 @@ class RightPanel extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 16),
                                         Expanded(
-                                          child: _buildInfoRow(
+                                          child: _buildCompactStatCard(
                                             icon: Icons.balance,
                                             label: 'Total Tons',
                                             value:
@@ -754,6 +778,7 @@ class RightPanel extends StatelessWidget {
                                             sublabel: 'SIE Mo + External',
                                           ),
                                         ),
+                                        const Expanded(child: SizedBox()),
                                       ],
                                     ),
                                   ],
