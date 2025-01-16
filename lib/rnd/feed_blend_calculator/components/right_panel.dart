@@ -192,19 +192,6 @@ class RightPanel extends StatelessWidget {
     final selectedLots = lots.where((lot) => lot.selectedBags > 0).toList();
     final hasSelectedLots = selectedLots.isNotEmpty;
 
-    // Calculate total bags and tons
-    final totalBags =
-        selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags);
-    final totalTons =
-        totalBags * 4000 / 2000; // 4000 lbs per bag, 2000 lbs per ton
-
-    // Calculate external Mo lbs/day based on feed rate
-    final externalMoLbsDay = feedRate * 2000 * 24; // TPH to lbs/day conversion
-
-    // Calculate weighted averages and check for out-of-spec elements
-    final weightedAverages = _calculateWeightedAverages(selectedLots);
-    final hasOutOfSpecElements = _hasOutOfSpecElements(weightedAverages);
-
     return Row(
       children: [
         // Resizable Divider
@@ -240,143 +227,170 @@ class RightPanel extends StatelessWidget {
           decoration: const BoxDecoration(
             color: Color(0xFFEBF2F8),
           ),
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(color: const Color(0xFFE5E7EB)),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.science),
-                        SizedBox(width: 8),
-                        Text(
-                          'Assay Details',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+          child: !hasSelectedLots
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.science_outlined,
+                        size: 48,
+                        color: Colors.grey[400],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Select bags from assays to view details',
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 16,
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                )
+              : Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(color: const Color(0xFFE5E7EB)),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.science),
+                              SizedBox(width: 8),
+                              Text(
+                                'Assay Details',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '${selectedLots.length} assay in blend',
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${selectedLots.length} assay in blend',
-                      style: TextStyle(color: Colors.grey[600]),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Primary Metrics (Hero Cards)
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _buildStatCard(
+                                    icon: Icons.inventory_2,
+                                    value: selectedLots
+                                        .fold<int>(
+                                            0,
+                                            (sum, lot) =>
+                                                sum + lot.selectedBags)
+                                        .toString(),
+                                    label: 'External Bags',
+                                  ),
+                                ),
+                                Expanded(
+                                  child: _buildStatCard(
+                                    icon: Icons.speed,
+                                    value: '${feedRate.toStringAsFixed(1)}k',
+                                    label: 'Target Feed Rate',
+                                  ),
+                                ),
+                                Expanded(
+                                  child: _buildStatCard(
+                                    icon: Icons.science,
+                                    value:
+                                        '${sieProduction.toStringAsFixed(1)}k',
+                                    label: 'SIE Mo Production',
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+
+                            // Schedule Section
+                            _buildSection(
+                              title: 'Schedule',
+                              children: [
+                                _buildInfoRow(
+                                  icon: Icons.calendar_today,
+                                  label: 'Start Date',
+                                  value: projectedStartDate != null
+                                      ? "${projectedStartDate!.month}/${projectedStartDate!.day}/${projectedStartDate!.year}"
+                                      : 'Not Set',
+                                ),
+                                _buildInfoRow(
+                                  icon: Icons.timer,
+                                  label: 'Projected Run Time',
+                                  value:
+                                      '${((selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags) * 4000) / (feedRate * 1000) * 24).toStringAsFixed(1)} hrs',
+                                  sublabel:
+                                      'Based on current feed rate and bag count',
+                                ),
+                                _buildInfoRow(
+                                  icon: Icons.access_time,
+                                  label: 'Leach Circuit Hours',
+                                  value: '24 hrs',
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+
+                            // Production Details Section
+                            _buildSection(
+                              title: 'Production Details',
+                              children: [
+                                _buildInfoRow(
+                                  icon: Icons.science,
+                                  label: 'External Mo lbs/day',
+                                  value: (feedRate * 2000 * 24)
+                                      .toStringAsFixed(0)
+                                      .replaceAllMapped(
+                                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                        (Match m) => '${m[1]},',
+                                      ),
+                                ),
+                                _buildInfoRow(
+                                  icon: Icons.balance,
+                                  label: 'Total Tons',
+                                  value:
+                                      '${((selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags) * 4000 / 2000) + (sieProduction * 24 / 2000)).toStringAsFixed(1)}',
+                                  sublabel: 'SIE Mo + External',
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+
+                            // Feed Composition Section
+                            const Text(
+                              'Feed Composition',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            FeedCompositionSection(selectedLots: selectedLots),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Primary Metrics (Hero Cards)
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildStatCard(
-                              icon: Icons.inventory_2,
-                              value: totalBags.toString(),
-                              label: 'External Bags',
-                            ),
-                          ),
-                          Expanded(
-                            child: _buildStatCard(
-                              icon: Icons.speed,
-                              value: '${feedRate.toStringAsFixed(1)}k',
-                              label: 'Target Feed Rate',
-                            ),
-                          ),
-                          Expanded(
-                            child: _buildStatCard(
-                              icon: Icons.science,
-                              value: '${sieProduction.toStringAsFixed(1)}k',
-                              label: 'SIE Mo Production',
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Schedule Section
-                      _buildSection(
-                        title: 'Schedule',
-                        children: [
-                          _buildInfoRow(
-                            icon: Icons.calendar_today,
-                            label: 'Start Date',
-                            value: projectedStartDate != null
-                                ? "${projectedStartDate!.month}/${projectedStartDate!.day}/${projectedStartDate!.year}"
-                                : 'Not Set',
-                          ),
-                          _buildInfoRow(
-                            icon: Icons.timer,
-                            label: 'Projected Run Time',
-                            value:
-                                '${((totalBags * 4000) / (feedRate * 1000) * 24).toStringAsFixed(1)} hrs',
-                            sublabel:
-                                'Based on current feed rate and bag count',
-                          ),
-                          _buildInfoRow(
-                            icon: Icons.access_time,
-                            label: 'Leach Circuit Hours',
-                            value: '24 hrs',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Production Details Section
-                      _buildSection(
-                        title: 'Production Details',
-                        children: [
-                          _buildInfoRow(
-                            icon: Icons.science,
-                            label: 'External Mo lbs/day',
-                            value: externalMoLbsDay
-                                .toStringAsFixed(0)
-                                .replaceAllMapped(
-                                  RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                                  (Match m) => '${m[1]},',
-                                ),
-                          ),
-                          _buildInfoRow(
-                            icon: Icons.balance,
-                            label: 'Total Tons',
-                            value:
-                                '${(totalTons + (sieProduction * 24 / 2000)).toStringAsFixed(1)}',
-                            sublabel: 'SIE Mo + External',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Feed Composition Section
-                      const Text(
-                        'Feed Composition',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      FeedCompositionSection(selectedLots: selectedLots),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ],
     );
