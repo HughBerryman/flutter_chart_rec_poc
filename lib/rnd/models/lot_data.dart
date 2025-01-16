@@ -6,6 +6,7 @@ class LotData {
   Map<String, double> elements;
   int selectedBags;
   bool isExpanded;
+  String barcodePrefix;
 
   LotData({
     required this.id,
@@ -13,11 +14,19 @@ class LotData {
     required this.elements,
     this.selectedBags = 0,
     this.isExpanded = false,
-  });
+    String? barcodePrefix,
+  }) : barcodePrefix = barcodePrefix ?? id;
 
   void updateAssayValues(Map<String, double> newValues) {
     elements.clear();
     elements.addAll(newValues);
+  }
+
+  String getBarcodeRange() {
+    if (selectedBags == 0) return 'No bags selected';
+    final start = '$barcodePrefix-${1.toString().padLeft(3, '0')}';
+    final end = '$barcodePrefix-${selectedBags.toString().padLeft(3, '0')}';
+    return '$start to $end';
   }
 }
 
@@ -36,6 +45,7 @@ final List<LotData> sampleLots = [
       'Oil': 3.20,
       'H2O': 6.50,
     },
+    barcodePrefix: 'MOR001',
   ),
   LotData(
     id: 'LOT-002',
@@ -50,6 +60,7 @@ final List<LotData> sampleLots = [
       'Oil': 2.90,
       'H2O': 5.50,
     },
+    barcodePrefix: 'SAF002',
   ),
   LotData(
     id: 'LOT-003',
@@ -64,5 +75,6 @@ final List<LotData> sampleLots = [
       'Oil': 3.80,
       'H2O': 7.20,
     },
+    barcodePrefix: 'SIE003',
   ),
 ];
