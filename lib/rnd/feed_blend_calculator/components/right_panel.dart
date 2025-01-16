@@ -896,6 +896,47 @@ class _RightPanelState extends State<RightPanel> {
                                                         color: Colors.grey[600],
                                                       ),
                                                     ),
+                                                    const SizedBox(width: 4),
+                                                    Tooltip(
+                                                      message: () {
+                                                        final bagsAndLbs =
+                                                            selectedLots
+                                                                .map((lot) =>
+                                                                    '${lot.selectedBags} bags × ${lot.lbsPerBag} lbs')
+                                                                .join(' + ');
+                                                        final externalTons =
+                                                            selectedLots.fold<
+                                                                    double>(
+                                                                0,
+                                                                (sum, lot) =>
+                                                                    sum +
+                                                                    (lot.selectedBags *
+                                                                        lot.lbsPerBag /
+                                                                        2000));
+                                                        final sieTons = widget
+                                                                .sieProduction *
+                                                            24 /
+                                                            2000;
+                                                        final totalTons =
+                                                            externalTons +
+                                                                sieTons;
+                                                        final runTimeHours =
+                                                            (totalTons * 2000) /
+                                                                (widget.feedRate *
+                                                                    1000) *
+                                                                24;
+                                                        final days =
+                                                            (runTimeHours / 24)
+                                                                .toStringAsFixed(
+                                                                    1);
+                                                        return 'Total tons for the entire run: (External Feed: $bagsAndLbs) + (SIE Mo: ${widget.sieProduction.toStringAsFixed(1)}k lbs/day × $days days)';
+                                                      }(),
+                                                      child: Icon(
+                                                        Icons.info_outline,
+                                                        size: 14,
+                                                        color: Colors.grey[400],
+                                                      ),
+                                                    ),
                                                     const SizedBox(width: 8),
                                                   ],
                                                   Icon(
@@ -931,7 +972,7 @@ class _RightPanelState extends State<RightPanel> {
                                                       label:
                                                           'SIE Mo Production',
                                                       value:
-                                                          '${widget.sieProduction.toStringAsFixed(1)}k',
+                                                          '${widget.sieProduction.toStringAsFixed(1)}k lbs/day',
                                                     ),
                                                   ),
                                                   const SizedBox(width: 16),
@@ -958,6 +999,39 @@ class _RightPanelState extends State<RightPanel> {
                                                       }(),
                                                       sublabel:
                                                           'SIE Mo + External Feed',
+                                                      tooltip: () {
+                                                        final bagsAndLbs =
+                                                            selectedLots
+                                                                .map((lot) =>
+                                                                    '${lot.selectedBags} bags × ${lot.lbsPerBag} lbs')
+                                                                .join(' + ');
+                                                        final externalTons =
+                                                            selectedLots.fold<
+                                                                    double>(
+                                                                0,
+                                                                (sum, lot) =>
+                                                                    sum +
+                                                                    (lot.selectedBags *
+                                                                        lot.lbsPerBag /
+                                                                        2000));
+                                                        final sieTons = widget
+                                                                .sieProduction *
+                                                            24 /
+                                                            2000;
+                                                        final totalTons =
+                                                            externalTons +
+                                                                sieTons;
+                                                        final runTimeHours =
+                                                            (totalTons * 2000) /
+                                                                (widget.feedRate *
+                                                                    1000) *
+                                                                24;
+                                                        final days =
+                                                            (runTimeHours / 24)
+                                                                .toStringAsFixed(
+                                                                    1);
+                                                        return 'Total tons for the entire run: (External Feed: $bagsAndLbs) + (SIE Mo: ${widget.sieProduction.toStringAsFixed(1)}k lbs/day × $days days)';
+                                                      }(),
                                                     ),
                                                   ),
                                                 ],
@@ -1042,13 +1116,8 @@ class _RightPanelState extends State<RightPanel> {
                                                         _buildCompactStatCard(
                                                       icon: Icons.inventory_2,
                                                       label: 'External Bags',
-                                                      value: selectedLots
-                                                          .fold<int>(
-                                                              0,
-                                                              (sum, lot) =>
-                                                                  sum +
-                                                                  lot.selectedBags)
-                                                          .toString(),
+                                                      value:
+                                                          '${selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags)} bags',
                                                     ),
                                                   ),
                                                   const SizedBox(width: 16),
