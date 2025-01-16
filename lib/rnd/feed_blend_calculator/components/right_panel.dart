@@ -518,13 +518,13 @@ class RightPanel extends StatelessWidget {
                                             label: 'Duration',
                                             value: () {
                                               final externalTons =
-                                                  selectedLots.fold<int>(
-                                                          0,
-                                                          (sum, lot) =>
-                                                              sum +
-                                                              lot.selectedBags) *
-                                                      4000 /
-                                                      2000;
+                                                  selectedLots.fold<double>(
+                                                      0,
+                                                      (sum, lot) =>
+                                                          sum +
+                                                          (lot.selectedBags *
+                                                              lot.lbsPerBag /
+                                                              2000));
                                               final sieTons =
                                                   sieProduction * 24 / 2000;
                                               final totalTons =
@@ -537,25 +537,24 @@ class RightPanel extends StatelessWidget {
                                               return '${days.toStringAsFixed(1)} days';
                                             }(),
                                             tooltip: () {
-                                              final totalBags =
-                                                  selectedLots.fold<int>(
-                                                      0,
-                                                      (sum, lot) =>
-                                                          sum +
-                                                          lot.selectedBags);
-                                              return 'Calculation: ($totalBags bags × 4000 lbs + ${sieProduction.toStringAsFixed(1)}k × 24 hrs) ÷ (${feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
+                                              final bagsAndLbs = selectedLots
+                                                  .map((lot) =>
+                                                      '${lot.selectedBags} bags × ${lot.lbsPerBag} lbs')
+                                                  .join(' + ');
+                                              return 'Calculation: ($bagsAndLbs + ${sieProduction.toStringAsFixed(1)}k × 24 hrs) ÷ (${feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
                                             }(),
                                             sublabel: targetEndDate != null &&
                                                     projectedStartDate != null
                                                 ? () {
                                                     final externalTons =
-                                                        selectedLots.fold<int>(
-                                                                0,
-                                                                (sum, lot) =>
-                                                                    sum +
-                                                                    lot.selectedBags) *
-                                                            4000 /
-                                                            2000;
+                                                        selectedLots.fold<
+                                                                double>(
+                                                            0,
+                                                            (sum, lot) =>
+                                                                sum +
+                                                                (lot.selectedBags *
+                                                                    lot.lbsPerBag /
+                                                                    2000));
                                                     final sieTons =
                                                         sieProduction *
                                                             24 /
@@ -604,13 +603,14 @@ class RightPanel extends StatelessWidget {
                                                     projectedStartDate != null
                                                 ? () {
                                                     final externalTons =
-                                                        selectedLots.fold<int>(
-                                                                0,
-                                                                (sum, lot) =>
-                                                                    sum +
-                                                                    lot.selectedBags) *
-                                                            4000 /
-                                                            2000;
+                                                        selectedLots.fold<
+                                                                double>(
+                                                            0,
+                                                            (sum, lot) =>
+                                                                sum +
+                                                                (lot.selectedBags *
+                                                                    lot.lbsPerBag /
+                                                                    2000));
                                                     final sieTons =
                                                         sieProduction *
                                                             24 /
@@ -663,13 +663,13 @@ class RightPanel extends StatelessWidget {
                                               if (projectedStartDate == null)
                                                 return 'Not Set';
                                               final externalTons =
-                                                  selectedLots.fold<int>(
-                                                          0,
-                                                          (sum, lot) =>
-                                                              sum +
-                                                              lot.selectedBags) *
-                                                      4000 /
-                                                      2000;
+                                                  selectedLots.fold<double>(
+                                                      0,
+                                                      (sum, lot) =>
+                                                          sum +
+                                                          (lot.selectedBags *
+                                                              lot.lbsPerBag /
+                                                              2000));
                                               final sieTons =
                                                   sieProduction * 24 / 2000;
                                               final totalTons =
@@ -689,13 +689,14 @@ class RightPanel extends StatelessWidget {
                                             sublabel: targetEndDate != null
                                                 ? () {
                                                     final externalTons =
-                                                        selectedLots.fold<int>(
-                                                                0,
-                                                                (sum, lot) =>
-                                                                    sum +
-                                                                    lot.selectedBags) *
-                                                            4000 /
-                                                            2000;
+                                                        selectedLots.fold<
+                                                                double>(
+                                                            0,
+                                                            (sum, lot) =>
+                                                                sum +
+                                                                (lot.selectedBags *
+                                                                    lot.lbsPerBag /
+                                                                    2000));
                                                     final sieTons =
                                                         sieProduction *
                                                             24 /
@@ -743,13 +744,14 @@ class RightPanel extends StatelessWidget {
                                             valueColor: targetEndDate != null
                                                 ? () {
                                                     final externalTons =
-                                                        selectedLots.fold<int>(
-                                                                0,
-                                                                (sum, lot) =>
-                                                                    sum +
-                                                                    lot.selectedBags) *
-                                                            4000 /
-                                                            2000;
+                                                        selectedLots.fold<
+                                                                double>(
+                                                            0,
+                                                            (sum, lot) =>
+                                                                sum +
+                                                                (lot.selectedBags *
+                                                                    lot.lbsPerBag /
+                                                                    2000));
                                                     final sieTons =
                                                         sieProduction *
                                                             24 /
@@ -843,8 +845,19 @@ class RightPanel extends StatelessWidget {
                                           child: _buildCompactStatCard(
                                             icon: Icons.balance,
                                             label: 'Total Tons',
-                                            value:
-                                                '${((selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags) * 4000 / 2000) + (sieProduction * 24 / 2000)).toStringAsFixed(1)} tons',
+                                            value: () {
+                                              final externalTons =
+                                                  selectedLots.fold<double>(
+                                                      0,
+                                                      (sum, lot) =>
+                                                          sum +
+                                                          (lot.selectedBags *
+                                                              lot.lbsPerBag /
+                                                              2000));
+                                              final sieTons =
+                                                  sieProduction * 24 / 2000;
+                                              return '${(externalTons + sieTons).toStringAsFixed(1)} tons';
+                                            }(),
                                             sublabel: 'SIE Mo + External',
                                           ),
                                         ),
@@ -911,23 +924,28 @@ class RightPanel extends StatelessWidget {
                                             icon: Icons.science,
                                             label: 'External Mo lbs/day',
                                             value: () {
-                                              final totalBags =
-                                                  selectedLots.fold<int>(
+                                              final lbsPerDay = selectedLots
+                                                  .fold<double>(
                                                       0,
                                                       (sum, lot) =>
                                                           sum +
-                                                          lot.selectedBags);
-                                              final lbsPerDay =
-                                                  (totalBags * 4000 / 24)
-                                                      .round();
+                                                          (lot.selectedBags *
+                                                              lot.lbsPerBag /
+                                                              24))
+                                                  .round();
                                               return "${lbsPerDay.toString().replaceAllMapped(
                                                     RegExp(
                                                         r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                                                     (Match m) => '${m[1]},',
                                                   )} lbs/day";
                                             }(),
-                                            tooltip:
-                                                'Calculation: (External Bags × 4000 lbs) ÷ 24 hrs',
+                                            tooltip: () {
+                                              final bagsAndLbs = selectedLots
+                                                  .map((lot) =>
+                                                      '${lot.selectedBags} bags × ${lot.lbsPerBag} lbs')
+                                                  .join(' + ');
+                                              return 'Calculation: ($bagsAndLbs) ÷ 24 hrs';
+                                            }(),
                                           ),
                                         ),
                                       ],

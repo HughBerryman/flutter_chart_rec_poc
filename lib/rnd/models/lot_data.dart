@@ -7,6 +7,7 @@ class LotData {
   int selectedBags;
   bool isExpanded;
   String barcodePrefix;
+  final int lbsPerBag;
 
   LotData({
     required this.id,
@@ -15,6 +16,7 @@ class LotData {
     this.selectedBags = 0,
     this.isExpanded = false,
     String? barcodePrefix,
+    required this.lbsPerBag,
   }) : barcodePrefix = barcodePrefix ?? id;
 
   void updateAssayValues(Map<String, double> newValues) {
@@ -46,9 +48,26 @@ final List<LotData> sampleLots = [
       'H2O': 8.50,
     },
     barcodePrefix: 'MOR001',
+    lbsPerBag: 4000,
   ),
   LotData(
     id: 'LOT-002',
+    location: 'Cerro Verde',
+    elements: {
+      'Mo': 52.00,
+      'Fe': 2.30,
+      'Cu': 1.80,
+      'Pb': 0.05,
+      'As': 0.02,
+      'Insol': 3.80,
+      'Oil': 2.90,
+      'H2O': 5.50,
+    },
+    barcodePrefix: 'CER002',
+    lbsPerBag: 1500,
+  ),
+  LotData(
+    id: 'LOT-003',
     location: 'Safford',
     elements: {
       'Mo': 52.00,
@@ -60,10 +79,11 @@ final List<LotData> sampleLots = [
       'Oil': 2.90,
       'H2O': 5.50,
     },
-    barcodePrefix: 'SAF002',
+    barcodePrefix: 'SAF003',
+    lbsPerBag: 4000,
   ),
   LotData(
-    id: 'LOT-003',
+    id: 'LOT-004',
     location: 'Sierrita',
     elements: {
       'Mo': 55.20,
@@ -75,6 +95,7 @@ final List<LotData> sampleLots = [
       'Oil': 3.80,
       'H2O': 7.20,
     },
-    barcodePrefix: 'SIE003',
+    barcodePrefix: 'SIE004',
+    lbsPerBag: 4000,
   ),
 ];

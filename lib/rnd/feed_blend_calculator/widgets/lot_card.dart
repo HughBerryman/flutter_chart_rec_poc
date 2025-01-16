@@ -614,7 +614,7 @@ class LotCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '150 bags in lot (4,000 lbs/bag)',
+                          '150 bags in lot (${lot.lbsPerBag.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}) lbs/bag)',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                         const SizedBox(height: 16),
