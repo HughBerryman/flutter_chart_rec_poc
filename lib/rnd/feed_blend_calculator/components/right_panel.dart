@@ -76,33 +76,31 @@ class RightPanel extends StatelessWidget {
     required String value,
     required String label,
   }) {
-    return Expanded(
-      child: Card(
-        color: Colors.white,
-        margin: const EdgeInsets.symmetric(horizontal: 8),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Icon(icon, size: 28),
-              const SizedBox(height: 8),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+    return Card(
+      color: Colors.white,
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Icon(icon, size: 28),
+            const SizedBox(height: 8),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
-              Text(
-                label,
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
+            ),
+            Text(
+              label,
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 14,
               ),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
@@ -341,6 +339,28 @@ class RightPanel extends StatelessWidget {
                                   sublabel:
                                       'Based on current feed rate and bag count',
                                 ),
+                                if (projectedStartDate != null) ...[
+                                  _buildInfoRow(
+                                    icon: Icons.event,
+                                    label: 'Projected End Date',
+                                    value: () {
+                                      final runTimeHours =
+                                          ((selectedLots.fold<int>(
+                                                      0,
+                                                      (sum, lot) =>
+                                                          sum +
+                                                          lot.selectedBags) *
+                                                  4000) /
+                                              (feedRate * 1000) *
+                                              24);
+                                      final endDate = projectedStartDate!.add(
+                                        Duration(hours: runTimeHours.round()),
+                                      );
+                                      return "${endDate.month}/${endDate.day}/${endDate.year}";
+                                    }(),
+                                    sublabel: 'Based on projected run time',
+                                  ),
+                                ],
                                 _buildInfoRow(
                                   icon: Icons.access_time,
                                   label: 'Leach Circuit Hours',
