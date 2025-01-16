@@ -47,22 +47,14 @@ class RightPanel extends StatelessWidget {
 
   bool _hasOutOfSpecElements(Map<String, double> weightedAverages) {
     final elementRanges = {
-      'Mo': [50.0, 95.0],
-      'Fe': [0.0, 3.5],
-      'Cu': [1.2, 2.8],
-      'Pb': [0.0, 0.08],
-      'Zn': [0.0, 0.5],
-      'As': [0.0, 0.15],
-      'Bi': [0.0, 0.1],
-      'Sb': [0.0, 0.08],
-      'Se': [0.0, 0.05],
-      'Te': [0.0, 0.03],
-      'Hg': [0.0, 0.005],
-      'Cd': [0.0, 0.01],
-      'H2O': [5.0, 10.0],
-      'Density': [45.0, 65.0],
-      'Size': [100.0, 200.0],
-      'pH': [6.0, 8.0],
+      'Mo': [48.0, double.infinity],
+      'Fe': [0.0, 4.0],
+      'Cu': [0.0, 3.0],
+      'Pb': [0.0, 0.1],
+      'As': [0.0, 0.05],
+      'Insol': [0.0, 5.0],
+      'Oil': [0.0, 5.0],
+      'H2O': [0.0, 8.0],
     };
 
     for (final entry in weightedAverages.entries) {
