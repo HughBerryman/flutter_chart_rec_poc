@@ -12,15 +12,33 @@ class FeedCompositionSection extends StatelessWidget {
   Widget _buildEmptyAccordion(
       BuildContext context, String title, String message) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
       color: Colors.white,
       surfaceTintColor: Colors.white,
       child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        data: Theme.of(context).copyWith(
+          dividerColor: Colors.transparent,
+          listTileTheme: const ListTileThemeData(
+            dense: true,
+            horizontalTitleGap: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+          ),
+        ),
         child: ExpansionTile(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
+          collapsedShape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
+          collapsedBackgroundColor: Colors.white,
+          backgroundColor: Colors.white,
+          tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           title: Row(
             children: [
               Icon(
@@ -29,7 +47,7 @@ class FeedCompositionSection extends StatelessWidget {
                     : title == 'Leach Chemistry'
                         ? Icons.science
                         : Icons.inventory_2,
-                size: 24,
+                size: 20,
                 color: title == 'Specification Status'
                     ? Colors.green[700]
                     : Colors.grey[700],
@@ -38,7 +56,7 @@ class FeedCompositionSection extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: title == 'Specification Status'
                       ? Colors.green[700]
@@ -49,7 +67,7 @@ class FeedCompositionSection extends StatelessWidget {
           ),
           children: [
             Container(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(color: Colors.grey[200]!),
@@ -59,13 +77,13 @@ class FeedCompositionSection extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.info_outline, size: 48, color: Colors.grey[400]),
-                  const SizedBox(height: 16),
+                  Icon(Icons.info_outline, size: 32, color: Colors.grey[400]),
+                  const SizedBox(height: 12),
                   Text(
                     message,
                     style: TextStyle(
                       color: Colors.grey[600],
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -81,15 +99,33 @@ class FeedCompositionSection extends StatelessWidget {
   Widget _buildAccordion(BuildContext context, String title, Widget content,
       {bool? hasOutOfSpec}) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
       color: Colors.white,
       surfaceTintColor: Colors.white,
       child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        data: Theme.of(context).copyWith(
+          dividerColor: Colors.transparent,
+          listTileTheme: const ListTileThemeData(
+            dense: true,
+            horizontalTitleGap: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+          ),
+        ),
         child: ExpansionTile(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
+          collapsedShape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
+          collapsedBackgroundColor: Colors.white,
+          backgroundColor: Colors.white,
+          tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           title: Row(
             children: [
               if (title == 'Specification Status')
@@ -97,7 +133,7 @@ class FeedCompositionSection extends StatelessWidget {
                   hasOutOfSpec == true
                       ? Icons.warning_amber_rounded
                       : Icons.check_circle,
-                  size: 24,
+                  size: 20,
                   color: hasOutOfSpec == true
                       ? Colors.red[700]
                       : Colors.green[700],
@@ -107,14 +143,14 @@ class FeedCompositionSection extends StatelessWidget {
                   title == 'Leach Chemistry'
                       ? Icons.science
                       : Icons.inventory_2,
-                  size: 24,
+                  size: 20,
                   color: Colors.grey[700],
                 ),
               const SizedBox(width: 12),
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: title == 'Specification Status'
                       ? (hasOutOfSpec == true
