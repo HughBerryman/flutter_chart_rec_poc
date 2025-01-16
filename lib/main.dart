@@ -74,7 +74,7 @@ class HomeScreen extends StatelessWidget {
               child: const Text('Feed Blend Calculator'),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
+            OutlinedButton(
               onPressed: () {
                 // Navigate to the UI from chart_app.dart
                 Navigator.push(
@@ -84,10 +84,14 @@ class HomeScreen extends StatelessWidget {
                           ChartApp()), // Use the widget from chart_app.dart
                 );
               },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Theme.of(context).primaryColor),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
               child: const Text('Show Chart App UI'),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
+            OutlinedButton(
               onPressed: () {
                 // Navigate to the UI from rec_selector.dart
                 Navigator.push(
@@ -95,6 +99,10 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const RecSelector()),
                 );
               },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Theme.of(context).primaryColor),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
               child: const Text('Show Rec Selector UI'),
             ),
             const SizedBox(height: 20),
