@@ -33,7 +33,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   }
 
   double _panelWidth = 800;
-  String? selectedLocation;
+  Set<String> selectedLocations = {'All Locations'};
   String? selectedSort;
 
   final List<String> locations = [
@@ -195,12 +195,19 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                           child: LotsSection(
                             lots: lots,
                             showSelected: showSelected,
-                            selectedLocation: selectedLocation,
+                            selectedLocations: selectedLocations,
                             selectedSort: selectedSort,
                             onShowSelectedChanged: (value) =>
                                 setState(() => showSelected = value),
-                            onLocationChanged: (value) =>
-                                setState(() => selectedLocation = value),
+                            onLocationsChanged: (locations) {
+                              setState(() {
+                                if (locations.contains('All Locations')) {
+                                  selectedLocations = {'All Locations'};
+                                } else {
+                                  selectedLocations = locations;
+                                }
+                              });
+                            },
                             onSortChanged: (value) =>
                                 setState(() => selectedSort = value),
                             onBagsChanged: _updateLotBags,
