@@ -114,6 +114,7 @@ class RightPanel extends StatelessWidget {
     required String value,
     String? sublabel,
     Color? valueColor,
+    String? tooltip,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -125,12 +126,27 @@ class RightPanel extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      label,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 14,
+                      ),
+                    ),
+                    if (tooltip != null) ...[
+                      const SizedBox(width: 4),
+                      Tooltip(
+                        message: tooltip,
+                        child: Icon(
+                          Icons.info_outline,
+                          size: 16,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
                 if (sublabel != null) ...[
                   const SizedBox(height: 2),
@@ -308,7 +324,7 @@ class RightPanel extends StatelessWidget {
                                 Expanded(
                                   child: _buildStatCard(
                                     icon: Icons.speed,
-                                    value: '${feedRate.toStringAsFixed(1)}k',
+                                    value: '${feedRate.toStringAsFixed(1)} TPH',
                                     label: 'Target Feed Rate',
                                   ),
                                 ),
@@ -385,7 +401,12 @@ class RightPanel extends StatelessWidget {
                                           }
                                           return '✓ Within 10% of target duration';
                                         }()
-                                      : 'Based on current feed rate and bag count',
+                                      : 'Based on 24hr leach circuit with current feed rate and bag count',
+                                  tooltip: () {
+                                    final totalBags = selectedLots.fold<int>(0,
+                                        (sum, lot) => sum + lot.selectedBags);
+                                    return 'Calculation: ($totalBags bags × 4000 lbs) ÷ (${feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
+                                  }(),
                                   valueColor: targetEndDate != null &&
                                           projectedStartDate != null
                                       ? () {
@@ -490,11 +511,6 @@ class RightPanel extends StatelessWidget {
                                         : null,
                                   ),
                                 ],
-                                _buildInfoRow(
-                                  icon: Icons.access_time,
-                                  label: 'Leach Circuit Hours',
-                                  value: '24 hrs',
-                                ),
                               ],
                             ),
                             const SizedBox(height: 16),
