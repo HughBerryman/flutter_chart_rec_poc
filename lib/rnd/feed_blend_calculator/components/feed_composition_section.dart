@@ -126,37 +126,32 @@ class FeedCompositionSection extends StatelessWidget {
           tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           title: Row(
             children: [
-              if (title == 'Specification Status')
-                Icon(
-                  hasOutOfSpec == true
-                      ? Icons.warning_amber_rounded
-                      : Icons.check_circle,
-                  size: 20,
-                  color: hasOutOfSpec == true
-                      ? Colors.red[700]
-                      : Colors.green[700],
-                )
-              else
-                Icon(
-                  title == 'Leach Chemistry'
-                      ? Icons.science
-                      : Icons.inventory_2,
-                  size: 20,
-                  color: Colors.grey[700],
-                ),
+              Icon(
+                title == 'Primary Elements'
+                    ? Icons.science
+                    : title == 'Leach Chemistry'
+                        ? Icons.science
+                        : Icons.inventory_2,
+                size: 20,
+                color: Colors.grey[700],
+              ),
               const SizedBox(width: 12),
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: title == 'Specification Status'
-                      ? (hasOutOfSpec == true
-                          ? Colors.red[700]
-                          : Colors.green[700])
-                      : Colors.black,
+                  color: Colors.black,
                 ),
               ),
+              if (title == 'Primary Elements' && hasOutOfSpec == true) ...[
+                const Spacer(),
+                Icon(
+                  Icons.warning_amber_rounded,
+                  size: 20,
+                  color: Colors.red[700],
+                ),
+              ],
             ],
           ),
           children: [
@@ -186,7 +181,7 @@ class FeedCompositionSection extends StatelessWidget {
               Expanded(
                 child: _buildEmptyAccordion(
                   context,
-                  'Elements',
+                  'Primary Elements',
                   'Select bags from assays to view element composition',
                 ),
               ),
@@ -221,7 +216,7 @@ class FeedCompositionSection extends StatelessWidget {
             Expanded(
               child: _buildAccordion(
                 context,
-                'Elements',
+                'Primary Elements',
                 _buildSpecificationStatus(weightedAverages),
                 hasOutOfSpec: hasOutOfSpec,
               ),
@@ -293,8 +288,8 @@ class FeedCompositionSection extends StatelessWidget {
 
   Widget _buildSpecificationStatus(Map<String, double> weightedAverages) {
     final elementRanges = {
-      'Mo': [48.0, double.infinity],
-      'Fe': [0.0, 4.0],
+      'Mo': [50.0, 95.0],
+      'Fe': [0.0, 3.5],
       'Cu': [0.0, 3.0],
       'Pb': [0.0, 0.1],
       'As': [0.0, 0.05],
@@ -303,104 +298,84 @@ class FeedCompositionSection extends StatelessWidget {
       'H2O': [0.0, 8.0],
     };
 
-    final outOfSpecElements = <String>[];
-    final inSpecElements = <String>[];
-
-    for (final entry in weightedAverages.entries) {
-      final range = elementRanges[entry.key];
-      if (range != null) {
-        if (entry.value < range[0] || entry.value > range[1]) {
-          outOfSpecElements.add(entry.key);
-        } else {
-          inSpecElements.add(entry.key);
-        }
-      }
-    }
+    final elementNames = {
+      'Mo': 'Molybdenum',
+      'Fe': 'Iron',
+      'Cu': 'Copper',
+      'Pb': 'Lead',
+      'As': 'Arsenic',
+      'Insol': 'Insolubles',
+      'Oil': 'Oil Content',
+      'H2O': 'Water Content',
+    };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (outOfSpecElements.isNotEmpty) ...[
-          Row(
+      children: weightedAverages.entries.map((entry) {
+        final range = elementRanges[entry.key]!;
+        final value = entry.value;
+        final isOutOfSpec = value < range[0] || value > range[1];
+        final progress = (value - range[0]) / (range[1] - range[0]);
+
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.warning_amber_rounded,
-                  size: 16, color: Colors.red[700]),
-              const SizedBox(width: 8),
               Text(
-                'Out of spec',
-                style: TextStyle(
-                  fontSize: 14,
+                elementNames[entry.key] ?? entry.key,
+                style: const TextStyle(
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Colors.red[700],
+                ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Text(
+                    '${value.toStringAsFixed(2)}%',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: isOutOfSpec ? Colors.red : Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '(${range[0]}.0% - ${range[1]}.0%)',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 14,
+                    ),
+                  ),
+                  if (isOutOfSpec) ...[
+                    const Spacer(),
+                    Text(
+                      'Out of Spec',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 4,
+                child: LinearProgressIndicator(
+                  value: progress.clamp(0.0, 1.0),
+                  backgroundColor: Colors.grey[200],
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    isOutOfSpec ? Colors.red : Colors.blue,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: outOfSpecElements.map((element) {
-              final value = weightedAverages[element]!;
-              return Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.red[50],
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Text(
-                  '$element: ${value.toStringAsFixed(2)}%',
-                  style: TextStyle(
-                    color: Colors.red[700],
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-          const SizedBox(height: 16),
-        ],
-        if (inSpecElements.isNotEmpty) ...[
-          Row(
-            children: [
-              Icon(Icons.check_circle, size: 16, color: Colors.green[700]),
-              const SizedBox(width: 8),
-              Text(
-                'In spec',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.green[700],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: inSpecElements.map((element) {
-              final value = weightedAverages[element]!;
-              return Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.green[50],
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Text(
-                  '$element: ${value.toStringAsFixed(2)}%',
-                  style: TextStyle(
-                    color: Colors.green[700],
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      ],
+        );
+      }).toList(),
     );
   }
 
