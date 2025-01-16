@@ -51,14 +51,6 @@ class FeedParameters extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Feed Parameters',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 16),
         Card(
           margin: EdgeInsets.zero,
           color: const Color(0xFFFCFCFF),
