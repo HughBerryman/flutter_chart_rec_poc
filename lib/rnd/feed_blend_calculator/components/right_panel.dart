@@ -239,52 +239,15 @@ class RightPanel extends StatelessWidget {
                             ),
                             const SizedBox(height: 24),
 
-                            // Out of Specification Warning
-                            if (hasOutOfSpecElements)
-                              Card(
-                                color: Colors.red[50],
-                                margin: EdgeInsets.zero,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Icon(Icons.warning_amber_rounded,
-                                          color: Colors.red[700], size: 24),
-                                      const SizedBox(width: 12),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Out of Specification Elements',
-                                              style: TextStyle(
-                                                color: Colors.red[700],
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 4),
-                                            Text(
-                                              'One or more elements outside target range',
-                                              style: TextStyle(
-                                                color: Colors.red[700],
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            if (hasOutOfSpecElements)
-                              const SizedBox(height: 24),
-
                             // Feed Composition Section
+                            const Text(
+                              'Feed Composition',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
                             FeedCompositionSection(selectedLots: selectedLots),
                           ],
                         ),

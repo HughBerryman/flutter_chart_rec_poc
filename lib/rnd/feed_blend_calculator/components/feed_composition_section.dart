@@ -137,7 +137,7 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
     );
   }
 
-  Widget _buildAccordion(String title, Widget content) {
+  Widget _buildAccordion(String title, Widget content, {bool? hasOutOfSpec}) {
     final isExpanded = _expandedSections[title] ?? false;
 
     return Card(
@@ -163,21 +163,35 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
               ),
               child: Row(
                 children: [
-                  Icon(
-                    title == 'Specification Status'
-                        ? Icons.check_circle
-                        : title == 'Leach Chemistry'
-                            ? Icons.science
-                            : Icons.inventory_2,
-                    size: 24,
-                    color: Colors.grey[700],
-                  ),
+                  if (title == 'Specification Status')
+                    Icon(
+                      hasOutOfSpec == true
+                          ? Icons.warning_amber_rounded
+                          : Icons.check_circle,
+                      size: 24,
+                      color: hasOutOfSpec == true
+                          ? Colors.red[700]
+                          : Colors.green[700],
+                    )
+                  else
+                    Icon(
+                      title == 'Leach Chemistry'
+                          ? Icons.science
+                          : Icons.inventory_2,
+                      size: 24,
+                      color: Colors.grey[700],
+                    ),
                   const SizedBox(width: 12),
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
+                      color: title == 'Specification Status'
+                          ? (hasOutOfSpec == true
+                              ? Colors.red[700]
+                              : Colors.green[700])
+                          : Colors.black,
                     ),
                   ),
                   const Spacer(),
@@ -226,25 +240,30 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
     }
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (outOfSpecElements.isNotEmpty) ...[
           Row(
             children: [
-              Icon(Icons.warning_amber_rounded,
-                  color: Colors.red[700], size: 20),
+              Icon(
+                Icons.warning_amber_rounded,
+                size: 16,
+                color: Colors.red[700],
+              ),
               const SizedBox(width: 8),
               Text(
                 'Out of Specification',
                 style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
                   color: Colors.red[700],
-                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 8),
           Wrap(
+            alignment: WrapAlignment.start,
             spacing: 8,
             runSpacing: 8,
             children: outOfSpecElements.map((element) {
@@ -268,41 +287,50 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
           ),
           const SizedBox(height: 16),
         ],
-        Row(
-          children: [
-            Icon(Icons.check_circle, color: Colors.green[700], size: 20),
-            const SizedBox(width: 8),
-            Text(
-              'In Specification',
-              style: TextStyle(
+        if (inSpecElements.isNotEmpty) ...[
+          Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                size: 16,
                 color: Colors.green[700],
-                fontWeight: FontWeight.bold,
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: inSpecElements.map((element) {
-            final value = weightedAverages[element]!;
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.green[50],
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Text(
-                '$element: ${value.toStringAsFixed(2)}%',
+              const SizedBox(width: 8),
+              Text(
+                'Within Specification',
                 style: TextStyle(
-                  color: Colors.green[700],
+                  fontSize: 14,
                   fontWeight: FontWeight.w500,
+                  color: Colors.green[700],
                 ),
               ),
-            );
-          }).toList(),
-        ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            alignment: WrapAlignment.start,
+            spacing: 8,
+            runSpacing: 8,
+            children: inSpecElements.map((element) {
+              final value = weightedAverages[element]!;
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.green[50],
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Text(
+                  '$element: ${value.toStringAsFixed(2)}%',
+                  style: TextStyle(
+                    color: Colors.green[700],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
       ],
     );
   }
@@ -484,6 +512,20 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
   @override
   Widget build(BuildContext context) {
     final weightedAverages = _calculateWeightedAverages();
+    final hasOutOfSpec = weightedAverages.entries.any((entry) {
+      final range = {
+        'Mo': [48.0, double.infinity],
+        'Fe': [0.0, 4.0],
+        'Cu': [0.0, 3.0],
+        'Pb': [0.0, 0.1],
+        'As': [0.0, 0.05],
+        'Insol': [0.0, 5.0],
+        'Oil': [0.0, 5.0],
+        'H2O': [0.0, 8.0],
+      }[entry.key];
+      return range != null &&
+          (entry.value < range[0] || entry.value > range[1]);
+    });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -499,6 +541,7 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
         _buildAccordion(
           'Specification Status',
           _buildSpecificationStatus(weightedAverages),
+          hasOutOfSpec: hasOutOfSpec,
         ),
         _buildAccordion(
           'Leach Chemistry',
