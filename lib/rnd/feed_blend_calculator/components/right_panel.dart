@@ -3,7 +3,7 @@ import '../../models/lot_data.dart';
 import '../widgets/elements_section.dart';
 import 'feed_composition_section.dart';
 
-class RightPanel extends StatelessWidget {
+class RightPanel extends StatefulWidget {
   final List<LotData> lots;
   final double width;
   final ValueChanged<double> onWidthChanged;
@@ -23,6 +23,14 @@ class RightPanel extends StatelessWidget {
     this.projectedStartDate,
     this.targetEndDate,
   });
+
+  @override
+  State<RightPanel> createState() => _RightPanelState();
+}
+
+class _RightPanelState extends State<RightPanel> {
+  bool _isProductionRatesExpanded = false;
+  bool _isFeedMaterialExpanded = false;
 
   Map<String, double> _calculateWeightedAverages(List<LotData> selectedLots) {
     final Map<String, double> weightedSums = {};
@@ -371,7 +379,8 @@ class RightPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedLots = lots.where((lot) => lot.selectedBags > 0).toList();
+    final selectedLots =
+        widget.lots.where((lot) => lot.selectedBags > 0).toList();
     final hasSelectedLots = selectedLots.isNotEmpty;
 
     return Row(
@@ -381,8 +390,8 @@ class RightPanel extends StatelessWidget {
           cursor: SystemMouseCursors.resizeColumn,
           child: GestureDetector(
             onHorizontalDragUpdate: (details) {
-              onWidthChanged(
-                (width - details.delta.dx)
+              widget.onWidthChanged(
+                (widget.width - details.delta.dx)
                     .clamp(600.0, MediaQuery.of(context).size.width * 0.6),
               );
             },
@@ -405,7 +414,7 @@ class RightPanel extends StatelessWidget {
         ),
         // Panel Content
         Container(
-          width: width,
+          width: widget.width,
           decoration: const BoxDecoration(
             color: Color(0xFFEBF2F8),
           ),
@@ -506,8 +515,9 @@ class RightPanel extends StatelessWidget {
                                           child: _buildCompactStatCard(
                                             icon: Icons.calendar_today,
                                             label: 'Start',
-                                            value: projectedStartDate != null
-                                                ? "${projectedStartDate!.month}/${projectedStartDate!.day}/${projectedStartDate!.year}"
+                                            value: widget.projectedStartDate !=
+                                                    null
+                                                ? "${widget.projectedStartDate!.month}/${widget.projectedStartDate!.day}/${widget.projectedStartDate!.year}"
                                                 : 'Not Set',
                                           ),
                                         ),
@@ -526,12 +536,14 @@ class RightPanel extends StatelessWidget {
                                                               lot.lbsPerBag /
                                                               2000));
                                               final sieTons =
-                                                  sieProduction * 24 / 2000;
+                                                  widget.sieProduction *
+                                                      24 /
+                                                      2000;
                                               final totalTons =
                                                   externalTons + sieTons;
                                               final runTimeHours =
                                                   (totalTons * 2000) /
-                                                      (feedRate * 1000) *
+                                                      (widget.feedRate * 1000) *
                                                       24;
                                               final days = runTimeHours / 24;
                                               return '${days.toStringAsFixed(1)} days';
@@ -541,10 +553,12 @@ class RightPanel extends StatelessWidget {
                                                   .map((lot) =>
                                                       '${lot.selectedBags} bags × ${lot.lbsPerBag} lbs')
                                                   .join(' + ');
-                                              return 'Calculation: ($bagsAndLbs + ${sieProduction.toStringAsFixed(1)}k × 24 hrs) ÷ (${feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
+                                              return 'Calculation: ($bagsAndLbs + ${widget.sieProduction.toStringAsFixed(1)}k × 24 hrs) ÷ (${widget.feedRate.toStringAsFixed(1)} TPH × 2000 lbs/ton) × 24 hrs/day';
                                             }(),
-                                            sublabel: targetEndDate != null &&
-                                                    projectedStartDate != null
+                                            sublabel: widget.targetEndDate !=
+                                                        null &&
+                                                    widget.projectedStartDate !=
+                                                        null
                                                 ? () {
                                                     final externalTons =
                                                         selectedLots.fold<
@@ -556,40 +570,45 @@ class RightPanel extends StatelessWidget {
                                                                     lot.lbsPerBag /
                                                                     2000));
                                                     final sieTons =
-                                                        sieProduction *
+                                                        widget.sieProduction *
                                                             24 /
                                                             2000;
                                                     final totalTons =
                                                         externalTons + sieTons;
                                                     final runTimeHours =
                                                         (totalTons * 2000) /
-                                                            (feedRate * 1000) *
+                                                            (widget.feedRate *
+                                                                1000) *
                                                             24;
                                                     final projectedEndDate =
-                                                        projectedStartDate!.add(
+                                                        widget
+                                                            .projectedStartDate!
+                                                            .add(
                                                       Duration(
                                                           hours: runTimeHours
                                                               .round()),
                                                     );
-                                                    final sameDay =
-                                                        projectedEndDate.year ==
-                                                                targetEndDate!
-                                                                    .year &&
-                                                            projectedEndDate
-                                                                    .month ==
-                                                                targetEndDate!
-                                                                    .month &&
-                                                            projectedEndDate
-                                                                    .day ==
-                                                                targetEndDate!
-                                                                    .day;
+                                                    final sameDay = projectedEndDate
+                                                                .year ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .year &&
+                                                        projectedEndDate
+                                                                .month ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .month &&
+                                                        projectedEndDate.day ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .day;
                                                     if (sameDay) {
                                                       return '✓ Matches target';
                                                     }
                                                     final diff =
                                                         projectedEndDate
-                                                            .difference(
-                                                                targetEndDate!)
+                                                            .difference(widget
+                                                                .targetEndDate!)
                                                             .inHours;
                                                     final days = (diff / 24)
                                                         .ceil()
@@ -599,8 +618,10 @@ class RightPanel extends StatelessWidget {
                                                         : '⚠️ $days days shorter than target';
                                                   }()
                                                 : 'Based on current feed rate',
-                                            valueColor: targetEndDate != null &&
-                                                    projectedStartDate != null
+                                            valueColor: widget.targetEndDate !=
+                                                        null &&
+                                                    widget.projectedStartDate !=
+                                                        null
                                                 ? () {
                                                     final externalTons =
                                                         selectedLots.fold<
@@ -612,40 +633,45 @@ class RightPanel extends StatelessWidget {
                                                                     lot.lbsPerBag /
                                                                     2000));
                                                     final sieTons =
-                                                        sieProduction *
+                                                        widget.sieProduction *
                                                             24 /
                                                             2000;
                                                     final totalTons =
                                                         externalTons + sieTons;
                                                     final runTimeHours =
                                                         (totalTons * 2000) /
-                                                            (feedRate * 1000) *
+                                                            (widget.feedRate *
+                                                                1000) *
                                                             24;
                                                     final projectedEndDate =
-                                                        projectedStartDate!.add(
+                                                        widget
+                                                            .projectedStartDate!
+                                                            .add(
                                                       Duration(
                                                           hours: runTimeHours
                                                               .round()),
                                                     );
-                                                    final sameDay =
-                                                        projectedEndDate.year ==
-                                                                targetEndDate!
-                                                                    .year &&
-                                                            projectedEndDate
-                                                                    .month ==
-                                                                targetEndDate!
-                                                                    .month &&
-                                                            projectedEndDate
-                                                                    .day ==
-                                                                targetEndDate!
-                                                                    .day;
+                                                    final sameDay = projectedEndDate
+                                                                .year ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .year &&
+                                                        projectedEndDate
+                                                                .month ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .month &&
+                                                        projectedEndDate.day ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .day;
                                                     if (sameDay) {
                                                       return Colors.green[700];
                                                     }
                                                     final diff =
                                                         projectedEndDate
-                                                            .difference(
-                                                                targetEndDate!)
+                                                            .difference(widget
+                                                                .targetEndDate!)
                                                             .inHours;
                                                     return diff > 0
                                                         ? Colors.red[700]
@@ -660,8 +686,8 @@ class RightPanel extends StatelessWidget {
                                             icon: Icons.event,
                                             label: 'Projected End',
                                             value: () {
-                                              if (projectedStartDate == null)
-                                                return 'Not Set';
+                                              if (widget.projectedStartDate ==
+                                                  null) return 'Not Set';
                                               final externalTons =
                                                   selectedLots.fold<double>(
                                                       0,
@@ -671,22 +697,26 @@ class RightPanel extends StatelessWidget {
                                                               lot.lbsPerBag /
                                                               2000));
                                               final sieTons =
-                                                  sieProduction * 24 / 2000;
+                                                  widget.sieProduction *
+                                                      24 /
+                                                      2000;
                                               final totalTons =
                                                   externalTons + sieTons;
                                               final runTimeHours =
                                                   (totalTons * 2000) /
-                                                      (feedRate * 1000) *
+                                                      (widget.feedRate * 1000) *
                                                       24;
-                                              final endDate =
-                                                  projectedStartDate!.add(
+                                              final endDate = widget
+                                                  .projectedStartDate!
+                                                  .add(
                                                 Duration(
                                                     hours:
                                                         runTimeHours.round()),
                                               );
                                               return "${endDate.month}/${endDate.day}/${endDate.year}";
                                             }(),
-                                            sublabel: targetEndDate != null
+                                            sublabel: widget.targetEndDate !=
+                                                    null
                                                 ? () {
                                                     final externalTons =
                                                         selectedLots.fold<
@@ -698,40 +728,45 @@ class RightPanel extends StatelessWidget {
                                                                     lot.lbsPerBag /
                                                                     2000));
                                                     final sieTons =
-                                                        sieProduction *
+                                                        widget.sieProduction *
                                                             24 /
                                                             2000;
                                                     final totalTons =
                                                         externalTons + sieTons;
                                                     final runTimeHours =
                                                         (totalTons * 2000) /
-                                                            (feedRate * 1000) *
+                                                            (widget.feedRate *
+                                                                1000) *
                                                             24;
                                                     final projectedEndDate =
-                                                        projectedStartDate!.add(
+                                                        widget
+                                                            .projectedStartDate!
+                                                            .add(
                                                       Duration(
                                                           hours: runTimeHours
                                                               .round()),
                                                     );
-                                                    final sameDay =
-                                                        projectedEndDate.year ==
-                                                                targetEndDate!
-                                                                    .year &&
-                                                            projectedEndDate
-                                                                    .month ==
-                                                                targetEndDate!
-                                                                    .month &&
-                                                            projectedEndDate
-                                                                    .day ==
-                                                                targetEndDate!
-                                                                    .day;
+                                                    final sameDay = projectedEndDate
+                                                                .year ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .year &&
+                                                        projectedEndDate
+                                                                .month ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .month &&
+                                                        projectedEndDate.day ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .day;
                                                     if (sameDay) {
                                                       return '✓ Matches target';
                                                     }
                                                     final diff =
                                                         projectedEndDate
-                                                            .difference(
-                                                                targetEndDate!)
+                                                            .difference(widget
+                                                                .targetEndDate!)
                                                             .inHours;
                                                     final days = (diff / 24)
                                                         .ceil()
@@ -741,7 +776,8 @@ class RightPanel extends StatelessWidget {
                                                         : '⚠️ $days days before target';
                                                   }()
                                                 : 'Based on duration',
-                                            valueColor: targetEndDate != null
+                                            valueColor: widget.targetEndDate !=
+                                                    null
                                                 ? () {
                                                     final externalTons =
                                                         selectedLots.fold<
@@ -753,40 +789,45 @@ class RightPanel extends StatelessWidget {
                                                                     lot.lbsPerBag /
                                                                     2000));
                                                     final sieTons =
-                                                        sieProduction *
+                                                        widget.sieProduction *
                                                             24 /
                                                             2000;
                                                     final totalTons =
                                                         externalTons + sieTons;
                                                     final runTimeHours =
                                                         (totalTons * 2000) /
-                                                            (feedRate * 1000) *
+                                                            (widget.feedRate *
+                                                                1000) *
                                                             24;
                                                     final projectedEndDate =
-                                                        projectedStartDate!.add(
+                                                        widget
+                                                            .projectedStartDate!
+                                                            .add(
                                                       Duration(
                                                           hours: runTimeHours
                                                               .round()),
                                                     );
-                                                    final sameDay =
-                                                        projectedEndDate.year ==
-                                                                targetEndDate!
-                                                                    .year &&
-                                                            projectedEndDate
-                                                                    .month ==
-                                                                targetEndDate!
-                                                                    .month &&
-                                                            projectedEndDate
-                                                                    .day ==
-                                                                targetEndDate!
-                                                                    .day;
+                                                    final sameDay = projectedEndDate
+                                                                .year ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .year &&
+                                                        projectedEndDate
+                                                                .month ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .month &&
+                                                        projectedEndDate.day ==
+                                                            widget
+                                                                .targetEndDate!
+                                                                .day;
                                                     if (sameDay) {
                                                       return Colors.green[700];
                                                     }
                                                     final diff =
                                                         projectedEndDate
-                                                            .difference(
-                                                                targetEndDate!)
+                                                            .difference(widget
+                                                                .targetEndDate!)
                                                             .inHours;
                                                     return diff > 0
                                                         ? Colors.red[700]
@@ -797,158 +838,223 @@ class RightPanel extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 16),
-                                      child: Divider(
-                                        color: Color(0xFFE5E7EB),
-                                      ),
-                                    ),
-                                    // Production Row
-                                    Row(
-                                      children: [
-                                        Icon(Icons.speed,
-                                            size: 20, color: Colors.grey[700]),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          'Production Rates',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.grey[800],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: _buildCompactStatCard(
-                                            icon: Icons.speed,
-                                            label: 'Feed Rate',
-                                            value:
-                                                '${feedRate.toStringAsFixed(1)} TPH',
-                                          ),
-                                        ),
-                                        const SizedBox(width: 16),
-                                        Expanded(
-                                          child: _buildCompactStatCard(
-                                            icon: Icons.science,
-                                            label: 'SIE Mo Production',
-                                            value:
-                                                '${sieProduction.toStringAsFixed(1)}k',
-                                          ),
-                                        ),
-                                        const SizedBox(width: 16),
-                                        Expanded(
-                                          child: _buildCompactStatCard(
-                                            icon: Icons.balance,
-                                            label: 'Total Tons',
-                                            value: () {
-                                              final externalTons =
-                                                  selectedLots.fold<double>(
-                                                      0,
-                                                      (sum, lot) =>
-                                                          sum +
-                                                          (lot.selectedBags *
-                                                              lot.lbsPerBag /
-                                                              2000));
-                                              final sieTons =
-                                                  sieProduction * 24 / 2000;
-                                              return '${(externalTons + sieTons).toStringAsFixed(1)} tons';
-                                            }(),
-                                            sublabel: 'SIE Mo + External Feed',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 16),
-                                      child: Divider(
-                                        color: Color(0xFFE5E7EB),
-                                      ),
-                                    ),
-                                    // Material Details Row
-                                    Row(
-                                      children: [
-                                        Icon(Icons.science,
-                                            size: 20, color: Colors.grey[700]),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          'Feed Material Details',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.grey[800],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: _buildCompactStatCard(
-                                            icon: Icons.folder,
-                                            label: 'Lots',
-                                            value:
-                                                '${selectedLots.length} lots',
-                                          ),
-                                        ),
-                                        const SizedBox(width: 16),
-                                        Expanded(
-                                          child: _buildCompactStatCard(
-                                            icon: Icons.inventory_2,
-                                            label: 'External Bags',
-                                            value:
-                                                "${selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags).toString()} bags",
-                                            tooltip:
-                                                'Click to view detailed bag information below',
+                                    const SizedBox(height: 24),
+
+                                    // Production Rates Accordion
+                                    Card(
+                                      margin: EdgeInsets.zero,
+                                      child: Column(
+                                        children: [
+                                          InkWell(
                                             onTap: () {
-                                              // Scroll to the Feed Composition section
-                                              Scrollable.ensureVisible(
-                                                feedCompositionKey
-                                                    .currentContext!,
-                                                duration: const Duration(
-                                                    milliseconds: 500),
-                                                curve: Curves.easeInOut,
-                                              );
+                                              setState(() {
+                                                _isProductionRatesExpanded =
+                                                    !_isProductionRatesExpanded;
+                                              });
                                             },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 12,
+                                                      horizontal: 16),
+                                              child: Row(
+                                                children: [
+                                                  Icon(Icons.speed,
+                                                      size: 20,
+                                                      color: Colors.grey[700]),
+                                                  const SizedBox(width: 8),
+                                                  Text(
+                                                    'Production Rates',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.grey[800],
+                                                    ),
+                                                  ),
+                                                  const Spacer(),
+                                                  Icon(
+                                                    _isProductionRatesExpanded
+                                                        ? Icons.expand_less
+                                                        : Icons.expand_more,
+                                                    size: 20,
+                                                    color: Colors.grey[600],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(width: 16),
-                                        Expanded(
-                                          child: _buildCompactStatCard(
-                                            icon: Icons.science,
-                                            label: 'External Mo lbs/day',
-                                            value: () {
-                                              final lbsPerDay = selectedLots
-                                                  .fold<double>(
-                                                      0,
-                                                      (sum, lot) =>
-                                                          sum +
-                                                          (lot.selectedBags *
-                                                              lot.lbsPerBag /
-                                                              24))
-                                                  .round();
-                                              return "${lbsPerDay.toString().replaceAllMapped(
-                                                    RegExp(
-                                                        r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                                                    (Match m) => '${m[1]},',
-                                                  )} lbs/day";
-                                            }(),
-                                            tooltip: () {
-                                              final bagsAndLbs = selectedLots
-                                                  .map((lot) =>
-                                                      '${lot.selectedBags} bags × ${lot.lbsPerBag} lbs')
-                                                  .join(' + ');
-                                              return 'Calculation: ($bagsAndLbs) ÷ 24 hrs';
-                                            }(),
+                                          if (_isProductionRatesExpanded)
+                                            Container(
+                                              padding: const EdgeInsets.all(16),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child:
+                                                        _buildCompactStatCard(
+                                                      icon: Icons.speed,
+                                                      label: 'Feed Rate',
+                                                      value:
+                                                          '${widget.feedRate.toStringAsFixed(1)} TPH',
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 16),
+                                                  Expanded(
+                                                    child:
+                                                        _buildCompactStatCard(
+                                                      icon: Icons.science,
+                                                      label:
+                                                          'SIE Mo Production',
+                                                      value:
+                                                          '${widget.sieProduction.toStringAsFixed(1)}k',
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 16),
+                                                  Expanded(
+                                                    child:
+                                                        _buildCompactStatCard(
+                                                      icon: Icons.balance,
+                                                      label: 'Total Tons',
+                                                      value: () {
+                                                        final externalTons =
+                                                            selectedLots.fold<
+                                                                    double>(
+                                                                0,
+                                                                (sum, lot) =>
+                                                                    sum +
+                                                                    (lot.selectedBags *
+                                                                        lot.lbsPerBag /
+                                                                        2000));
+                                                        final sieTons = widget
+                                                                .sieProduction *
+                                                            24 /
+                                                            2000;
+                                                        return '${(externalTons + sieTons).toStringAsFixed(1)} tons';
+                                                      }(),
+                                                      sublabel:
+                                                          'SIE Mo + External Feed',
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+
+                                    // Feed Material Details Accordion
+                                    Card(
+                                      margin: EdgeInsets.zero,
+                                      child: Column(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                _isFeedMaterialExpanded =
+                                                    !_isFeedMaterialExpanded;
+                                              });
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 12,
+                                                      horizontal: 16),
+                                              child: Row(
+                                                children: [
+                                                  Icon(Icons.science,
+                                                      size: 20,
+                                                      color: Colors.grey[700]),
+                                                  const SizedBox(width: 8),
+                                                  Text(
+                                                    'Feed Material Details',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.grey[800],
+                                                    ),
+                                                  ),
+                                                  const Spacer(),
+                                                  Icon(
+                                                    _isFeedMaterialExpanded
+                                                        ? Icons.expand_less
+                                                        : Icons.expand_more,
+                                                    size: 20,
+                                                    color: Colors.grey[600],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          if (_isFeedMaterialExpanded)
+                                            Container(
+                                              padding: const EdgeInsets.all(16),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child:
+                                                        _buildCompactStatCard(
+                                                      icon: Icons.folder,
+                                                      label: 'Lots',
+                                                      value:
+                                                          '${selectedLots.length} lots',
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 16),
+                                                  Expanded(
+                                                    child:
+                                                        _buildCompactStatCard(
+                                                      icon: Icons.inventory_2,
+                                                      label: 'External Bags',
+                                                      value: selectedLots
+                                                          .fold<int>(
+                                                              0,
+                                                              (sum, lot) =>
+                                                                  sum +
+                                                                  lot.selectedBags)
+                                                          .toString(),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 16),
+                                                  Expanded(
+                                                    child:
+                                                        _buildCompactStatCard(
+                                                      icon: Icons.science,
+                                                      label:
+                                                          'External Mo lbs/day',
+                                                      value: () {
+                                                        final lbsPerDay = selectedLots
+                                                            .fold<double>(
+                                                                0,
+                                                                (sum, lot) =>
+                                                                    sum +
+                                                                    (lot.selectedBags *
+                                                                        lot.lbsPerBag /
+                                                                        24))
+                                                            .round();
+                                                        return "${lbsPerDay.toString().replaceAllMapped(
+                                                              RegExp(
+                                                                  r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                                              (Match m) =>
+                                                                  '${m[1]},',
+                                                            )} lbs/day";
+                                                      }(),
+                                                      tooltip: () {
+                                                        final bagsAndLbs =
+                                                            selectedLots
+                                                                .map((lot) =>
+                                                                    '${lot.selectedBags} bags × ${lot.lbsPerBag} lbs')
+                                                                .join(' + ');
+                                                        return 'Calculation: ($bagsAndLbs) ÷ 24 hrs';
+                                                      }(),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -962,7 +1068,7 @@ class RightPanel extends StatelessWidget {
                                 const SizedBox(width: 8),
                                 Text(
                                   'Feed Composition',
-                                  key: feedCompositionKey,
+                                  key: widget.feedCompositionKey,
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
