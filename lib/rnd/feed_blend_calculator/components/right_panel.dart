@@ -795,28 +795,11 @@ class RightPanel extends StatelessWidget {
                                         const SizedBox(width: 16),
                                         Expanded(
                                           child: _buildCompactStatCard(
-                                            icon: Icons.science,
-                                            label: 'External Mo lbs/day',
-                                            value: () {
-                                              final totalBags =
-                                                  selectedLots.fold<int>(
-                                                      0,
-                                                      (sum, lot) =>
-                                                          sum +
-                                                          lot.selectedBags);
-                                              final lbsPerDay =
-                                                  (totalBags * 4000 / 24)
-                                                      .round();
-                                              return lbsPerDay
-                                                  .toString()
-                                                  .replaceAllMapped(
-                                                    RegExp(
-                                                        r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                                                    (Match m) => '${m[1]},',
-                                                  );
-                                            }(),
-                                            tooltip:
-                                                'Calculation: (External Bags × 4000 lbs) ÷ 24 hrs',
+                                            icon: Icons.balance,
+                                            label: 'Total Tons',
+                                            value:
+                                                '${((selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags) * 4000 / 2000) + (sieProduction * 24 / 2000)).toStringAsFixed(1)} tons',
+                                            sublabel: 'SIE Mo + External',
                                           ),
                                         ),
                                       ],
@@ -835,7 +818,7 @@ class RightPanel extends StatelessWidget {
                                             size: 20, color: Colors.grey[700]),
                                         const SizedBox(width: 8),
                                         Text(
-                                          'Material Details',
+                                          'Feed Material Details',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
@@ -849,14 +832,19 @@ class RightPanel extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: _buildCompactStatCard(
+                                            icon: Icons.folder,
+                                            label: 'Lots',
+                                            value:
+                                                '${selectedLots.length} lots',
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          child: _buildCompactStatCard(
                                             icon: Icons.inventory_2,
                                             label: 'External Bags',
-                                            value: selectedLots
-                                                .fold<int>(
-                                                    0,
-                                                    (sum, lot) =>
-                                                        sum + lot.selectedBags)
-                                                .toString(),
+                                            value:
+                                                "${selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags).toString()} bags",
                                             tooltip:
                                                 'Click to view detailed bag information below',
                                             onTap: () {
@@ -874,14 +862,28 @@ class RightPanel extends StatelessWidget {
                                         const SizedBox(width: 16),
                                         Expanded(
                                           child: _buildCompactStatCard(
-                                            icon: Icons.balance,
-                                            label: 'Total Tons',
-                                            value:
-                                                '${((selectedLots.fold<int>(0, (sum, lot) => sum + lot.selectedBags) * 4000 / 2000) + (sieProduction * 24 / 2000)).toStringAsFixed(1)}',
-                                            sublabel: 'SIE Mo + External',
+                                            icon: Icons.science,
+                                            label: 'External Mo lbs/day',
+                                            value: () {
+                                              final totalBags =
+                                                  selectedLots.fold<int>(
+                                                      0,
+                                                      (sum, lot) =>
+                                                          sum +
+                                                          lot.selectedBags);
+                                              final lbsPerDay =
+                                                  (totalBags * 4000 / 24)
+                                                      .round();
+                                              return "${lbsPerDay.toString().replaceAllMapped(
+                                                    RegExp(
+                                                        r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                                    (Match m) => '${m[1]},',
+                                                  )} lbs/day";
+                                            }(),
+                                            tooltip:
+                                                'Calculation: (External Bags × 4000 lbs) ÷ 24 hrs',
                                           ),
                                         ),
-                                        const Expanded(child: SizedBox()),
                                       ],
                                     ),
                                   ],
