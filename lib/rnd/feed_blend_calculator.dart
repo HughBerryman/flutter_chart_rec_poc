@@ -30,6 +30,11 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
   void initState() {
     super.initState();
     lots = sampleLots;
+    // Set optimistic defaults
+    final now = DateTime.now();
+    projectedStartDate = now;
+    projectedEndDate =
+        now.add(const Duration(days: 7)); // Default to 1-week projection
   }
 
   double _panelWidth = 800;
@@ -228,6 +233,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                       lots: lots.where((lot) => lot.selectedBags > 0).toList(),
                       feedRate: feedRate,
                       sieProduction: sieProduction,
+                      projectedStartDate: projectedStartDate,
                     ),
                 ],
               ),

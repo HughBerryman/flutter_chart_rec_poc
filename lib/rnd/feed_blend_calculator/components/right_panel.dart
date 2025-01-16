@@ -9,6 +9,7 @@ class RightPanel extends StatelessWidget {
   final List<LotData> lots;
   final double feedRate;
   final double sieProduction;
+  final DateTime? projectedStartDate;
 
   const RightPanel({
     super.key,
@@ -17,6 +18,7 @@ class RightPanel extends StatelessWidget {
     required this.lots,
     required this.feedRate,
     required this.sieProduction,
+    this.projectedStartDate,
   });
 
   Map<String, double> _calculateWeightedAverages(List<LotData> selectedLots) {
@@ -214,10 +216,28 @@ class RightPanel extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 _buildStatCard(
+                                  icon: Icons.calendar_today,
+                                  value: projectedStartDate != null
+                                      ? "${projectedStartDate!.month}/${projectedStartDate!.day}/${projectedStartDate!.year}"
+                                      : 'Not Set',
+                                  label: 'Start Date',
+                                ),
+                                _buildStatCard(
+                                  icon: Icons.science,
+                                  value: '${sieProduction.toStringAsFixed(1)}k',
+                                  label: 'SIE Mo Production',
+                                ),
+                                _buildStatCard(
                                   icon: Icons.inventory_2,
                                   value: totalBags.toString(),
-                                  label: 'Bags Selected',
+                                  label: 'External Bags',
                                 ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
                                 _buildStatCard(
                                   icon: Icons.science,
                                   value: externalMoLbsDay
@@ -229,12 +249,35 @@ class RightPanel extends StatelessWidget {
                                   label: 'External Mo lbs/day',
                                 ),
                                 _buildStatCard(
+                                  icon: Icons.speed,
+                                  value: '${feedRate.toStringAsFixed(1)}k',
+                                  label: 'Target Feed Rate',
+                                ),
+                                _buildStatCard(
+                                  icon: Icons.timer,
+                                  value:
+                                      '${((totalBags * 4000) / (feedRate * 1000) * 24).toStringAsFixed(1)}',
+                                  label: 'Projected Run Time (hrs)',
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _buildStatCard(
                                   icon: Icons.balance,
                                   value:
                                       (totalTons + (sieProduction * 24 / 2000))
                                           .toStringAsFixed(1),
                                   label: 'Total Tons (SIE Mo + External)',
                                 ),
+                                _buildStatCard(
+                                  icon: Icons.access_time,
+                                  value: '24',
+                                  label: 'Leach Circuit Hours',
+                                ),
+                                const Spacer(),
                               ],
                             ),
                             const SizedBox(height: 24),
