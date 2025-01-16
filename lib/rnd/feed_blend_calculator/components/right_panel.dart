@@ -4,19 +4,20 @@ import '../widgets/elements_section.dart';
 import 'feed_composition_section.dart';
 
 class RightPanel extends StatelessWidget {
+  final List<LotData> lots;
   final double width;
   final ValueChanged<double> onWidthChanged;
-  final List<LotData> lots;
   final double feedRate;
   final double sieProduction;
   final DateTime? projectedStartDate;
   final DateTime? targetEndDate;
+  final GlobalKey feedCompositionKey = GlobalKey();
 
-  const RightPanel({
+  RightPanel({
     super.key,
+    required this.lots,
     required this.width,
     required this.onWidthChanged,
-    required this.lots,
     required this.feedRate,
     required this.sieProduction,
     this.projectedStartDate,
@@ -110,53 +111,53 @@ class RightPanel extends StatelessWidget {
 
   Widget _buildCompactStatCard({
     required IconData icon,
-    required String value,
     required String label,
+    required String value,
     String? sublabel,
     String? tooltip,
     Color? valueColor,
+    VoidCallback? onTap,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(12),
+    final card = Container(
+      height: 120,
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey[200]!),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
       ),
-      height: 120,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Row(
             children: [
-              Icon(icon, size: 16, color: Colors.grey[700]),
+              Icon(icon, size: 20, color: Colors.grey[700]),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   label,
                   style: TextStyle(
-                    color: Colors.grey[600],
                     fontSize: 14,
+                    color: Colors.grey[600],
                   ),
                 ),
               ),
             ],
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: Row(
                   children: [
                     Text(
                       value,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 24,
                         fontWeight: FontWeight.w600,
-                        color: valueColor ?? Colors.grey[800],
+                        color: valueColor ?? Colors.black87,
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
                     if (tooltip != null) ...[
                       const SizedBox(width: 4),
@@ -169,34 +170,38 @@ class RightPanel extends StatelessWidget {
                         ),
                       ),
                     ],
-                    const Spacer(),
                   ],
                 ),
-                if (sublabel != null) ...[
-                  const SizedBox(height: 4),
-                  Text(
-                    sublabel,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ] else ...[
-                  const SizedBox(height: 4),
-                  const Text(
-                    '\u200B', // Zero-width space to maintain consistent height
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ],
-            ),
+              ),
+            ],
           ),
+          if (sublabel != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              sublabel,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
+            ),
+          ] else
+            Text(
+              '\u200B',
+              style: const TextStyle(fontSize: 12),
+            ),
         ],
       ),
     );
+
+    if (onTap != null) {
+      return InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: card,
+      );
+    }
+
+    return card;
   }
 
   Widget _buildInfoRow({
@@ -805,6 +810,18 @@ class RightPanel extends StatelessWidget {
                                                     (sum, lot) =>
                                                         sum + lot.selectedBags)
                                                 .toString(),
+                                            tooltip:
+                                                'Click to view detailed bag information below',
+                                            onTap: () {
+                                              // Scroll to the Feed Composition section
+                                              Scrollable.ensureVisible(
+                                                feedCompositionKey
+                                                    .currentContext!,
+                                                duration: const Duration(
+                                                    milliseconds: 500),
+                                                curve: Curves.easeInOut,
+                                              );
+                                            },
                                           ),
                                         ),
                                         const SizedBox(width: 16),
@@ -830,9 +847,10 @@ class RightPanel extends StatelessWidget {
                                 Icon(Icons.science,
                                     size: 20, color: Colors.grey[700]),
                                 const SizedBox(width: 8),
-                                const Text(
+                                Text(
                                   'Feed Composition',
-                                  style: TextStyle(
+                                  key: feedCompositionKey,
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
