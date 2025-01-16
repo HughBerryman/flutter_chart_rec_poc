@@ -100,11 +100,11 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
               if (isOutOfSpec) ...[
                 const Spacer(),
                 Text(
-                  'Out of Spec',
+                  'Out of spec',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.red[600],
                     fontWeight: FontWeight.w500,
+                    color: Colors.red[700],
                   ),
                 ),
               ],
@@ -252,7 +252,7 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
               ),
               const SizedBox(width: 8),
               Text(
-                'Out of Specification',
+                'Out of spec',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -297,7 +297,7 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
               ),
               const SizedBox(width: 8),
               Text(
-                'Within Specification',
+                'In spec',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
