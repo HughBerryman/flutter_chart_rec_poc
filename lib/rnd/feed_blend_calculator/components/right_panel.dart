@@ -557,25 +557,32 @@ class RightPanel extends StatelessWidget {
                                                           hours: runTimeHours
                                                               .round()),
                                                     );
+                                                    final sameDay =
+                                                        projectedEndDate.year ==
+                                                                targetEndDate!
+                                                                    .year &&
+                                                            projectedEndDate
+                                                                    .month ==
+                                                                targetEndDate!
+                                                                    .month &&
+                                                            projectedEndDate
+                                                                    .day ==
+                                                                targetEndDate!
+                                                                    .day;
+                                                    if (sameDay) {
+                                                      return '✓ Matches target';
+                                                    }
                                                     final diff =
                                                         projectedEndDate
                                                             .difference(
                                                                 targetEndDate!)
-                                                            .inDays;
-                                                    final percentDiff = (diff
-                                                                .abs() /
-                                                            targetEndDate!
-                                                                .difference(
-                                                                    projectedStartDate!)
-                                                                .inDays *
-                                                            100)
-                                                        .round();
-                                                    if (percentDiff > 10) {
-                                                      return diff > 0
-                                                          ? '⚠️ ${percentDiff}% longer than target'
-                                                          : '⚠️ ${percentDiff}% shorter than target';
-                                                    }
-                                                    return '✓ Within 10% of target';
+                                                            .inHours;
+                                                    final days = (diff / 24)
+                                                        .ceil()
+                                                        .abs();
+                                                    return diff > 0
+                                                        ? '⚠️ $days days longer than target'
+                                                        : '⚠️ $days days shorter than target';
                                                   }()
                                                 : 'Based on current feed rate',
                                             valueColor: targetEndDate != null &&
@@ -597,23 +604,29 @@ class RightPanel extends StatelessWidget {
                                                           hours: runTimeHours
                                                               .round()),
                                                     );
+                                                    final sameDay =
+                                                        projectedEndDate.year ==
+                                                                targetEndDate!
+                                                                    .year &&
+                                                            projectedEndDate
+                                                                    .month ==
+                                                                targetEndDate!
+                                                                    .month &&
+                                                            projectedEndDate
+                                                                    .day ==
+                                                                targetEndDate!
+                                                                    .day;
+                                                    if (sameDay) {
+                                                      return Colors.green[700];
+                                                    }
                                                     final diff =
                                                         projectedEndDate
                                                             .difference(
                                                                 targetEndDate!)
-                                                            .inDays;
-                                                    final percentDiff = (diff
-                                                                .abs() /
-                                                            targetEndDate!
-                                                                .difference(
-                                                                    projectedStartDate!)
-                                                                .inDays *
-                                                            100)
-                                                        .round();
-                                                    if (percentDiff > 10) {
-                                                      return Colors.red[700];
-                                                    }
-                                                    return Colors.green[700];
+                                                            .inHours;
+                                                    return diff > 0
+                                                        ? Colors.red[700]
+                                                        : Colors.amber[700];
                                                   }()
                                                 : null,
                                           ),
@@ -661,16 +674,32 @@ class RightPanel extends StatelessWidget {
                                                           hours: runTimeHours
                                                               .round()),
                                                     );
+                                                    final sameDay =
+                                                        projectedEndDate.year ==
+                                                                targetEndDate!
+                                                                    .year &&
+                                                            projectedEndDate
+                                                                    .month ==
+                                                                targetEndDate!
+                                                                    .month &&
+                                                            projectedEndDate
+                                                                    .day ==
+                                                                targetEndDate!
+                                                                    .day;
+                                                    if (sameDay) {
+                                                      return '✓ Matches target';
+                                                    }
                                                     final diff =
                                                         projectedEndDate
                                                             .difference(
                                                                 targetEndDate!)
-                                                            .inDays;
-                                                    if (diff == 0)
-                                                      return '✓ Matches target';
+                                                            .inHours;
+                                                    final days = (diff / 24)
+                                                        .ceil()
+                                                        .abs();
                                                     return diff > 0
-                                                        ? '⚠️ ${diff.abs()} days after target'
-                                                        : '⚠️ ${diff.abs()} days before target';
+                                                        ? '⚠️ $days days after target'
+                                                        : '⚠️ $days days before target';
                                                   }()
                                                 : 'Based on duration',
                                             valueColor: targetEndDate != null
@@ -691,11 +720,29 @@ class RightPanel extends StatelessWidget {
                                                           hours: runTimeHours
                                                               .round()),
                                                     );
-                                                    return projectedEndDate
-                                                            .isAtSameMomentAs(
+                                                    final sameDay =
+                                                        projectedEndDate.year ==
+                                                                targetEndDate!
+                                                                    .year &&
+                                                            projectedEndDate
+                                                                    .month ==
+                                                                targetEndDate!
+                                                                    .month &&
+                                                            projectedEndDate
+                                                                    .day ==
+                                                                targetEndDate!
+                                                                    .day;
+                                                    if (sameDay) {
+                                                      return Colors.green[700];
+                                                    }
+                                                    final diff =
+                                                        projectedEndDate
+                                                            .difference(
                                                                 targetEndDate!)
-                                                        ? Colors.green[700]
-                                                        : Colors.red[700];
+                                                            .inHours;
+                                                    return diff > 0
+                                                        ? Colors.red[700]
+                                                        : Colors.amber[700];
                                                   }()
                                                 : null,
                                           ),
