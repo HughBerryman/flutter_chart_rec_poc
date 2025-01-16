@@ -348,7 +348,7 @@ class FeedCompositionSection extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    '${value.toStringAsFixed(2)}%',
+                    '${value.toStringAsFixed(1)}%',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -357,7 +357,9 @@ class FeedCompositionSection extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '(${range[0]}.0% - ${range[1]}.0%)',
+                    range[1] % 1 == 0
+                        ? '(${range[0].toStringAsFixed(1)} - ${range[1].toStringAsFixed(0)}%)'
+                        : '(${range[0].toStringAsFixed(1)} - ${range[1].toStringAsFixed(2)}%)',
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 14,
@@ -493,7 +495,7 @@ class FeedCompositionSection extends StatelessWidget {
           Row(
             children: [
               Text(
-                '${value.toStringAsFixed(2)}%',
+                '${value.toStringAsFixed(1)}%',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
