@@ -530,14 +530,6 @@ class _FeedCompositionSectionState extends State<FeedCompositionSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Feed Composition',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 16),
         _buildAccordion(
           'Specification Status',
           _buildSpecificationStatus(weightedAverages),
