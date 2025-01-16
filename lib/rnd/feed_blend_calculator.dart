@@ -33,6 +33,7 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     // Set optimistic defaults
     final now = DateTime.now();
     _projectedStartDate = now;
+    _targetEndDate = now.add(const Duration(days: 4));
   }
 
   double _panelWidth = 800;
