@@ -374,40 +374,6 @@ class RightPanel extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Primary Metrics (Hero Cards)
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _buildStatCard(
-                                    icon: Icons.inventory_2,
-                                    value: selectedLots
-                                        .fold<int>(
-                                            0,
-                                            (sum, lot) =>
-                                                sum + lot.selectedBags)
-                                        .toString(),
-                                    label: 'External Bags',
-                                  ),
-                                ),
-                                Expanded(
-                                  child: _buildStatCard(
-                                    icon: Icons.speed,
-                                    value: '${feedRate.toStringAsFixed(1)} TPH',
-                                    label: 'Target Feed Rate',
-                                  ),
-                                ),
-                                Expanded(
-                                  child: _buildStatCard(
-                                    icon: Icons.science,
-                                    value:
-                                        '${sieProduction.toStringAsFixed(1)}k',
-                                    label: 'SIE Mo Production',
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 24),
-
                             // Schedule Section
                             _buildSection(
                               title: 'Schedule Projections',
@@ -605,10 +571,58 @@ class RightPanel extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
 
-                            // Production Details Section
+                            // Production Rate Settings Section
                             _buildSection(
-                              title: 'Production Details',
+                              title: 'Production Rate Settings',
                               children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: _buildStatCard(
+                                        icon: Icons.speed,
+                                        value:
+                                            '${feedRate.toStringAsFixed(1)} TPH',
+                                        label: 'Target Feed Rate',
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: _buildStatCard(
+                                        icon: Icons.science,
+                                        value:
+                                            '${sieProduction.toStringAsFixed(1)}k',
+                                        label: 'SIE Mo Production',
+                                      ),
+                                    ),
+                                    const Expanded(child: SizedBox()),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+
+                            // Feed Material Details Section
+                            _buildSection(
+                              title: 'Feed Material Details',
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: _buildStatCard(
+                                        icon: Icons.inventory_2,
+                                        value: selectedLots
+                                            .fold<int>(
+                                                0,
+                                                (sum, lot) =>
+                                                    sum + lot.selectedBags)
+                                            .toString(),
+                                        label: 'External Bags',
+                                      ),
+                                    ),
+                                    const Expanded(child: SizedBox()),
+                                    const Expanded(child: SizedBox()),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
                                 _buildInfoRow(
                                   icon: Icons.science,
                                   label: 'External Mo lbs/day',
