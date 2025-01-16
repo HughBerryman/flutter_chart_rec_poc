@@ -30,6 +30,7 @@ class FeedCompositionSection extends StatelessWidget {
           ),
         ),
         child: ExpansionTile(
+          initiallyExpanded: true,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
@@ -48,19 +49,15 @@ class FeedCompositionSection extends StatelessWidget {
                         ? Icons.science
                         : Icons.inventory_2,
                 size: 20,
-                color: title == 'Specification Status'
-                    ? Colors.green[700]
-                    : Colors.grey[700],
+                color: Colors.grey[700],
               ),
               const SizedBox(width: 12),
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: title == 'Specification Status'
-                      ? Colors.green[700]
-                      : Colors.black,
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -117,6 +114,7 @@ class FeedCompositionSection extends StatelessWidget {
           ),
         ),
         child: ExpansionTile(
+          initiallyExpanded: true,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
