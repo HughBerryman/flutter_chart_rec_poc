@@ -998,7 +998,7 @@ class _RightPanelState extends State<RightPanel> {
                                                       icon: Icons.folder,
                                                       label: 'Lots',
                                                       value:
-                                                          '${selectedLots.length} lots',
+                                                          '${selectedLots.length} ${selectedLots.length == 1 ? 'lot' : 'lots'}',
                                                     ),
                                                   ),
                                                   const SizedBox(width: 16),
