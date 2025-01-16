@@ -858,7 +858,7 @@ class RightPanel extends StatelessWidget {
                                                   sieProduction * 24 / 2000;
                                               return '${(externalTons + sieTons).toStringAsFixed(1)} tons';
                                             }(),
-                                            sublabel: 'SIE Mo + External',
+                                            sublabel: 'SIE Mo + External Feed',
                                           ),
                                         ),
                                       ],
