@@ -980,7 +980,8 @@ class _RightPanelState extends State<RightPanel> {
                                                     child:
                                                         _buildCompactStatCard(
                                                       icon: Icons.balance,
-                                                      label: 'Total Tons',
+                                                      label:
+                                                          'Total Tons Processed',
                                                       value: () {
                                                         final externalTons =
                                                             selectedLots.fold<
@@ -997,8 +998,72 @@ class _RightPanelState extends State<RightPanel> {
                                                             2000;
                                                         return '${(externalTons + sieTons).toStringAsFixed(1)} tons';
                                                       }(),
-                                                      sublabel:
-                                                          'SIE Mo + External Feed',
+                                                      sublabel: () {
+                                                        if (widget.targetEndDate ==
+                                                                null ||
+                                                            widget.projectedStartDate ==
+                                                                null) {
+                                                          return 'Based on current feed rate';
+                                                        }
+                                                        final externalTons =
+                                                            selectedLots.fold<
+                                                                    double>(
+                                                                0,
+                                                                (sum, lot) =>
+                                                                    sum +
+                                                                    (lot.selectedBags *
+                                                                        lot.lbsPerBag /
+                                                                        2000));
+                                                        final sieTons = widget
+                                                                .sieProduction *
+                                                            24 /
+                                                            2000;
+                                                        final totalTons =
+                                                            externalTons +
+                                                                sieTons;
+                                                        final runTimeHours =
+                                                            (totalTons * 2000) /
+                                                                (widget.feedRate *
+                                                                    1000) *
+                                                                24;
+                                                        final projectedEndDate =
+                                                            widget
+                                                                .projectedStartDate!
+                                                                .add(
+                                                          Duration(
+                                                              hours:
+                                                                  runTimeHours
+                                                                      .round()),
+                                                        );
+                                                        final sameDay = projectedEndDate
+                                                                    .year ==
+                                                                widget
+                                                                    .targetEndDate!
+                                                                    .year &&
+                                                            projectedEndDate
+                                                                    .month ==
+                                                                widget
+                                                                    .targetEndDate!
+                                                                    .month &&
+                                                            projectedEndDate
+                                                                    .day ==
+                                                                widget
+                                                                    .targetEndDate!
+                                                                    .day;
+                                                        if (sameDay) {
+                                                          return '✓ Matches target duration';
+                                                        }
+                                                        final diff = projectedEndDate
+                                                            .difference(widget
+                                                                .targetEndDate!)
+                                                            .inHours;
+                                                        final days = (diff / 24)
+                                                            .ceil()
+                                                            .abs();
+                                                        return diff > 0
+                                                            ? '⚠️ $days days over target'
+                                                            : '⚠️ $days days under target';
+                                                      }(),
                                                       tooltip: () {
                                                         final bagsAndLbs =
                                                             selectedLots
