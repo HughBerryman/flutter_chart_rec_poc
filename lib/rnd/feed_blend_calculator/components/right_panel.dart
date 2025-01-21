@@ -468,7 +468,7 @@ class _RightPanelState extends State<RightPanel> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${selectedLots.length} assay in blend',
+                            '${selectedLots.length} ${selectedLots.length == 1 ? 'lot' : 'lots'} in blend',
                             style: TextStyle(color: Colors.grey[600]),
                           ),
                         ],
