@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'rnd/rec_selector.dart';
 import 'rnd/chart_app.dart';
 import 'rnd/feed_blend_calculator.dart';
+import 'rnd/mds_widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -121,6 +122,21 @@ class HomeScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
               child: const Text('Open Widgetbook POC'),
+            ),
+            const SizedBox(height: 20),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MdsWidgets()),
+                );
+              },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Theme.of(context).primaryColor),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
+              child: const Text('MDS Widgets Example'),
             ),
             const SizedBox(height: 20),
           ],
