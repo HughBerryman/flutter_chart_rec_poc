@@ -4,6 +4,7 @@ import 'rnd/rec_selector.dart';
 import 'rnd/chart_app.dart';
 import 'rnd/feed_blend_calculator.dart';
 import 'rnd/mds_widgets.dart';
+import 'rnd/codeparrot-poc/lot_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -137,6 +138,21 @@ class HomeScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
               child: const Text('MDS Widgets Example'),
+            ),
+            const SizedBox(height: 20),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LotCard()),
+                );
+              },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Theme.of(context).primaryColor),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
+              child: const Text('CodeParrot POC'),
             ),
             const SizedBox(height: 20),
           ],
