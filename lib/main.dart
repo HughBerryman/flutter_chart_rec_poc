@@ -85,21 +85,22 @@ class HomeScreen extends StatelessWidget {
               child: const Text('Feed Blend Calculator'),
             ),
             const SizedBox(height: 20),
-            OutlinedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LotCard()),
-                );
-              },
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Theme.of(context).primaryColor),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              ),
-              child: const Text('CodeParrot POC'),
-            ),
-            const SizedBox(height: 20),
+            // Temporarily hidden CodeParrot POC button
+            // OutlinedButton(
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => LotCard()),
+            //     );
+            //   },
+            //   style: OutlinedButton.styleFrom(
+            //     side: BorderSide(color: Theme.of(context).primaryColor),
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            //   ),
+            //   child: const Text('CodeParrot POC'),
+            // ),
+            // const SizedBox(height: 20),
             OutlinedButton(
               onPressed: () {
                 Navigator.push(
