@@ -89,6 +89,21 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
+                  MaterialPageRoute(builder: (context) => LotCard()),
+                );
+              },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Theme.of(context).primaryColor),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
+              child: const Text('CodeParrot POC'),
+            ),
+            const SizedBox(height: 20),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
                   MaterialPageRoute(builder: (context) => ChartApp()),
                 );
               },
@@ -98,21 +113,6 @@ class HomeScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
               child: const Text('Show Chart App UI'),
-            ),
-            const SizedBox(height: 20),
-            OutlinedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const RecSelector()),
-                );
-              },
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Theme.of(context).primaryColor),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              ),
-              child: const Text('Show Rec Selector UI'),
             ),
             const SizedBox(height: 20),
             OutlinedButton(
@@ -144,7 +144,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LotCard()),
+                  MaterialPageRoute(builder: (context) => const RecSelector()),
                 );
               },
               style: OutlinedButton.styleFrom(
@@ -152,7 +152,7 @@ class HomeScreen extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
-              child: const Text('CodeParrot POC'),
+              child: const Text('Show Rec Selector UI'),
             ),
             const SizedBox(height: 20),
           ],
