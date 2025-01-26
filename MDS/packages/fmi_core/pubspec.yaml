@@ -1,0 +1,192 @@
+name: fmi_core
+description: A new Flutter package project.
+version: 0.0.1
+homepage:
+publish_to: none
+
+environment:
+  sdk: '>=2.18.1 <3.0.0'
+  flutter: '>=3.3.2'
+
+dependency_overrides:
+  ffi: ^2.0.1
+  http: 1.0.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Flutter generator to support 'generate: true' below
+  flutter_gen:
+
+  # Package for cross platform (web/mobile) data persistence
+  isar: 2.4.0
+  isar_flutter_libs: 2.4.0
+
+  # Azure Authentication
+  azure_ad_authentication:
+    path: ./packages/fmi_authentication
+
+  # dependency injection
+  get_it:
+
+  # internet connection inspection
+  connectivity_plus: 5.0.1
+  universal_html: 2.2.2
+
+  # flutter custom carousel
+  flutter_custom_carousel: ^0.1.0+1
+  flutter_animate: ^4.5.0
+
+  # Package utilized for search bar implementations
+  material_floating_search_bar_2: ^0.5.0
+
+  # json serialization
+  json_annotation:
+
+  # Package for network related images and associated error handling
+  cached_network_image: ^3.2.1
+
+  # Debounce
+  easy_debounce:
+
+  # File selection
+  file_picker: 5.2.2
+
+  # MVVM / state management
+  provider:
+  stacked: ^3.2.8
+
+  # Secure Storage
+  flutter_secure_storage: ^6.0.0
+
+  # token decoding
+  jwt_decoder: ^2.0.1
+
+  # Application package information
+  package_info_plus:
+
+  # Application Insights
+  azure_application_insights: ^3.0.0
+  device_info_plus: ^4.0.0
+
+  # Package to manage concurrent access to asynchronous code
+  synchronized: ^3.0.0+2
+
+  font_awesome_flutter:
+    path: ../fmi-mineral-dsp/dist/font_awesome_flutter
+
+  flutter_svg: ^2.0.10+1
+
+  charts_painter: ^2.0.0
+  intl_phone_number_input: ^0.7.1
+
+  # Signature capture
+  signature: ^5.2.1
+  mobile_scanner: 3.4.1
+
+  # Approval timelines
+  timelines: ^0.1.0
+
+  # Badges
+  badges: ^3.1.1
+
+  # Geolocation
+  geolocator: ^9.0.2
+
+  # Syncfusion
+  syncfusion_flutter_charts: ^26.1.35
+  syncfusion_flutter_gauges: ^26.1.35
+  syncfusion_flutter_datagrid: ^26.1.35
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+  # Url launching
+  url_launcher: ^6.1.5
+
+  # Camera
+  camera: ^0.10.5+2
+
+  # Arc Map
+  flutter_map: 6.0.0-dev.1
+  latlong2:
+
+  # Guid generation
+  uuid: ^3.0.0
+
+  # Animations
+  animations: ^2.0.7
+
+  # dio
+  dio: ^5.4.1
+
+  # path_provider
+  path_provider: ^2.1.2
+
+  # permission handler
+  permission_handler: ^11.3.1
+
+  # open file
+  open_file: ^3.3.2
+
+  # tree view
+  two_dimensional_scrollables: ^0.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+  # json serialization
+  json_serializable:
+
+  build_runner:
+
+  # isar database generators
+  isar_generator:
+    path: ./packages/isar_generator
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  uses-material-design: true
+  generate: true
+  # To add assets to your package, add an assets section, like this:
+  assets:
+    - assets/images/fa-safe-svgs/
+    - assets/images/misc-svgs/
+    - CHANGELOG.md
+    - CHANGELOG_archived.md
+  #
+  # For details regarding assets in packages, see
+  # https://flutter.dev/assets-and-images/#from-packages
+  #
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # To add custom fonts to your package, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: FmiIcons
+      fonts:
+        - asset: assets/fonts/FmiIcons.ttf
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts in packages, see
+  # https://flutter.dev/custom-fonts/#from-packages

@@ -1,0 +1,8 @@
+synthetic-package: false
+arb-dir: lib/localizations
+template-arb-file: locale_en.arb
+output-localization-file: fmi_core_localizations.dart
+output-class: FmiCoreLocalizations
+output-dir: lib/generated
+nullable-getter: true
+#untranslated-messages-file: l10n_errors.txt

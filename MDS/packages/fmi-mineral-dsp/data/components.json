@@ -1,0 +1,27 @@
+{
+  "dsp_spec_version": "0.0.1",
+  "last_updated_by": "",
+  "last_updated": "2022-01-19T21:39:25.000Z",
+  "entities": [
+    {
+      "id": "d617b8eb-4489-4ba7-9a23-e0cb9d049d22",
+      "class": "component",
+      "type": "page",
+      "related_entity_ids": [],
+      "snippets": {
+        "trigger": "test-snippet",
+        "languages": {
+          "dart": "// THIS IS A SAMPLE SNIPPET\n// It is only a comment, but a real snippet will contain actual code! =D"
+        }
+      },
+      "renditions": [
+        ""
+      ],
+      "name": "Sample Test Component",
+      "tags": [],
+      "last_updated": "2022-02-10T15:25:53.606Z",
+      "last_updated_by": "",
+      "description": "# Test Documentation\nThis is a test component to make sure the intellisense works. Additional components may be available. If there are other components, this example can be deleted."
+    }
+  ]
+}

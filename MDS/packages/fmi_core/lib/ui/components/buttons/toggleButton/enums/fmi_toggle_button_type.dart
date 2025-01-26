@@ -1,0 +1,1 @@
+enum FmiToggleButtonType { outline, elevated }

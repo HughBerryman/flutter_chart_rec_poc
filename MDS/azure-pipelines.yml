@@ -1,0 +1,39 @@
+name: Kitchen Sink
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  FlutterVersion: '3.22.2'
+
+stages:
+- stage: ci
+  displayName: Continuous Integration
+  jobs:
+  - job: web
+    displayName: Build Kitchen Sink web app
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: FlutterInstall@0
+      displayName: Install Flutter SDK
+      inputs:
+        version: custom
+        customVersion: $(FlutterVersion)
+    - task: FlutterBuild@0
+      displayName: Build the web application
+      inputs:
+        target: web
+        extraArgs: '--no-tree-shake-icons'
+    - publish: build/web
+      artifact: Web
+      displayName: Publish web application
+    - task: AzureStaticWebApp@0
+      inputs:
+        app_location: '/build/web'
+        azure_static_web_apps_api_token: $(webDeploymentToken)
+        skip_app_build: true
+

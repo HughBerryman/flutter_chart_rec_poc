@@ -1,0 +1,21 @@
+{
+  "source": [
+    "./../../data/fmi-tokens/base.json",
+    "./../../data/fmi-tokens/dark.json"],
+  "platforms": {
+    "flutter": {
+      "prefix": "dark",
+      "transformGroup": "mds/flutter",
+      "buildPath": "flutter/",
+      "files": [{
+        "destination": "fmi_theme_dark.dart",
+        "format": "flutter/class.dart",
+        "filter": "filterColors",
+        "className": "FMIThemeDark",
+        "options": {
+          "showFileHeader": false
+        }
+      }]
+    }
+  }
+}

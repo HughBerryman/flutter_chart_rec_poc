@@ -1,0 +1,15 @@
+enum FmiColor {
+  illustrationsOnBackgroundPurple,
+  illustrationsBackgroundPurple,
+  illustrationsOnBackgroundRed,
+  illustrationsBackgroundRed,
+  illustrationsOnBackgroundOrange,
+  illustrationsBackgroundOrange,
+  illustrationsOnBackgroundGreen,
+  illustrationsBackgroundGreen,
+  illustrationsOnBackgroundBlue,
+  illustrationsBackgroundBlue,
+  illustrationsOnBackgroundDarkBlue,
+  illustrationsBackgroundDarkBlue,
+  illustrationsBackgroundGray,
+}

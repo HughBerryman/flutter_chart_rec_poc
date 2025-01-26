@@ -1,0 +1,4 @@
+enum ScaffoldComponentColor {
+  primary,
+  secondary,
+}

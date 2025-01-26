@@ -1,0 +1,4 @@
+enum NonTargetedBarColor {
+  primary,
+  onSurface,
+}

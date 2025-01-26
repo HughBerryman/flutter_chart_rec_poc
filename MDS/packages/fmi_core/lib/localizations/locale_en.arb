@@ -1,0 +1,165 @@
+{
+    "searchTerm": "Search by term...",
+    "searchStart": "Start Searching",
+    "save": "Save",
+    "cancel": "Cancel",
+    "dismiss": "Dismiss",
+    "okay": "Okay",
+    "searchEmployee": "Search Employee",
+    "searchEmployees": "Search Employee(s)",
+    "validating": "Validating...",
+    "inspectedBy": "Inspected By",
+    "offline": "Offline",
+    "youAreOffline": "You're Offline",
+    "youAreBackOnline": "You're back online",
+    "pastDue": "Past Due",
+    "dueToday": "Due Today",
+    "dueInDays": "Due in {numOfDays, plural, =0{0 day} =1{1 day} other{{numOfDays} days}}",
+    "@dueInDays": {
+        "description": "Due in x day(s)",
+        "placeholders": {
+            "numOfDays": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "daysPastDue": "{numOfDays, plural, =0{0 Day} =1{1 Day} other{{numOfDays} Days}} Past Due",
+    "@daysPastDue": {
+        "description": "x day(s) past due",
+        "placeholders": {
+            "numOfDays": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "daysAgo": "{numOfDays, plural, =0{day} =1{1 day} other{{numOfDays} days}} ago",
+    "@daysAgo": {
+        "description": "day(s) ago",
+        "placeholders": {
+            "numOfDays": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "hoursAgo": "{numOfHours, plural, =0{hour} =1{1 hour} other{{numOfHours} hours}} ago",
+    "@hoursAgo": {
+        "description": "hour(s) ago",
+        "placeholders": {
+            "numOfHours": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "hoursAgoAbbreviated": "{numOfHours} hr(s) ago",
+    "@hoursAgoAbbreviated": {
+        "description": "hrs(s) ago",
+        "placeholders": {
+            "numOfHours": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "minutesAgo": "{numOfMinutes, plural, =0{minute} =1{1 minute} other{{numOfMinutes} minutes}} ago",
+    "@minutesAgo": {
+        "description": "minute(s) ago",
+        "placeholders": {
+            "numOfMinutes": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "minutesAgoAbbreviated": "{numOfMinutes} min(s) ago",
+    "@minutesAgoAbbreviated": {
+        "description": "min(s) ago",
+        "placeholders": {
+            "numOfMinutes": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "secondsAgo": "{numOfSeconds, plural, =0{second} =1{1 second} other{{numOfSeconds} seconds}} ago",
+    "@secondsAgo": {
+        "description": "second(s) ago",
+        "placeholders": {
+            "numOfSeconds": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "secondsAgoAbbreviated": "{numOfSeconds} sec(s) ago",
+    "@secondsAgoAbbreviated": {
+        "description": "sec(s) ago",
+        "placeholders": {
+            "numOfSeconds": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "justNow": "just now",
+    "attach": "Attach",
+    "equipmentNumber" : "Equipment Number",
+    "scanNotValid": "Scan not valid",
+    "clear": "Clear",
+    "done": "Done",
+    "signHere": "Sign Here",
+    "target": "Target",
+    "search": "Search",
+    "unknown": "Unknown",
+    "addEmployee": "Add Employee(s)",
+    "inputValue": "Input Value(s)",
+    "addItem": "Add Item(s)",
+    "inputPhoneNumber": "Input phone number",
+    "invalidPhoneNumber": "Invalid phone number",
+    "signature": "Signature",
+    "signatureRequired": "Signature Required",
+    "signedAt": "signed at",
+    "submit": "Submit",
+    "comment": "Comment",
+    "allCaughtUp": "You're all caught up!",
+    "viewAll": "View All",
+    "tasks": "Tasks",
+    "tapped": "Tapped",
+    "placeholder": "Placeholder",
+    "ok": "OK",
+    "sample": "Sample",
+    "howWasYourDay": "How was your day?",
+    "noResultFound": "No results found.", 
+    "popular": "Popular",
+    "recent": "Recent",
+    "noRecentResults": "No recent search results.",
+    "clickHere": "Click Here",
+    "searchKnowledgeBase":" to search our Knowledge Base.",
+    "results": "Results",
+    "noResults": "No Results",
+    "networkDisconnected": "Network is disconnected or unavailable.",
+    "noFavorites": "No Favorites",
+    "apps": "Apps",
+    "forms": "Forms",
+    "camera": "Camera",
+    "gallery": "Gallery",
+    "files": "Files",
+    "cameraErrorTitle": "Could Not Open the Camera",
+    "cameraError": "Please try again or open on another device",
+    "searchItem": "Search Items...",
+    "loadMore": "Load More",
+    "location": "Location",
+    "modifyLocation": "Modify Location",
+    "viewLocation": "View Location",
+    "offlineUpdateLocationMessage": "Network connection required to update location",
+    "offlineViewLocationMessage": "Network connection required to view location",
+    "connectNetwork": "Please try to reconnect to your WiFi or Cellular network",
+    "showMoreResults": "Show More Results",
+    "showLessResults": "Show Less Results",
+    "employeeNotFound": "Employee Not Found",
+    "networkError": "There was an error retrieving this information, please make sure you are connected to the internet and try again.",
+    "copied": "Copied"
+}

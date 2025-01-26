@@ -1,0 +1,165 @@
+{
+	"searchTerm": "Telusuri...",
+	"searchStart": "Mulai Mencari",
+	"save": "Simpan",
+	"cancel": "Batal",
+	"dismiss": "Batal",
+	"okay": "Oke",
+	"searchEmployee": "Telusuri",
+	"searchEmployees": "Cari Karyawan",
+	"validating": "Memvalidasi...",
+	"inspectedBy": "Diperiksa Oleh",
+	"offline": "Offline",
+	"youAreOffline": "Anda sedang offline",
+	"youAreBackOnline": "Anda kembali online",
+	"pastDue": "Terlambat",
+	"dueToday": "Jatuh tempo hari ini",
+	"dueInDays": "Jatuh tempo dalam {numOfDays, plural, =0{0 hari} =1{1 hari} other{{numOfDays} hari}}",
+	"@dueInDays": {
+		"description": "Due in x day(s)",
+		"placeholders": {
+			"numOfDays": {
+				"type": "num",
+				"format": "compact"
+			}
+		}
+	},
+	"daysPastDue": "{numOfDays, plural, =0{0 Hari} =1{1 Hari} other{{numOfDays} Hari}}Lewat Jatuh Tempo",
+	"@daysPastDue": {
+		"description": "x day(s) past due",
+		"placeholders": {
+			"numOfDays": {
+				"type": "num",
+				"format": "compact"
+			}
+		}
+	},
+	"daysAgo": "{numOfDays, plural, =0{hari} =1{1 hari} other{{numOfDays} hari}} yang lalu",
+	"@daysAgo": {
+		"description": "day(s) ago",
+		"placeholders": {
+			"numOfDays": {
+				"type": "num",
+				"format": "compact"
+			}
+		}
+	},
+	"hoursAgo": "{numOfHours, plural, =0{jam} =1{1 jam} other{{numOfHours} jam}} yang lalu",
+	"@hoursAgo": {
+		"description": "hour(s) ago",
+		"placeholders": {
+			"numOfHours": {
+				"type": "num",
+				"format": "compact"
+			}
+		}
+	},
+    "hoursAgoAbbreviated": "{numOfHours} jam yang lalu",
+    "@hoursAgoAbbreviated": {
+        "description": "hr(s) ago",
+        "placeholders": {
+            "numOfHours": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+	"minutesAgo": "{numOfMinutes, plural, =0{menit} =1{1 menit} other{{numOfMinutes} menit}} lalu",
+	"@minutesAgo": {
+		"description": "minute(s) ago",
+		"placeholders": {
+			"numOfMinutes": {
+				"type": "num",
+				"format": "compact"
+			}
+		}
+	},
+    "minutesAgoAbbreviated": "{numOfMinutes} menit lalu",
+    "@minutesAgoAbbreviated": {
+        "description": "min(s) ago",
+        "placeholders": {
+            "numOfMinutes": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+	"secondsAgo": "{numOfSeconds, plural, =0{detik} =1{1 detik} other{{numOfSeconds} detik}} yang lalu",
+	"@secondsAgo": {
+		"description": "second(s) ago",
+		"placeholders": {
+			"numOfSeconds": {
+				"type": "num",
+				"format": "compact"
+			}
+		}
+	},
+    "secondsAgoAbbreviated": "{numOfSeconds} detik yang lalu",
+    "@secondsAgoAbbreviated": {
+        "description": "second(s) ago",
+        "placeholders": {
+            "numOfSeconds": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+	"justNow": "baru saja",
+	"attach": "Lampirkan",
+	"equipmentNumber": "Nomer Equipment",
+	"scanNotValid": "Pemindaian tidak valid",
+	"clear": "Hapus",
+	"done": "Selesai",
+	"signHere": "Tanda tangani di sini",
+	"target": "Sasaran",
+	"search": "Mencari",
+	"unknown": "Tidak dikenal",
+	"addEmployee": "Tambahkan Employee",
+	"inputValue": "Masukan Nilai",
+	"addItem": "Tambahkan Item",
+	"inputPhoneNumber": "Masukkan nomor telepon",
+	"invalidPhoneNumber": "Nomor telepon tidak valid",
+	"signature": "Tanda tangan",
+	"signatureRequired": "Tanda Tangan Diperlukan",
+	"signedAt": "ditandatangani",
+	"submit": "Kirim",
+	"comment": "Komentar",
+	"allCaughtUp": "Sudah selesai semua!",
+	"viewAll": "Lihat semua",
+	"tasks": "Tugas",
+	"tapped": "Tapped",
+	"placeholder": "Placeholder",
+	"ok": "Oke",
+	"sample": "Contoh",
+	"howWasYourDay": "Apa kabar hari ini?",
+	"noResultFound": "Tidak ada hasil yang ditemukan.",
+	"popular": "Populer",
+	"recent": "Terbaru",
+	"noRecentResults": "Tidak ada hasil pencarian terbaru.",
+	"clickHere": "Klik disini",
+	"searchKnowledgeBase": " cari di basis data kami.",
+	"results": "Hasil",
+	"noResults": "Tidak ada hasil",
+	"networkDisconnected": "Jaringan terputus atau tidak tersedia.",
+	"noFavorites": "Tidak ada Favorit",
+	"apps": "Aplikasi",
+	"forms": "Formulir",
+	"camera": "Kamera",
+	"gallery": "Galeri",
+    "files": "Mengajukan",
+ 	"cameraErrorTitle": "Tidak Bisa Membuka Kamera",
+    "cameraError": "Silakan coba lagi atau buka di perangkat lain",
+    "searchItem": "Cari item..."	,
+	"loadMore": "Muat Lebih Banyak",
+    "location": "Lokasi",
+    "modifyLocation": "Ubah Lokasi",
+    "viewLocation": "Ver Ubicación",
+    "offlineUpdateLocationMessage": "Koneksi jaringan diperlukan untuk memperbarui lokasi",
+    "offlineViewLocationMessage": "Koneksi jaringan diperlukan untuk melihat lokasi",
+    "connectNetwork": "Coba sambungkan kembali ke jaringan WiFi atau seluler Anda",
+	"showMoreResults": "Tampilkan Lebih Banyak Hasil",
+	"showLessResults": "Tampilkan Lebih Sedikit Hasil",
+	"employeeNotFound": "Employee Tidak Ditemukan",
+	"networkError": "Terjadi kesalahan saat mengambil informasi ini, pastikan Anda terhubung ke internet dan coba lagi.",
+    "copied": "Disalin"
+}

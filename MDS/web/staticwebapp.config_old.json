@@ -1,0 +1,84 @@
+{
+    "routes": [
+        {
+            "route": "/login",
+            "allowedRoles": ["anonymous"],
+            "rewrite": "/.auth/login/aad"
+        },
+        {
+            "route": "/logout",
+            "allowedRoles": ["authenticated"],
+            "rewrite": "/.auth/logout"
+        },
+        {
+            "route": "/.auth/login/aad",
+            "allowedRoles": ["anonymous"]
+        },
+        {
+            "route": "/.auth/login/aad/callback",
+            "allowedRoles": ["anonymous", "authenticated"]
+        },
+        {
+            "route": "/.auth/login/apple",
+            "allowedRoles": ["anonymous"],
+            "statusCode": 404
+        },
+        {
+            "route": "/.auth/login/facebook",
+            "allowedRoles": ["anonymous"],
+            "statusCode": 404
+        },
+        {
+            "route": "/.auth/login/github",
+            "allowedRoles": ["anonymous"],
+            "statusCode": 404
+        },
+        {
+            "route": "/.auth/login/google",
+            "allowedRoles": ["anonymous"],
+            "statusCode": 404
+        },
+        {
+            "route": "/.auth/login/twitter",
+            "allowedRoles": ["anonymous"],
+            "statusCode": 404
+        },
+        {
+            "route": "/.auth/complete",
+            "allowedRoles": ["anonymous"]
+        },
+        {
+            "route": "/manifest.json",
+            "allowedRoles": ["anonymous"]
+        },
+        {
+            "route": "/*",
+            "allowedRoles": ["authenticated"]
+        }
+    ],
+    "responseOverrides": {
+        "401": {
+            "statusCode": 302,
+            "redirect": "/login"
+        }
+    },
+    "navigationFallback": {
+        "rewrite": "/index.html",
+        "exclude": [
+            "/assets/*",
+            "/canvaskit/*",
+            "/icons/*"
+        ]
+    },
+    "auth": {
+        "identityProviders": {
+            "azureActiveDirectory": {
+                "registration": {
+                    "openIdIssuer": "https://login.microsoftonline.com/5f229ce1-773c-46ed-a6fa-974006fae097/v2.0",
+                    "clientIdSettingName": "AZURE_CLIENT_ID",
+                    "clientSecretSettingName": "AZURE_CLIENT_SECRET"
+                }
+            }
+        }
+    }
+}

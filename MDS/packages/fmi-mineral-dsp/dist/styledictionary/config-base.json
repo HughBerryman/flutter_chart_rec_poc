@@ -1,0 +1,19 @@
+{
+  "source": ["./../../data/fmi-tokens/base.json"],
+  "platforms": {
+    "flutter": {
+      "prefix": "base",
+      "transformGroup": "mds/flutter",
+      "buildPath": "flutter/",
+      "files": [{
+        "destination": "fmi_theme_base.dart",
+        "format": "flutter/class.dart",
+        "filter": "removeGradients",
+        "className": "FMIThemeBase",
+        "options": {
+          "showFileHeader": false
+        }
+      }]
+    }
+  }
+}

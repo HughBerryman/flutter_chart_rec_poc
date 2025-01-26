@@ -1,0 +1,4 @@
+enum ThemeStyle {
+  primary,
+  secondary
+}

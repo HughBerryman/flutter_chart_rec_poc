@@ -1,0 +1,4 @@
+enum IconColors {
+  primary,
+  warning,
+}
