@@ -5,6 +5,7 @@ import 'rnd/chart_app.dart';
 import 'rnd/feed_blend_calculator.dart';
 import 'rnd/mds_widgets.dart';
 import 'rnd/codeparrot-poc/lot_card.dart';
+import 'rnd/test_mds_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -83,6 +84,16 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               child: const Text('Feed Blend Calculator'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const TestMdsPage()),
+                );
+              },
+              child: const Text('Test MDS Page'),
             ),
             const SizedBox(height: 20),
             // Temporarily hidden CodeParrot POC button
