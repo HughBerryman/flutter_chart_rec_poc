@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fmi_core/designTokens/designTokens.dart';
 
 class TestMdsPage extends StatelessWidget {
   const TestMdsPage({super.key});
@@ -8,52 +9,114 @@ class TestMdsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Test MDS Page'),
-        backgroundColor: const Color(0xFFEBF2F8),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        foregroundColor: Theme.of(context).colorScheme.onSurface,
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(FMIThemeBase.basePadding8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Components Test',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: FMIThemeBase.baseGap12),
             Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Sample Card',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+              elevation: 1,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(FMIThemeBase.baseBorderRadiusMedium),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(FMIThemeBase.basePadding8),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(
+                            FMIThemeBase.baseBorderRadiusMedium),
+                        topRight: Radius.circular(
+                            FMIThemeBase.baseBorderRadiusMedium),
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'This is a test page using Flutter components.',
-                      style: TextStyle(fontSize: 16),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Sample Card',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Primary Button'),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(FMIThemeBase.basePadding8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'This is a test page using Flutter components with MDS-like styling.',
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurfaceVariant,
+                                  ),
+                        ),
+                        const SizedBox(height: FMIThemeBase.baseGap8),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
+                            foregroundColor:
+                                Theme.of(context).colorScheme.onPrimary,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: FMIThemeBase.basePadding12,
+                              vertical: FMIThemeBase.basePadding6,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  FMIThemeBase.baseBorderRadiusSmall),
+                            ),
+                          ),
+                          child: const Text('Primary Button'),
+                        ),
+                        const SizedBox(height: FMIThemeBase.baseGap4),
+                        OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(context).colorScheme.primary,
+                            side: BorderSide(
+                                color: Theme.of(context).colorScheme.outline),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: FMIThemeBase.basePadding12,
+                              vertical: FMIThemeBase.basePadding6,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  FMIThemeBase.baseBorderRadiusSmall),
+                            ),
+                          ),
+                          child: const Text('Secondary Button'),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 8),
-                    OutlinedButton(
-                      onPressed: () {},
-                      child: const Text('Secondary Button'),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
