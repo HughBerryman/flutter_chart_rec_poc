@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 
-void main() => runApp(const ChartApp());
-
 class ChartApp extends StatelessWidget {
   const ChartApp({super.key});
 

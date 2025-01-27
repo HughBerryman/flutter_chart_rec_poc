@@ -31,7 +31,7 @@ class RecSelector extends StatelessWidget {
       body: Center(
         child: Container(
           width: 320,
-          height: 80,
+          height: 90,
           padding: const EdgeInsets.all(FMIThemeBase.basePadding8),
           decoration: BoxDecoration(
             color: isEnabled
@@ -54,6 +54,7 @@ class RecSelector extends StatelessWidget {
             children: [
               Expanded(
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -76,6 +77,7 @@ class RecSelector extends StatelessWidget {
                 ),
               ),
               Column(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
