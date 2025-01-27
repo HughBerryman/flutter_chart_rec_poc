@@ -21,47 +21,6 @@ class MyApp extends StatelessWidget {
           seedColor: FMIThemeBase.basePalettePrimaryPrimary50,
           surfaceTint: FMIThemeBase.basePaletteCoolGrayCoolGray100,
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: FMIThemeBase.basePalettePrimaryPrimary50,
-            foregroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray100,
-            padding: EdgeInsets.symmetric(
-              horizontal: FMIThemeBase.basePaddingXLarge,
-              vertical: FMIThemeBase.basePaddingMedium,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(FMIThemeBase.baseBorderRadiusMedium),
-            ),
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray50,
-            padding: EdgeInsets.symmetric(
-              horizontal: FMIThemeBase.basePaddingXLarge,
-              vertical: FMIThemeBase.basePaddingMedium,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(FMIThemeBase.baseBorderRadiusMedium),
-            ),
-          ),
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            foregroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray50,
-            side: BorderSide(color: FMIThemeBase.basePaletteCoolGrayCoolGray30),
-            padding: EdgeInsets.symmetric(
-              horizontal: FMIThemeBase.basePaddingXLarge,
-              vertical: FMIThemeBase.basePaddingMedium,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(FMIThemeBase.baseBorderRadiusMedium),
-            ),
-          ),
-        ),
         scaffoldBackgroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray95,
       ),
       home: const HomeScreen(),
@@ -95,47 +54,55 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: FMIThemeBase.basePaddingLarge),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const FeedBlendCalculator()),
-                );
-              },
-              child: const Text('Feed Blend Calculator'),
-            ),
-            SizedBox(height: FMIThemeBase.basePaddingLarge),
-            OutlinedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ChartApp()),
-                );
-              },
-              child: const Text('Show Chart App UI'),
-            ),
-            SizedBox(height: FMIThemeBase.basePaddingLarge),
-            OutlinedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const RecSelector()),
-                );
-              },
-              child: const Text('Show Rec Selector UI'),
-            ),
-            SizedBox(height: FMIThemeBase.basePaddingLarge),
-            OutlinedButton(
-              onPressed: _launchWidgetbook,
-              child: const Text('Open Widgetbook POC'),
-            ),
-            SizedBox(height: FMIThemeBase.basePaddingLarge),
-          ],
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 300),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: FMIThemeBase.basePaddingLarge),
+              FmiToggleButton(
+                text: 'Feed Blend Calculator',
+                type: FmiToggleButtonType.elevated,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FeedBlendCalculator()),
+                  );
+                },
+              ),
+              SizedBox(height: FMIThemeBase.basePaddingLarge),
+              FmiToggleButton(
+                text: 'Show Chart App UI',
+                type: FmiToggleButtonType.outline,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ChartApp()),
+                  );
+                },
+              ),
+              SizedBox(height: FMIThemeBase.basePaddingLarge),
+              FmiToggleButton(
+                text: 'Show Rec Selector UI',
+                type: FmiToggleButtonType.outline,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RecSelector()),
+                  );
+                },
+              ),
+              SizedBox(height: FMIThemeBase.basePaddingLarge),
+              FmiToggleButton(
+                text: 'Open Widgetbook POC',
+                type: FmiToggleButtonType.outline,
+                onPressed: _launchWidgetbook,
+              ),
+              SizedBox(height: FMIThemeBase.basePaddingLarge),
+            ],
+          ),
         ),
       ),
     );
