@@ -11,3 +11,5 @@ Please make sure you understand how to import the fundamental themes from FMIThe
 Most all full screen backgrounds will by theme/alt-surface/inverse-alt-surface by default
 
 NavRail will use Force Dark Themeing
+
+Please aim to componenetize designs so they can we viewed as components in Widgetbook
