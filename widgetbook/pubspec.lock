@@ -637,7 +637,7 @@ packages:
     source: sdk
     version: "0.0.0"
   fmi_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "../MDS/packages/fmi_core"
       relative: true
