@@ -28,7 +28,8 @@ class FeedParametersSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Theme.of(context).colorScheme.fmiBaseThemeAltSurfaceAltSurface,
+      color:
+          Theme.of(context).colorScheme.fmiBaseThemeAltSurfaceInverseAltSurface,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,7 +38,7 @@ class FeedParametersSection extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Theme.of(context)
                       .colorScheme
-                      .fmiBaseThemeAltSurfaceOnAltSurface,
+                      .fmiBaseThemeAltSurfaceInverseOnAltSurface,
                   fontWeight: FontWeight.bold,
                 ),
           ),
