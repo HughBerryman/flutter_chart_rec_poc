@@ -41,6 +41,7 @@ class FeedCompositionSection extends StatelessWidget {
           backgroundColor: Colors.white,
           tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           title: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 title == 'Specification Status'
@@ -73,6 +74,7 @@ class FeedCompositionSection extends StatelessWidget {
               alignment: Alignment.center,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.info_outline, size: 32, color: Colors.grey[400]),
                   const SizedBox(height: 12),
@@ -125,6 +127,7 @@ class FeedCompositionSection extends StatelessWidget {
           backgroundColor: Colors.white,
           tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           title: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 title == 'Primary Elements' || title == 'Leach Chemistry'
@@ -172,34 +175,40 @@ class FeedCompositionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (selectedLots.isEmpty) {
-      return Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: _buildEmptyAccordion(
-                  context,
-                  'Primary Elements',
-                  'Select bags from assays to view element composition',
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: _buildEmptyAccordion(
+                      context,
+                      'Primary Elements',
+                      'Select bags from assays to view element composition',
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildEmptyAccordion(
+                      context,
+                      'Leach Chemistry',
+                      'Select bags from assays to view leach chemistry details',
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _buildEmptyAccordion(
-                  context,
-                  'Leach Chemistry',
-                  'Select bags from assays to view leach chemistry details',
-                ),
+              _buildEmptyAccordion(
+                context,
+                'Bag Information',
+                'Select bags from assays to view bag details and locations',
               ),
             ],
-          ),
-          _buildEmptyAccordion(
-            context,
-            'Bag Information',
-            'Select bags from assays to view bag details and locations',
-          ),
-        ],
+          );
+        },
       );
     }
 
@@ -207,37 +216,42 @@ class FeedCompositionSection extends StatelessWidget {
     final hasOutOfSpec = _hasOutOfSpecElements(weightedAverages);
     final hasOutOfSpecLeach = _hasOutOfSpecLeachChemistry(weightedAverages);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
-              child: _buildAccordion(
-                context,
-                'Primary Elements',
-                _buildSpecificationStatus(weightedAverages),
-                hasOutOfSpec: hasOutOfSpec,
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: _buildAccordion(
+                    context,
+                    'Primary Elements',
+                    _buildSpecificationStatus(weightedAverages),
+                    hasOutOfSpec: hasOutOfSpec,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildAccordion(
+                    context,
+                    'Leach Chemistry',
+                    _buildLeachChemistry(weightedAverages),
+                    hasOutOfSpec: hasOutOfSpecLeach,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _buildAccordion(
-                context,
-                'Leach Chemistry',
-                _buildLeachChemistry(weightedAverages),
-                hasOutOfSpec: hasOutOfSpecLeach,
-              ),
+            _buildAccordion(
+              context,
+              'Bag Information',
+              _buildBagInformation(),
             ),
           ],
-        ),
-        _buildAccordion(
-          context,
-          'Bag Information',
-          _buildBagInformation(),
-        ),
-      ],
+        );
+      },
     );
   }
 
