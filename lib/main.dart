@@ -101,11 +101,14 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Row(
         children: [
           if (context.isLarge || context.isMedium)
-            FmiNavigationRail(
-              selectedIndex: _selectedIndex,
-              destinations: _destinations,
-              onDestinationSelected: _onDestinationSelected,
-              showElevation: true,
+            Theme(
+              data: FmiThemeDark.fmiThemeDataDark,
+              child: FmiNavigationRail(
+                selectedIndex: _selectedIndex,
+                destinations: _destinations,
+                onDestinationSelected: _onDestinationSelected,
+                showElevation: true,
+              ),
             ),
           Expanded(
             child: _getSelectedContent(),
