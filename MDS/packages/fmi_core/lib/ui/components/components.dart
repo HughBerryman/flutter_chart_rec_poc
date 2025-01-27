@@ -42,7 +42,6 @@ export 'search/search.dart';
 export 'signature/signature.dart';
 export 'syncFusion/syncFusion.dart';
 export 'tabBar/tabBar.dart';
-export 'timelines/timelines.dart';
 export 'tour/tour.dart';
 export 'warningTextField/warningTextField.dart';
 export 'genericTextFields/genericTextFields.dart';

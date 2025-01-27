@@ -85,9 +85,6 @@ dependencies:
   signature: ^5.2.1
   mobile_scanner: ^3.5.5
 
-  # Approval timelines
-  timelines: ^0.1.0
-
   # Badges
   badges: ^3.1.1
 
