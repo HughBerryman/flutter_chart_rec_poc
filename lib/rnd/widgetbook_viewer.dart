@@ -11,6 +11,7 @@ import 'feed_blend_calculator/components/right_panel.dart';
 import 'feed_blend_calculator/components/feed_app_bar.dart';
 import 'feed_blend_calculator/components/feed_parameters_section.dart';
 import 'feed_blend_calculator/components/feed_material_assays.dart';
+import 'models/lot_data.dart';
 
 class WidgetbookViewer extends StatelessWidget {
   const WidgetbookViewer({super.key});
@@ -27,6 +28,36 @@ class WidgetbookViewer extends StatelessWidget {
     final mockExpandCallback = (String id, bool value) {};
     final mockAssayCallback = (String id, Map<String, double> value) {};
     final mockBoolCallback = (bool value) {};
+
+    // Mock lots data
+    final mockLots = [
+      LotData(
+        id: '1',
+        location: 'Morenci',
+        elements: {
+          'Cu': 25.5,
+          'Fe': 30.2,
+          'Au': 2.1,
+        },
+        selectedBags: 50,
+        isExpanded: false,
+        barcodePrefix: 'MOR',
+        lbsPerBag: 2000,
+      ),
+      LotData(
+        id: '2',
+        location: 'Bagdad',
+        elements: {
+          'Cu': 22.1,
+          'Fe': 28.5,
+          'Au': 1.8,
+        },
+        selectedBags: 0,
+        isExpanded: false,
+        barcodePrefix: 'BAG',
+        lbsPerBag: 2000,
+      ),
+    ];
 
     return Widgetbook(
       initialRoute: 'welcome/welcome-page',
@@ -83,12 +114,38 @@ class WidgetbookViewer extends StatelessWidget {
                   name: 'Feed Material Assays',
                   useCases: [
                     WidgetbookUseCase(
-                      name: 'Default',
+                      name: 'Empty State',
                       builder: (context) => FeedMaterialAssays(
                         lots: const [],
-                        showSelected: true,
-                        selectedLocations: <String>{},
+                        showSelected: context.knobs.boolean(
+                          label: 'Show Selected',
+                          initialValue: false,
+                        ),
+                        selectedLocations: {'All Locations'},
                         selectedSort: null,
+                        onShowSelectedChanged: mockBoolCallback,
+                        onLocationsChanged: mockSetStringCallback,
+                        onSortChanged: mockStringCallback,
+                        onBagsChanged: mockBagCallback,
+                        onExpandChanged: mockExpandCallback,
+                        onAssayValuesChanged: mockAssayCallback,
+                      ),
+                    ),
+                    WidgetbookUseCase(
+                      name: 'With Data',
+                      builder: (context) => FeedMaterialAssays(
+                        lots: mockLots,
+                        showSelected: context.knobs.boolean(
+                          label: 'Show Selected',
+                          initialValue: false,
+                        ),
+                        selectedLocations: {'All Locations'},
+                        selectedSort: context.knobs.boolean(
+                          label: 'Enable Sorting',
+                          initialValue: false,
+                        )
+                            ? 'Sort by In Spec'
+                            : null,
                         onShowSelectedChanged: mockBoolCallback,
                         onLocationsChanged: mockSetStringCallback,
                         onSortChanged: mockStringCallback,
