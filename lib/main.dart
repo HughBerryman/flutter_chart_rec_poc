@@ -28,14 +28,7 @@ class MyApp extends StatelessWidget {
       providers: CoreInit.getProviders(context),
       child: MaterialApp(
         title: 'UI Tester',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: FMIThemeBase.basePalettePrimaryPrimary50,
-            surfaceTint: FMIThemeBase.basePaletteCoolGrayCoolGray100,
-          ),
-          scaffoldBackgroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray95,
-          textTheme: FmiThemeBase.fmiThemeDataBase.textTheme,
-        ),
+        theme: FmiThemeLight.fmiThemeDataLight,
         home: const HomeScreen(),
       ),
     );
