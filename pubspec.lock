@@ -52,7 +52,7 @@ packages:
   azure_ad_authentication:
     dependency: transitive
     description:
-      path: "../MDS-Flutter-Sandbox/packages/fmi_core/packages/fmi_authentication"
+      path: "MDS/packages/fmi_core/packages/fmi_authentication"
       relative: true
     source: path
     version: "1.0.2"
@@ -623,14 +623,14 @@ packages:
   fmi_core:
     dependency: "direct main"
     description:
-      path: "../MDS-Flutter-Sandbox/packages/fmi_core"
+      path: "MDS/packages/fmi_core"
       relative: true
     source: path
     version: "0.0.1"
   font_awesome_flutter:
     dependency: transitive
     description:
-      path: "../MDS-Flutter-Sandbox/packages/fmi-mineral-dsp/dist/font_awesome_flutter"
+      path: "MDS/packages/fmi-mineral-dsp/dist/font_awesome_flutter"
       relative: true
     source: path
     version: "10.6.0"
