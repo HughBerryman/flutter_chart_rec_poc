@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:fmi_core/fmi_core.dart';
+
 import 'chart_app.dart';
 import 'rec_selector.dart';
 import 'feed_blend_calculator.dart';
@@ -24,17 +25,31 @@ class WidgetbookViewer extends StatelessWidget {
           ],
         ),
         WidgetbookCategory(
-          name: 'Applications',
+          name: 'Feed Blend Calculator',
           children: [
-            WidgetbookComponent(
-              name: 'Feed Blend Calculator',
-              useCases: [
-                WidgetbookUseCase(
-                  name: 'Default',
-                  builder: (context) => const FeedBlendCalculator(),
+            WidgetbookFolder(
+              name: 'Templates',
+              children: [
+                WidgetbookComponent(
+                  name: 'Feed Blend Calculator',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Default',
+                      builder: (context) => const FeedBlendCalculator(),
+                    ),
+                  ],
                 ),
               ],
             ),
+            WidgetbookFolder(
+              name: 'Widgets',
+              children: [], // This will house the smaller widgets
+            ),
+          ],
+        ),
+        WidgetbookCategory(
+          name: 'Components',
+          children: [
             WidgetbookComponent(
               name: 'Chart App',
               useCases: [
@@ -44,11 +59,6 @@ class WidgetbookViewer extends StatelessWidget {
                 ),
               ],
             ),
-          ],
-        ),
-        WidgetbookCategory(
-          name: 'Components',
-          children: [
             WidgetbookComponent(
               name: 'Rec Selector',
               useCases: [
