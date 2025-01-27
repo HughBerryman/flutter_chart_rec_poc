@@ -3,7 +3,7 @@ import 'package:fmi_core/fmi_core.dart';
 
 class FmiCardTheme {
   static ThemeData primary(BuildContext context) {
-    CardTheme cardBase = Theme.of(context).cardTheme;
+    CardTheme cardBase = Theme.of(context).cardTheme as CardTheme;
     return Theme.of(context).copyWith(
         cardTheme: cardBase.copyWith(
       color: Theme.of(context).colorScheme.surface,
@@ -11,7 +11,7 @@ class FmiCardTheme {
   }
 
   static ThemeData outline(BuildContext context) {
-    CardTheme cardBase = Theme.of(context).cardTheme;
+    CardTheme cardBase = Theme.of(context).cardTheme as CardTheme;
 
     return Theme.of(context).copyWith(
         cardTheme: cardBase.copyWith(
@@ -23,7 +23,7 @@ class FmiCardTheme {
   }
 
   static ThemeData elevated(BuildContext context) {
-    CardTheme cardBase = Theme.of(context).cardTheme;
+    CardTheme cardBase = Theme.of(context).cardTheme as CardTheme;
 
     return Theme.of(context).copyWith(
         cardTheme: cardBase.copyWith(
@@ -31,7 +31,7 @@ class FmiCardTheme {
   }
 
   static ThemeData secondary(BuildContext context) {
-    CardTheme cardBase = Theme.of(context).cardTheme;
+    CardTheme cardBase = Theme.of(context).cardTheme as CardTheme;
 
     return Theme.of(context).copyWith(
         cardTheme: cardBase.copyWith(
@@ -41,7 +41,7 @@ class FmiCardTheme {
   }
 
   static ThemeData filled(BuildContext context) {
-    CardTheme cardBase = Theme.of(context).cardTheme;
+    CardTheme cardBase = Theme.of(context).cardTheme as CardTheme;
 
     return Theme.of(context).copyWith(
         cardTheme: cardBase.copyWith(

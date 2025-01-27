@@ -4,7 +4,7 @@ import 'package:fmi_core/fmi_core.dart';
 class FmiChipTheme {
   @Deprecated('Use default theme styling or FmiChipTheme.transparent instead')
   static ThemeData inverseAltSurface(BuildContext context) {
-    ChipThemeData base = Theme.of(context).chipTheme;
+    ChipThemeData base = Theme.of(context).chipTheme as ChipThemeData;
 
     return Theme.of(context).copyWith(
         chipTheme: base.copyWith(
@@ -14,7 +14,7 @@ class FmiChipTheme {
   }
 
   static ThemeData transparent(BuildContext context) {
-    ChipThemeData base = Theme.of(context).chipTheme;
+    ChipThemeData base = Theme.of(context).chipTheme as ChipThemeData;
 
     return Theme.of(context).copyWith(
         canvasColor: Colors.transparent,
@@ -49,7 +49,7 @@ class FmiChipTheme {
   }
 
   static ThemeData defaultNoBorder(BuildContext context) {
-    ChipThemeData base = Theme.of(context).chipTheme;
+    ChipThemeData base = Theme.of(context).chipTheme as ChipThemeData;
 
     return Theme.of(context).copyWith(
         chipTheme: base.copyWith(
@@ -76,7 +76,7 @@ class FmiChipTheme {
 
   @Deprecated('Use default theme styling or FmiChipTheme.transparent instead')
   static ThemeData inverseAltSurfaceNoBorder(BuildContext context) {
-    ChipThemeData base = Theme.of(context).chipTheme;
+    ChipThemeData base = Theme.of(context).chipTheme as ChipThemeData;
 
     return Theme.of(context).copyWith(
         chipTheme: base.copyWith(
@@ -88,7 +88,7 @@ class FmiChipTheme {
 
   @Deprecated('Use default theme styling or FmiChipTheme.transparent instead')
   static ThemeData transparentNoBorder(BuildContext context) {
-    ChipThemeData base = Theme.of(context).chipTheme;
+    ChipThemeData base = Theme.of(context).chipTheme as ChipThemeData;
 
     return Theme.of(context).copyWith(
         canvasColor: Colors.transparent,

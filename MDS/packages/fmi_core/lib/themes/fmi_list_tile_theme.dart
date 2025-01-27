@@ -3,7 +3,8 @@ import 'package:fmi_core/fmi_core.dart';
 
 class FmiListTileTheme {
   static ThemeData success(BuildContext context) {
-    ListTileThemeData listTileBase = Theme.of(context).listTileTheme;
+    ListTileThemeData listTileBase =
+        Theme.of(context).listTileTheme as ListTileThemeData;
 
     return Theme.of(context).copyWith(
         listTileTheme: listTileBase.copyWith(
@@ -14,7 +15,8 @@ class FmiListTileTheme {
   }
 
   static ThemeData danger(BuildContext context) {
-    ListTileThemeData listTileBase = Theme.of(context).listTileTheme;
+    ListTileThemeData listTileBase =
+        Theme.of(context).listTileTheme as ListTileThemeData;
 
     return Theme.of(context).copyWith(
         listTileTheme: listTileBase.copyWith(
@@ -25,7 +27,8 @@ class FmiListTileTheme {
   }
 
   static ThemeData altSurface(BuildContext context) {
-    ListTileThemeData listTileBase = Theme.of(context).listTileTheme;
+    ListTileThemeData listTileBase =
+        Theme.of(context).listTileTheme as ListTileThemeData;
 
     return Theme.of(context).copyWith(
         listTileTheme: listTileBase.copyWith(
@@ -40,7 +43,8 @@ class FmiListTileTheme {
   }
 
   static ThemeData transparent(BuildContext context) {
-    ListTileThemeData listTileBase = Theme.of(context).listTileTheme;
+    ListTileThemeData listTileBase =
+        Theme.of(context).listTileTheme as ListTileThemeData;
 
     return Theme.of(context).copyWith(
         listTileTheme: listTileBase.copyWith(tileColor: Colors.transparent));

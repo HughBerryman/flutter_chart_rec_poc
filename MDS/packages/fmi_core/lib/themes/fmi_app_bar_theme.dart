@@ -6,7 +6,7 @@ import '../designTokens/designTokens.dart';
 
 class FmiAppBarTheme {
   static ThemeData surface(BuildContext context) {
-    AppBarTheme base = Theme.of(context).appBarTheme;
+    AppBarTheme base = Theme.of(context).appBarTheme as AppBarTheme;
 
     return Theme.of(context).copyWith(
         appBarTheme: base.copyWith(
@@ -35,7 +35,7 @@ class FmiAppBarTheme {
   }
 
   static ThemeData inverseAltSurface(BuildContext context) {
-    AppBarTheme base = Theme.of(context).appBarTheme;
+    AppBarTheme base = Theme.of(context).appBarTheme as AppBarTheme;
 
     return Theme.of(context).copyWith(
         appBarTheme: base.copyWith(
@@ -71,7 +71,7 @@ class FmiAppBarTheme {
   }
 
   static ThemeData forceDarkMode(BuildContext context) {
-    AppBarTheme base = Theme.of(context).appBarTheme;
+    AppBarTheme base = Theme.of(context).appBarTheme as AppBarTheme;
 
     return Theme.of(context).copyWith(
         appBarTheme: base.copyWith(
