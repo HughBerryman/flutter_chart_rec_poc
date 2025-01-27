@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:fmi_core/fmi_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'rnd/rec_selector.dart';
 import 'rnd/chart_app.dart';
 import 'rnd/feed_blend_calculator.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:device_frame/device_frame.dart';
 
 void main() {
   // Initialize GetIt
@@ -55,8 +56,73 @@ class _HomeScreenState extends State<HomeScreen> {
       case 2:
         return const RecSelector();
       case 3:
-        _launchWidgetbook();
-        return const SizedBox(); // Empty widget when widgetbook is launched
+        return Widgetbook(
+          directories: [
+            WidgetbookCategory(
+              name: 'Components',
+              children: [
+                WidgetbookComponent(
+                  name: 'Feed Blend Calculator',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Default',
+                      builder: (context) => const FeedBlendCalculator(),
+                    ),
+                  ],
+                ),
+                WidgetbookComponent(
+                  name: 'Chart App',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Default',
+                      builder: (context) => const ChartApp(),
+                    ),
+                  ],
+                ),
+                WidgetbookComponent(
+                  name: 'Rec Selector',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Default',
+                      builder: (context) => const RecSelector(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+          addons: [
+            DeviceFrameAddon(
+              devices: [
+                Devices.ios.iPhone13,
+                Devices.ios.iPhone13ProMax,
+                Devices.android.samsungGalaxyS20,
+              ],
+            ),
+            MaterialThemeAddon(
+              themes: [
+                WidgetbookTheme(
+                  name: 'Light',
+                  data: FmiThemeLight.fmiThemeDataLight,
+                ),
+                WidgetbookTheme(
+                  name: 'Dark',
+                  data: FmiThemeDark.fmiThemeDataDark,
+                ),
+              ],
+            ),
+            TextScaleAddon(
+              scales: [1.0, 1.5, 2.0],
+            ),
+          ],
+          appBuilder: (context, child) {
+            return MaterialApp(
+              theme: FmiThemeLight.fmiThemeDataLight,
+              darkTheme: FmiThemeDark.fmiThemeDataDark,
+              home: child,
+            );
+          },
+        );
       default:
         return const SizedBox();
     }
@@ -85,14 +151,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  Future<void> _launchWidgetbook() async {
-    final Uri url = Uri.parse(
-        'https://cdn.widgetbook.io/52cd824d-bf7d-486d-9afb-ccbdfaf82437/00c181cf-dada-4a5a-9cd7-84921d6d3dd5/builds/cedb9e22-4506-46ec-ab49-e9a332a9b690/index.html');
-    if (!await launchUrl(url)) {
-      throw Exception('Could not launch $url');
-    }
   }
 
   @override
