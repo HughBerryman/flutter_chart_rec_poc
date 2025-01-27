@@ -17,18 +17,22 @@ class WidgetbookViewer extends StatelessWidget {
       directories: [
         WidgetbookComponent(
           name: 'Welcome',
+          isInitiallyExpanded: true, // false => collapses by default
           useCases: [
             WidgetbookUseCase(
-              name: 'Default',
+              name: 'Welcome Page',
               builder: (context) => const WelcomePage(),
+              initialBuilder:
+                  true, // This makes it the initially selected use case
             ),
           ],
         ),
         WidgetbookCategory(
           name: 'Feed Blend Calculator',
+          isInitiallyExpanded: false, // false => collapses by default
           children: [
             WidgetbookFolder(
-              name: 'Templates',
+              name: 'Screens',
               children: [
                 WidgetbookComponent(
                   name: 'Feed Blend Calculator',
@@ -49,6 +53,7 @@ class WidgetbookViewer extends StatelessWidget {
         ),
         WidgetbookCategory(
           name: 'Components',
+          isInitiallyExpanded: false, // false => collapses by default
           children: [
             WidgetbookComponent(
               name: 'Chart App',
