@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SingleChildScrollView(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 300),
-                  child: context.isSmall
+                  child: (context.isXSmall || context.isSmall)
                       ? FmiGenericCard(
                           title: 'Navigation',
                           titleTextThemeMobile: Theme.of(context)
@@ -170,6 +170,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+      bottomNavigationBar: (context.isXSmall || context.isSmall)
+          ? FmiBottomNavigationBar(
+              destinations: _destinations,
+              currentIndex: _selectedIndex,
+              onTap: _onDestinationSelected,
+              showSelectedLabels: true,
+              showUnselectedLabels: true,
+            )
+          : null,
     );
   }
 }
