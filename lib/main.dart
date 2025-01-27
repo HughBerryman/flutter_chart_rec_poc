@@ -46,10 +46,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    // Open simulator automatically after build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _onDestinationSelected(0);
+    });
+  }
+
   final List<FmiNavigationDestination> _destinations = [
     FmiNavigationDestination(
       icon: FontAwesomeIcons.calculator,
-      label: 'Feed Blend Calculator',
+      label: 'Simulator',
     ),
     FmiNavigationDestination(
       icon: FontAwesomeIcons.chartLine,
@@ -116,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           const Expanded(
             child: Center(
-              child: Text('Select an option from the navigation'),
+              child: SizedBox(), // Empty container instead of text
             ),
           ),
         ],
