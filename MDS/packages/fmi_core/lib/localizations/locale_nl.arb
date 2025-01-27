@@ -1,0 +1,165 @@
+{
+    "searchTerm": "Zoeken op term...",
+    "searchStart": "Begin met zoeken",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "dismiss": "Ontslaan",
+    "okay": "Oké",
+    "searchEmployee": "Medewerker zoeken",
+    "searchEmployees": "Medewerker(s) zoeken",
+    "validating": "Valideren...",
+    "inspectedBy": "Geïnspecteerd door",
+    "offline": "Offline",
+    "youAreOffline": "Je bent offline",
+    "youAreBackOnline": "Je bent weer online",
+    "pastDue": "Verlopen",
+    "dueToday": "Vandaag verlopen",
+    "dueInDays": "Wegens {numOfDays, plural, =0{0 dag} =1{1 dag} other{{numOfDays} Dagen}}",
+    "@dueInDays": {
+        "description": "Uitgeleverd over x dag(en)",
+        "placeholders": {
+            "numOfDays": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "daysPastDue": "{numOfDays, plural, =0{0 Day} =1{1 Day} other{{numOfDays} Days}} Achterstallig",
+    "@daysPastDue": {
+        "description": "x dag(en) achterstallig",
+        "placeholders": {
+            "numOfDays": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "daysAgo": "{numOfDays} {numOfDays, plural, =0{day} =1{1 dag} other{{numOfDays} dagen}} geleden",
+    "@daysAgo": {
+        "description": "dag(en) geleden",
+        "placeholders": {
+            "numOfDays": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "hoursAgo": "{numOfHours} {numOfHours, plural, =0{hour} =1{1 uur} other{{numOfHours} uur}} geleden",
+    "@hoursAgo": {
+        "description": "uur geleden",
+        "placeholders": {
+            "numOfHours": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "hoursAgoAbbreviated": "{numOfHours} uur (s) geleden",
+    "@hoursAgoAbbreviated": {
+        "description": "uur(en) geleden",
+        "placeholders": {
+            "numOfHours": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "minutesAgo": "{numOfMinutes, plural, =0{0 minuut} =1{1 minuut} other{{numOfMinutes} minuut}}",
+    "@minutesAgo": {
+        "description": "minuut(en) geleden",
+        "placeholders": {
+            "numOfMinutes": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "minutesAgoAbbreviated": "{numOfMinutes} min(s) geleden",
+    "@minutesAgoAbbreviated": {
+        "description": "min(s) geleden",
+        "placeholders": {
+            "numOfMinutes": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "secondsAgo": "{numOfSeconds, plural, =0{second} =1{1 second} other{{numOfSeconds} seconden}} geleden",
+    "@secondsAgo": {
+        "description": "seconde(s) geleden",
+        "placeholders": {
+            "numOfSeconds": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "secondsAgoAbbreviated": "{numOfSeconds} sec(s) geleden",
+    "@secondsAgoAbbreviated": {
+        "description": "sec(s) geleden",
+        "placeholders": {
+            "numOfSeconds": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "justNow": "daarnet",
+    "attach": "Vastmaken",
+    "equipmentNumber" : "Uitrusting nummer",
+    "scanNotValid": "Scan niet geldig",
+    "clear": "Duidelijk",
+    "done": "Klaar",
+    "signHere": "Teken hier",
+    "target": "Doel",
+    "search": "Zoeken",
+    "unknown": "Onbekend",
+    "addEmployee": "Medewerker(s) toevoegen",
+    "inputValue": "Invoerwaarde(n)",
+    "addItem": "Item(s) toevoegen",
+    "inputPhoneNumber": "Telefoonnummer invoeren",
+    "invalidPhoneNumber": "Ongeldig telefoonnummer",
+    "signature": "Handtekening",
+    "signatureRequired": "Handtekening vereist",
+    "signedAt": "ondertekend op",
+    "submit": "Opslaan",
+    "comment": "Commentaar",
+    "allCaughtUp": "Je bent helemaal bijgepraat!",
+    "viewAll": "Bekijk alles",
+    "tasks": "Taken",
+    "tapped": "Tikte",
+    "placeholder": "Tijdelijke aanduiding",
+    "ok": "OK",
+    "sample": "Monster",
+    "howWasYourDay": "Hoe was je dag?",
+    "noResultFound": "Geen resultaten gevonden.", 
+    "popular": "Populair",
+    "recent": "Recent",
+    "noRecentResults": "Geen recente zoekresultaten.",
+    "clickHere": "Klik hier",
+    "searchKnowledgeBase":" om onze Knowledge Base te doorzoeken.",
+    "results": "Resultaten",
+    "noResults": "Geen resultaten",
+    "networkDisconnected": "De verbinding met het netwerk is verbroken of niet beschikbaar.",
+    "noFavorites": "Geen favorieten",
+    "apps": "Apps",
+    "forms": "Formulieren",
+    "camera": "Camera",
+    "gallery": "Galerie",
+    "files": "Archief",
+    "cameraErrorTitle": "Kan de camera niet openen",
+    "cameraError": "Probeer het opnieuw of open het op een ander apparaat",
+    "searchItem": "Objecten zoeken...",
+    "loadMore": "Meer laden",
+    "location": "Plaats",
+    "modifyLocation": "Locatie wijzigen",
+    "viewLocation": "Bekijk locatie",
+    "offlineUpdateLocationMessage": "Netwerkverbinding vereist om locatie bij te werken",
+    "offlineViewLocationMessage": "Netwerkverbinding vereist om locatie te bekijken",
+    "connectNetwork": "Probeer opnieuw verbinding te maken met uw wifi- of mobiele netwerk",
+    "showMoreResults": "Toon meer resultaten",
+    "showLessResults": "Minder resultaten tonen",
+    "employeeNotFound": "Medewerker niet gevonden",
+    "networkError": "Er is een fout opgetreden bij het ophalen van deze informatie, zorg ervoor dat u bent verbonden met internet en probeer het opnieuw.",
+    "copied": "Gekopieerd"
+}

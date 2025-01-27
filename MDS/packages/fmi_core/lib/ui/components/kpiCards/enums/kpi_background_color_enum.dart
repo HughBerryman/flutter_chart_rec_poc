@@ -1,0 +1,1 @@
+enum KpiBackgroundColorEnum { surface, transparent }

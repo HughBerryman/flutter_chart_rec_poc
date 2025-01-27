@@ -1,0 +1,16 @@
+**/node_modules
+
+*/styledictionary/flutter
+*/node_modules
+
+dist/font_awesome_flutter/lib/fonts/icons.json
+*/font_awesome_flutter/example/
+*/font_awesome_flutter/test/
+
+**/unix-**.sh
+scripts/flutter/unix-build.sh
+scripts/flutter/unix-init-mac.sh
+
+.packages
+.dart_tool
+pubspec.lock

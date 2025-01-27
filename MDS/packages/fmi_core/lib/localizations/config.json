@@ -1,0 +1,27 @@
+{
+    "srcLocale": "en",
+    "srcPath": "lib/localizations",
+    "srcFile": "locale_en.arb",
+    "outLocales": ["id"],    
+    "outPath": "lib/localizations",
+    "outFile": "locale_",
+    "translation": {
+        "translate": {
+            "id": {
+                "save": "Simpan",
+                "cancel": "Batal",
+                "dismiss": "Batal",
+                "offline": "Offline",
+                "clear": "Hapus"
+            }
+        },
+        "ignore": [
+            "plural",
+            "other{",
+            "numOfDays",
+            "numOfHours",
+            "numOfMinutes",
+            "numOfSeconds"
+        ]
+    }    
+}

@@ -1,0 +1,166 @@
+{
+    "searchTerm": "Buscar por término...",
+    "searchStart": "Comenzar a buscar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "dismiss": "Descartar",
+    "okay": "Ok",
+    "searchEmployee": "Buscar Persona",
+    "searchEmployees": "Buscar Persona(s)",
+    "validating": "Validando…",
+    "inspectedBy": "Inspeccionado por",
+    "offline": "Offline",
+    "youAreOffline": "Estás en modo Offline",
+    "youAreBackOnline": "Conexión reestablecida",
+    "pastDue": "Vencido",
+    "dueToday": "Vence hoy",
+    "dueInDays": "Vence en {numOfDays, plural, =0{0 días} =1{1 día} other{{numOfDays} días}}",
+    "@dueInDays": {
+        "description": "Vence en x día(s)",
+        "placeholders": {
+            "numOfDays": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "daysPastDue": "{numOfDays, plural, =0{0 Días} =1{1 Día} other{{numOfDays} Días}} De Atraso",
+    "@daysPastDue": {
+        "description": "x día(s) de atraso",
+        "placeholders": {
+            "numOfDays": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "daysAgo": "Hace {numOfDays, plural, =0{0 días} =1{1 día} other{{numOfDays} días}}",
+    "@daysAgo": {
+        "description": "hace día(s)",
+        "placeholders": {
+            "numOfDays": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "hoursAgo": "Hace {numOfHours, plural, =0{0 horas} =1{1 hora} other{{numOfHours} horas}}",
+    "@hoursAgo": {
+        "description": "hace hora(s)",
+        "placeholders": {
+            "numOfHours": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "hoursAgoAbbreviated": "Hace {numOfHours} hr(s)",
+    "@hoursAgoAbbreviated": {
+        "description": "hace hr(s)",
+        "placeholders": {
+            "numOfHours": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "minutesAgo": "Hace {numOfMinutes, plural, =0{0 minutos} =1{1 minuto} other{{numOfMinutes} minutos}}",
+    "@minutesAgo": {
+        "description": "hace minuto(s)",
+        "placeholders": {
+            "numOfMinutes": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "minutesAgoAbbreviated": "Hace {numOfMinutes} min(s)",
+    "@minutesAgoAbbreviated": {
+        "description": "hace min(s)",
+        "placeholders": {
+            "numOfMinutes": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "secondsAgo": "Hace {numOfSeconds, plural, =0{0 segundos} =1{1 segundo} other{{numOfSeconds} segundos}}",
+    "@secondsAgo": {
+        "description": "hace segundo(s)",
+        "placeholders": {
+            "numOfSeconds": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "secondsAgoAbbreviated": "Hace {numOfSeconds} seg(s)",
+    "@secondsAgoAbbreviated": {
+        "description": "hace seg(s)",
+        "placeholders": {
+            "numOfSeconds": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "justNow": "en este momento",
+    "attach": "Adjuntar",
+    "equipmentNumber": "Número de Equipo",
+    "scanNotValid": "Escaneo inválido",
+    "clear": "Limpiar",
+    "done": "Listo",
+    "signHere": "Firme aquí",
+    "target": "Objetivo",
+    "search": "Buscar",
+    "unknown": "Desconocido",
+    "addEmployee": "Añadir Persona(s)",
+    "inputValue": "Valor(es) de entrada",
+    "addItem": "Añadir Elementos(s)",
+    "inputPhoneNumber": "Ingresar número de teléfono",
+    "invalidPhoneNumber": "Número de teléfono inválido",
+    "signature": "Firma",
+    "signatureRequired": "Firma Obligatoria",
+    "signedAt": "firmado el",
+    "submit": "Enviar",
+    "comment": "Comentar",
+    "allCaughtUp": "¡Estás al día!",
+    "viewAll": "Ver Todo",
+    "tasks": "Tareas",
+    "tapped": "Realizado",
+    "placeholder": "Placeholder",
+    "ok": "OK",
+    "sample": "Muestra",
+    "howWasYourDay": "¿Cómo estuvo tu día?",
+    "noResultFound": "No se encontraron resultados.",
+    "popular": "Popular",
+    "recent": "Reciente",
+    "noRecentResults": "Sin resultados recientes de búsqueda.",
+    "clickHere": "Haz clic aquí",
+    "searchKnowledgeBase": " para buscar en nuestra Base de Conocimientos.",
+    "results": "Resultados",
+    "noResults": "Sin Resultados",
+    "networkDisconnected": "La red está desconectada o no está disponible.",
+    "noFavorites": "Sin Favoritos",
+    "apps": "Aplicaciones",
+    "forms": "Formularios",
+    "forms": "Formularios",
+    "camera": "Cámara",
+    "gallery": "Galería",
+    "files": "Archivos",
+    "cameraErrorTitle": "No se pudo abrir la cámara",
+    "cameraError": "Inténtalo de nuevo o ábrelo en otro dispositivo",
+    "loadMore": "Carga más",
+    "searchItem": "Buscar elementos...",
+    "location": "Ubicación",
+    "modifyLocation": "Modificar Ubicación",
+    "viewLocation": "Ver Ubicación",
+    "offlineUpdateLocationMessage": "Se requiere conexión de red para actualizar la ubicación",
+    "offlineViewLocationMessage": "Se requiere conexión de red para ver la ubicación",
+    "connectNetwork": "Por favor, intenta conectarte a una red WiFi o usar los datos móviles del dispositivo",
+    "showMoreResults": "Mostrar más resultados",
+    "showLessResults": "Mostrar menos resultados",
+    "employeeNotFound": "Empleada no encontrado",
+    "networkError": "Hubo un error al recuperar esta información, asegúrese de estar conectado a Internet y vuelva a intentarlo.",
+    "copied": "Copiado"
+}

@@ -1,0 +1,4 @@
+enum IconButtonSize {
+  small,
+  large,
+}

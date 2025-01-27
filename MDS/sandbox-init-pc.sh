@@ -1,0 +1,1 @@
+sh ./packages/fmi-mineral-dsp/scripts/flutter/init-pc.sh

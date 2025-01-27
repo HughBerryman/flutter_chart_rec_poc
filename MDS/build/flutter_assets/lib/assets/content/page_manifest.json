@@ -1,0 +1,1537 @@
+[
+  {
+    "name": "What's New",
+    "pages": [
+      {
+        "name": "Current Status",
+        "route": "/changelog",
+        "view": "changelogView",
+        "category": "changelog",
+        "overviewContent": "packages/fmi_core/CHANGELOG.md"
+      },
+      {
+        "name": "Archived Notes",
+        "route": "/changelog/archived",
+        "view": "changelogView",
+        "category": "changelog",
+        "overviewContent": "packages/fmi_core/CHANGELOG_archived.md"
+      }
+    ]
+  },
+  {
+    "name": "About",
+    "pages": [
+      {
+        "name": "Welcome to MDS",
+        "route": "/",
+        "view": "aboutView",
+        "category": "about",
+        "overviewContent": "lib/assets/content/about/about_overview.md"
+      },
+      {
+        "name": "Getting Started",
+        "route": "/about/reference",
+        "view": "aboutView",
+        "category": "about",
+        "overviewContent": "README.md"
+      },
+      {
+        "name": "Core",
+        "route": "/about/core",
+        "view": "aboutView",
+        "category": "about",
+        "overviewContent": "packages/fmi_core/README.md"
+      },
+      {
+        "name": "Mineral DSP",
+        "route": "/about/dsp",
+        "view": "aboutView",
+        "category": "about",
+        "overviewContent": "packages/fmi-mineral-dsp/README.md"
+      }
+    ]
+  },
+  {
+    "name": "Foundations",
+    "pages": [
+      {
+        "name": "Colors",
+        "route": "/foundations/colors",
+        "designContents": [
+          {
+            "componentName": "Colors",
+            "component": "colors",
+            "platform": "flutter",
+            "content": "lib/assets/content/foundations/colors/colors_design.md"
+          }
+        ],
+        "view": "foundationView",
+        "category": "foundations"
+      },
+      {
+        "name": "Typography",
+        "route": "/foundations/typography",
+        "designContents": [
+          {
+            "componentName": "Typography",
+            "component": "typography",
+            "platform": "flutter",
+            "content": "lib/assets/content/foundations/typography/typography_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "content": "lib/assets/content/foundations/typography/typography_flutter.md"
+          }
+        ],
+        "view": "foundationView",
+        "category": "foundations"
+      },
+      {
+        "name": "Iconography",
+        "route": "/foundations/iconography",
+        "designContents": [
+          {
+            "content": "lib/assets/content/foundations/iconography/iconography_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Iconography",
+            "component": "iconography",
+            "platform": "flutter",
+            "content": "lib/assets/content/foundations/iconography/iconography_flutter.md"
+          }
+        ],
+        "view": "foundationView",
+        "category": "foundations"
+      },
+      {
+        "name": "Spacing and Layout",
+        "route": "/foundations/spacing",
+        "designContents": [
+          {
+            "componentName": "SpacingLayout",
+            "component": "spacingLayout",
+            "platform": "flutter",
+            "content": "lib/assets/content/foundations/spacing/spacing_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "content": "lib/assets/content/foundations/spacing/spacing_flutter.md"
+          }
+        ],
+        "view": "foundationView",
+        "category": "foundations"
+      },
+      {
+        "name": "Media and Graphics",
+        "route": "/foundations/logosimages",
+        "designContents": [
+          {
+            "componentName": "MediaGraphics",
+            "component": "mediaGraphics",
+            "platform": "flutter",
+            "content": "lib/assets/content/foundations/logos-images/logos-images_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "content": "lib/assets/content/foundations/logos-images/logos-images_flutter.md"
+          }
+        ],
+        "view": "foundationView",
+        "category": "foundations"
+      }
+    ]
+  },
+  {
+    "name": "Processes",
+    "pages": [
+      {
+        "name": "Tokens",
+        "route": "/processes/designtokens/figmatokens",
+        "view": "processView",
+        "category": "processes",
+        "overviewContent": "lib/assets/content/processes/designTokens/figmaTokens.md"
+      },
+      {
+        "name": "Adding/Updating Tokens",
+        "route": "/processes/designtokens/figmatokensaddingupdating",
+        "view": "processView",
+        "category": "processes",
+        "overviewContent": "lib/assets/content/processes/designTokens/figmaTokens_addingUpdating.md"
+      },
+      {
+        "name": "Adding New Component",
+        "route": "/processes/addingnewcomponent",
+        "view": "processView",
+        "category": "processes",
+        "overviewContent": "lib/assets/content/processes/addingNewComponent/adding_new_component.md"
+      }
+    ]
+  },
+  {
+    "name": "FMI Components",
+    "pages": [
+      {
+        "name": "Components Overview",
+        "route": "/components",
+        "view": "componentView",
+        "category": "components",
+        "overviewContent": "lib/assets/content/components/components_overview.md"
+      },
+      {
+        "name": "Animations",
+        "route": "/components/animation",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/animation/sliding_visibility/sliding_visibility_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Sliding Visibility",
+            "platform": "flutter",
+            "component": "slidingVisibility",
+            "content": "lib/assets/content/components/animation/sliding_visibility/sliding_visibility_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "App Bar",
+        "route": "/components/appbar",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/bar/appBarTop/app_bar_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/bar/appBarTop/app_bar_top_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi App Bar",
+            "platform": "flutter",
+            "component": "fmiAppBar",
+            "content": "lib/assets/content/components/bar/appBarTop/app_bar_flutter.md"
+          },
+          {
+            "componentName": "Fmi App Bar Top",
+            "platform": "flutter",
+            "component": "fmiAppBarTop",
+            "content": "lib/assets/content/components/bar/appBarTop/app_bar_top_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Attachments",
+        "route": "/components/attachment",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/attachment/fmiAttachment/fmiAttachment_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/attachment/photoAttachment/photoAttachment_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Attachment Widget",
+            "platform": "flutter",
+            "component": "fmiAttachment",
+            "content": "lib/assets/content/components/attachment/fmiAttachment/fmiAttachment_flutter.md"
+          },
+          {
+            "componentName": "Photo Attachment Widget",
+            "platform": "flutter",
+            "component": "photoAttachment",
+            "content": "lib/assets/content/components/attachment/photoAttachment/photoAttachment_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Avatar",
+        "route": "/components/avatar",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/avatar/avatarContent/avatar_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Avatar",
+            "platform": "flutter",
+            "component": "fmiAvatar",
+            "content": "lib/assets/content/components/avatar/avatarContent/avatar_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Badges",
+        "route": "/components/badges",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/badges/badges_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Badge",
+            "platform": "flutter",
+            "component": "fmiBadge",
+            "content": "lib/assets/content/components/badges/badges_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Bottom Sheets",
+        "route": "/components/bottomnsheet",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/bottomSheet/bottomSheet_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Bottom Sheets",
+            "platform": "flutter",
+            "component": "bottomSheet",
+            "content": "lib/assets/content/components/bottomSheet/bottomSheet_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Buttons",
+        "route": "/components/buttons",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/button/fmi_core/dialogIconButton/dialogIconButton_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/fmi_core/iconButton/iconButton_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/fmi_core/multiDialogIconButton/multi_dialog_icon_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/fmi_core/toggleButton/toggleButton_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Dialog Icon Button",
+            "platform": "flutter",
+            "component": "fmiDialogIconButton",
+            "content": "lib/assets/content/components/button/fmi_core/dialogIconButton/dialogIconButton_flutter.md"
+          },
+          {
+            "componentName": "Fmi Icon Button",
+            "platform": "flutter",
+            "component": "fmiIconButton",
+            "content": "lib/assets/content/components/button/fmi_core/iconButton/iconButton_flutter.md"
+          },
+          {
+            "componentName": "Fmi Multi Dialog Icon Button",
+            "platform": "flutter",
+            "component": "fmiMultiDialogIconButton",
+            "content": "lib/assets/content/components/button/fmi_core/multiDialogIconButton/multi_dialog_icon_flutter.md"
+          },
+          {
+            "componentName": "Fmi Toggle Button",
+            "platform": "flutter",
+            "component": "fmiToggleButton",
+            "content": "lib/assets/content/components/button/fmi_core/toggleButton/toggleButton_flutter.md"
+          }
+        ],
+        "oobDesignContents": [
+          {
+            "content": "lib/assets/content/components/button/oob/dropdownButton/dropDownButton_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/dropdownButtonFormField/dropdownButtonFormField_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/elevatedButton/elevatedButton_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_default_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_primary_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_primary_container_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_secondary_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_secondary_container_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_tertiary_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_tertiary_container_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_hero_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_zero_elevation_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/filledButton/filledButton_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/outlinedButton/outlinedButton_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/segmentedButton/segmentedButton_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/button/oob/textButton/textButton_design.md"
+          }
+        ],
+        "oobCodeContents": [
+          {
+            "componentName": "Dropdown Button",
+            "platform": "flutter",
+            "component": "dropdownButton",
+            "content": "lib/assets/content/components/button/oob/dropdownButton/dropdownButton_flutter.md"
+          },
+          {
+            "componentName": "Dropdown Button Form Field",
+            "platform": "flutter",
+            "component": "dropdownButtonFormField",
+            "content": "lib/assets/content/components/button/oob/dropdownButtonFormField/dropdownButtonFormField_flutter.md"
+          },
+          {
+            "componentName": "Elevated Button",
+            "platform": "flutter",
+            "component": "elevatedButton",
+            "content": "lib/assets/content/components/button/oob/elevatedButton/elevatedButton_flutter.md"
+          },
+          {
+            "componentName": "FAB - Default",
+            "platform": "flutter",
+            "component": "fabDefault",
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_default_flutter.md"
+          },
+          {
+            "componentName": "FAB - Primary",
+            "platform": "flutter",
+            "component": "fabPrimary",
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_primary_flutter.md"
+          },
+          {
+            "componentName": "FAB - Primary Container",
+            "platform": "flutter",
+            "component": "fabPrimaryContainer",
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_primary_container_flutter.md"
+          },
+          {
+            "componentName": "FAB - Secondary",
+            "platform": "flutter",
+            "component": "fabSecondary",
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_secondary_flutter.md"
+          },
+          {
+            "componentName": "FAB - Secondary Container",
+            "platform": "flutter",
+            "component": "fabSecondaryContainer",
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_secondary_container_flutter.md"
+          },
+          {
+            "componentName": "FAB - Tertiary",
+            "platform": "flutter",
+            "component": "fabTertiary",
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_tertiary_flutter.md"
+          },
+          {
+            "componentName": "FAB - Tertiary Container",
+            "platform": "flutter",
+            "component": "fabTertiaryContainer",
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_tertiary_container_flutter.md"
+          },
+          {
+            "componentName": "FAB - Hero",
+            "platform": "flutter",
+            "component": "fabHero",
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_hero_flutter.md"
+          },
+          {
+            "componentName": "FAB - Zero Elevation",
+            "platform": "flutter",
+            "component": "fabZeroElevation",
+            "content": "lib/assets/content/components/button/oob/floatingActionButton/fab_zero_elevation_flutter.md"
+          },
+          {
+            "componentName": "Filled Button",
+            "platform": "flutter",
+            "component": "filledButton",
+            "content": "lib/assets/content/components/button/oob/filledButton/filledButton_flutter.md"
+          },
+          {
+            "componentName": "Outlined Button",
+            "platform": "flutter",
+            "component": "outlinedButton",
+            "content": "lib/assets/content/components/button/oob/outlinedButton/outlinedButton_flutter.md"
+          },
+          {
+            "componentName": "Segmented Button",
+            "platform": "flutter",
+            "component": "oobSegmentedButton",
+            "content": "lib/assets/content/components/button/oob/segmentedButton/segmentedButton_flutter.md"
+          },
+          {
+            "componentName": "Text Button",
+            "platform": "flutter",
+            "component": "textButton",
+            "content": "lib/assets/content/components/button/oob/textButton/textButton_flutter.md"
+          }
+        ],
+        "hasOOB": true,
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Candy Bar",
+        "route": "/components/candyBar",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/candyBar/fmi_candy_bar_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Candy Bar",
+            "platform": "flutter",
+            "component": "fmiCandyBar",
+            "content": "lib/assets/content/components/candyBar/fmi_candy_bar_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Cards",
+        "route": "/components/cards",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/cards/errorHeaderCard/errorHeaderCard_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/cards/fmiGenericCard/fmiGenericCard_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/cards/fmiKpiGraphCard/fmi_kpi_graph_card_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/cards/fmiKpiListCard/fmi_kpi_list_card_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/cards/fmiMaterialOverview/fmiMaterialOverview_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/cards/fmiMineOverview/fmiMineOverview_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/cards/fmiScorecard/fmiScoreCard_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Error Card Header",
+            "platform": "flutter",
+            "component": "errorCardHeader",
+            "content": "lib/assets/content/components/cards/errorHeaderCard/errorHeaderCard_flutter.md"
+          },
+          {
+            "componentName": "Fmi Generic Card",
+            "platform": "flutter",
+            "component": "fmiGenericCard",
+            "content": "lib/assets/content/components/cards/fmiGenericCard/fmiGenericCard_flutter.md"
+          },
+          {
+            "componentName": "Fmi Kpi Graph Card",
+            "platform": "flutter",
+            "component": "fmiKpiGraphCard",
+            "content": "lib/assets/content/components/cards/fmiKpiGraphCard/fmi_kpi_graph_card_flutter.md"
+          },
+          {
+            "componentName": "Fmi Kpi List Card",
+            "platform": "flutter",
+            "component": "fmiKpiCard",
+            "content": "lib/assets/content/components/cards/fmiKpiListCard/fmi_kpi_list_card_flutter.md"
+          },
+          {
+            "componentName": "Fmi Material Overview",
+            "platform": "flutter",
+            "component": "fmiMaterialOverview",
+            "content": "lib/assets/content/components/cards/fmiMaterialOverview/fmiMaterialOverview_flutter.md"
+          },
+          {
+            "componentName": "Fmi Mine Overview",
+            "platform": "flutter",
+            "component": "fmiMineOverview",
+            "content": "lib/assets/content/components/cards/fmiMineOverview/fmiMineOverview_flutter.md"
+          },
+          {
+            "componentName": "Fmi Scorecard",
+            "platform": "flutter",
+            "component": "fmiScorecard",
+            "content": "lib/assets/content/components/cards/fmiScorecard/fmiScoreCard_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Cards - Sub Components",
+        "route": "/components/cardsubcomponents",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/cardSubComponent/fmiOverviewBar/fmiOverviewBar_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Overview Bar",
+            "platform": "flutter",
+            "component": "fmiOverviewBar",
+            "content": "lib/assets/content/components/cardSubComponent/fmiOverviewBar/fmiOverviewBar_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Cards - Themes",
+        "route": "/components/cardthemes",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/cardThemes/cardThemeDefault_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Default Theme",
+            "platform": "flutter",
+            "component": "cardThemeDefault",
+            "content": "lib/assets/content/components/cardThemes/cardThemeDefault_flutter.md"
+          },
+          {
+            "componentName": "Elevated Theme",
+            "platform": "flutter",
+            "component": "cardThemeElevated",
+            "content": "lib/assets/content/components/cardThemes/cardThemeElevated_flutter.md"
+          },
+          {
+            "componentName": "Filled Theme",
+            "platform": "flutter",
+            "component": "cardThemeFilled",
+            "content": "lib/assets/content/components/cardThemes/cardThemeFilled_flutter.md"
+          },
+          {
+            "componentName": "Outline Theme",
+            "platform": "flutter",
+            "component": "cardThemeOutline",
+            "content": "lib/assets/content/components/cardThemes/cardThemeOutline_flutter.md"
+          },
+          {
+            "componentName": "Secondary Theme",
+            "platform": "flutter",
+            "component": "cardThemeSecondary",
+            "content": "lib/assets/content/components/cardThemes/cardThemeSecondary_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Carousel",
+        "route": "/components/carousel",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/carousel/fmi_carousel_widget_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Carousel Widget",
+            "platform": "flutter",
+            "component": "fmiCarouselWidget",
+            "content": "lib/assets/content/components/carousel/fmi_carousel_widget_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Chips",
+        "route": "/components/chips",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/chips/actionChip/actionChip_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/chips/choiceChip/choiceChip_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/chips/filterChip/filterChip_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/chips/inputChip/inputChip_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Action Chips",
+            "platform": "flutter",
+            "component": "actionChips",
+            "content": "lib/assets/content/components/chips/actionChip/actionChip_flutter.md"
+          },
+          {
+            "componentName": "Choice Chips",
+            "platform": "flutter",
+            "component": "choiceChips",
+            "content": "lib/assets/content/components/chips/choiceChip/choiceChip_flutter.md"
+          },
+          {
+            "componentName": "Filter Chips",
+            "platform": "flutter",
+            "component": "filterChips",
+            "content": "lib/assets/content/components/chips/filterChip/filterChip_flutter.md"
+          },
+          {
+            "componentName": "Input Chips",
+            "platform": "flutter",
+            "component": "inputChips",
+            "content": "lib/assets/content/components/chips/inputChip/inputChip_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Closeable App Bar",
+        "route": "/components/bar",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/bar/closeable_app_bar/closeable_app_bar_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Closeable App Bar",
+            "platform": "flutter",
+            "component": "closeableAppBar",
+            "content": "lib/assets/content/components/bar/closeable_app_bar/closeable_app_bar_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Conditional Question",
+        "route": "/components/conditionalquestion",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/question/conditionalQuestion/conditionalQuestion_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Conditional Question",
+            "platform": "flutter",
+            "component": "conditionalQuestion",
+            "content": "lib/assets/content/components/question/conditionalQuestion/conditionalQuestion_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Connected Asset Lookup",
+        "route": "/components/connectedasset",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/connectedAsset/connected_asset_lookup/connected_asset_lookup_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Connected Asset Lookup",
+            "platform": "flutter",
+            "component": "fmiConnectedAssetLookup",
+            "content": "lib/assets/content/components/connectedAsset/connected_asset_lookup/connected_asset_lookup_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Datetime",
+        "route": "/components/datetime",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/datetime/datetimePickers/date/datePicker_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/datetime/datetimePickers/dateRange/dateRangePicker_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/datetime/datetimePickers/time/timePicker_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Default Date Picker",
+            "platform": "flutter",
+            "component": "datePickerDefault",
+            "content": "lib/assets/content/components/datetime/datetimePickers/date/datePicker_flutter.md"
+          },
+          {
+            "componentName": "Default Date Range Picker",
+            "platform": "flutter",
+            "component": "dateRangePickerDefault",
+            "content": "lib/assets/content/components/datetime/datetimePickers/dateRange/dateRangePicker_flutter.md"
+          },
+          {
+            "componentName": "Default Time Picker",
+            "platform": "flutter",
+            "component": "timePickerDefault",
+            "content": "lib/assets/content/components/datetime/datetimePickers/time/timePicker_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Employee",
+        "route": "/components/employee",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/employee/employee_lookup/employee_lookup_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/employee/fmi_employee_directory_search/fmi_employee_directory_search_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/employee/fmi_employee_info_widget/fmi_employee_info_widget_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/employee/fmi_multi_employee_lookup/fmi_multi_employee_lookup_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Employee Lookup Widget",
+            "platform": "flutter",
+            "component": "employeeLookup",
+            "content": "lib/assets/content/components/employee/employee_lookup/employee_lookup_flutter.md"
+          },
+          {
+            "componentName": "Fmi Employee Directory Search",
+            "platform": "flutter",
+            "component": "fmiEmployeeDirectorySearch",
+            "content": "lib/assets/content/components/employee/fmi_employee_directory_search/fmi_employee_directory_search_flutter.md"
+          },
+          {
+            "componentName": "Fmi Employee Info Widget",
+            "platform": "flutter",
+            "component": "fmiEmployeeInfoWidget",
+            "content": "lib/assets/content/components/employee/fmi_employee_info_widget/fmi_employee_info_widget_flutter.md"
+          },
+          {
+            "componentName": "Fmi Multi Employee Lookup Widget",
+            "platform": "flutter",
+            "component": "fmiMultiEmployeeLookup",
+            "content": "lib/assets/content/components/employee/fmi_multi_employee_lookup/fmi_multi_employee_lookup_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Expandable Kpi Card",
+        "route": "/components/fmiexpandablekpicard",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/cards/fmiExpandableKpiCard/expandable_kpi_card_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Image Slot",
+            "platform": "flutter",
+            "component": "fmiExpandableKpiCard",
+            "content": "lib/assets/content/components/cards/fmiExpandableKpiCard/expandable_kpi_card_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Filters",
+        "route": "/components/filters",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/filters/fmiMultiSelectFilter/multi_select_filter_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/filters/fmiSingleSelectFilter/single_select_filter_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Multi Select Filter",
+            "platform": "flutter",
+            "component": "fmiMultiSelectFilter",
+            "content": "lib/assets/content/components/filters/fmiMultiSelectFilter/multi_select_filter_flutter.md"
+          },
+          {
+            "componentName": "Fmi Single Select Filter",
+            "platform": "flutter",
+            "component": "fmiSingleSelectFilter",
+            "content": "lib/assets/content/components/filters/fmiSingleSelectFilter/single_select_filter_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Generic Lookup",
+        "route": "/components/genericLookup",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/genericLookup/generic_lookup_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/genericLookup/multiSelect/generic_lookup_multi_select_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Generic Lookup",
+            "platform": "flutter",
+            "component": "genericLookup",
+            "content": "lib/assets/content/components/genericLookup/generic_lookup_flutter.md"
+          },
+          {
+            "componentName": "Generic Lookup Multi Select",
+            "platform": "flutter",
+            "component": "genericLookupMultiSelect",
+            "content": "lib/assets/content/components/genericLookup/multiSelect/generic_lookup_multi_select_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Hyperlink",
+        "route": "/components/hyperlink",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/hyperlink/hyperlink_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Hyperlink",
+            "platform": "flutter",
+            "component": "fmiHyperlink",
+            "content": "lib/assets/content/components/hyperlink/hyperlink_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "List Tiles",
+        "route": "/components/listtiles",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/listTiles/listTilesGuide/listTiles_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/listTiles/subtitleTwoLine/subtitleTwoLine_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/listTiles/titleWithOverline/titleWithOverline_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/listTiles/titleWithSubscript/titleWithSubscript_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/listTiles/fmiCardHeaderListTile/fmiCardHeaderListTile_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "List Tile",
+            "platform": "flutter",
+            "content": "lib/assets/content/components/listTiles/listTilesGuide/listTiles_flutter.md"
+          },
+          {
+            "componentName": "Subtitle Two Line",
+            "platform": "flutter",
+            "component": "subtitleTwoLine",
+            "content": "lib/assets/content/components/listTiles/subtitleTwoLine/subtitleTwoLine_flutter.md"
+          },
+          {
+            "componentName": "Title With Overline",
+            "platform": "flutter",
+            "component": "titleWithOverline",
+            "content": "lib/assets/content/components/listTiles/titleWithOverline/titleWithOverline_flutter.md"
+          },
+          {
+            "componentName": "Title With Subscript",
+            "platform": "flutter",
+            "component": "titleWithSubscript",
+            "content": "lib/assets/content/components/listTiles/titleWithSubscript/titleWithSubscript_flutter.md"
+          },
+          {
+            "componentName": "Fmi Card Header List Tile",
+            "platform": "flutter",
+            "component": "fmiCardHeaderListTile",
+            "content": "lib/assets/content/components/listTiles/fmiCardHeaderListTile/fmiCardHeaderListTile_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Location Picker",
+        "route": "/components/locationpicker",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/locationPicker/fmi_location_picker_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Location Picker",
+            "platform": "flutter",
+            "component": "fmiLocationPicker",
+            "content": "lib/assets/content/components/locationPicker/fmi_location_picker_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Maps",
+        "route": "/components/maps",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/map/mapGuide/fmi_map_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Map",
+            "platform": "flutter",
+            "component": "fmiMap",
+            "content": "lib/assets/content/components/map/mapGuide/fmi_map_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Multi Input",
+        "route": "/components/multiinput",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/input/multiInput/multiInput_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Multi Input",
+            "platform": "flutter",
+            "component": "fmiMultiInput",
+            "content": "lib/assets/content/components/input/multiInput/multiInput_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Multi Select",
+        "route": "/components/multiselect",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/lists/multi_select/multi_select_list_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/multiSelect/fmi_multi_select_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Multi Select List",
+            "platform": "flutter",
+            "component": "fmiMultiSelectList",
+            "content": "lib/assets/content/components/lists/multi_select/multi_select_list_flutter.md"
+          },
+          {
+            "componentName": "Fmi Multi Select",
+            "platform": "flutter",
+            "component": "fmiMultiSelect",
+            "content": "lib/assets/content/components/multiSelect/fmi_multi_select_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Navigation - Bottom Nav Bar",
+        "route": "/components/bottomnavigationbar",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/bottomNavigationBar/fmi_core/fmi_bottom_navigation_bar_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Bottom Navigation Bar",
+            "platform": "flutter",
+            "component": "fmiBottomNavigationBar",
+            "content": "lib/assets/content/components/bottomNavigationBar/fmi_core/fmi_bottom_navigation_bar_flutter.md"
+          }
+        ],
+        "oobDesignContents": [
+          {
+            "content": "lib/assets/content/components/bottomNavigationBar/oob/default_bottom_navigation_bar_design.md"
+          }
+        ],
+        "oobCodeContents": [
+          {
+            "componentName": "Fmi Bottom Navigation Bar",
+            "platform": "flutter",
+            "component": "defaultBottomNavBar",
+            "content": "lib/assets/content/components/bottomNavigationBar/oob/default_bottom_navigation_bar_flutter.md"
+          }
+        ],
+        "hasOOB": true,
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Navigation - Themes",
+        "route": "/components/navigationthemes",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/navigation/appBarThemes/appBarThemes_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Default Theme",
+            "platform": "flutter",
+            "component": "appBarThemes",
+            "content": "lib/assets/content/components/navigation/appBarThemes/appBarThemes_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Navigation Drawer",
+        "route": "/components/navigationdrawer",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/navigationDrawer/navigation_drawer_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Navigation Drawer",
+            "platform": "flutter",
+            "component": "fmiNavigationDrawer",
+            "content": "lib/assets/content/components/navigationDrawer/navigation_drawer_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Navigation Rail",
+        "route": "/components/navigationrail",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/navigationRail/navigation_rail_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Navigation Rail",
+            "platform": "flutter",
+            "component": "fmiNavigationRail",
+            "content": "lib/assets/content/components/navigationRail/navigation_rail_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Phone Number Input",
+        "route": "/components/phonenumberinput",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/input/phoneNumberInput/phone_number_input_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Phone Number Input",
+            "platform": "flutter",
+            "component": "fmiPhoneNumberInput",
+            "content": "lib/assets/content/components/input/phoneNumberInput/phone_number_input_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Progress Bar",
+        "route": "/components/progressbar",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/syncFusion/fmi_progress_bar_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Progress Bar",
+            "platform": "flutter",
+            "component": "fmiProgressBar",
+            "content": "lib/assets/content/components/syncFusion/fmi_progress_bar_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Radio",
+        "route": "/components/radio",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/radio/radioButton/radioButton_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Radio Button",
+            "platform": "flutter",
+            "component": "radioButtonGroup",
+            "content": "lib/assets/content/components/radio/radioButton/radioButton_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Scaffold",
+        "route": "/components/scaffold",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/scaffold/scaffold_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Scaffold",
+            "platform": "flutter",
+            "content": "lib/assets/content/components/scaffold/scaffold_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Search",
+        "route": "/components/search",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/search/dialog/search_dialog_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/search/single_select/search_single_select_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Search Dialog",
+            "platform": "flutter",
+            "component": "fmiSearchDialog",
+            "content": "lib/assets/content/components/search/dialog/search_dialog_flutter.md"
+          },
+          {
+            "componentName": "Search Single Select",
+            "platform": "flutter",
+            "component": "fmiSearchSingleSelect",
+            "content": "lib/assets/content/components/search/single_select/search_single_select_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Signature",
+        "route": "/components/signature",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/signature/signature_canvas/signature_canvas_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/signature/signature_dialog/signature_dialog_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/signature/signature_viewer/signature_viewer_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Signature Canvas",
+            "platform": "flutter",
+            "component": "fmiSignatureCanvas",
+            "content": "lib/assets/content/components/signature/signature_canvas/signature_canvas_flutter.md"
+          },
+          {
+            "componentName": "Fmi Signature Dialog",
+            "platform": "flutter",
+            "component": "fmiSignatureDialog",
+            "content": "lib/assets/content/components/signature/signature_dialog/signature_dialog_flutter.md"
+          },
+          {
+            "componentName": "Fmi Signature Viewer",
+            "platform": "flutter",
+            "component": "fmiSignatureViewer",
+            "content": "lib/assets/content/components/signature/signature_viewer/signature_viewer_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Snack Bar Service",
+        "route": "/components/snackbarservice",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/snackBar/snackBarService/snack_bar_service_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Snack Bar Service",
+            "platform": "flutter",
+            "component": "snackBarService",
+            "content": "lib/assets/content/components/snackBar/snackBarService/snack_bar_service_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Syncfusion - Misc. Charts",
+        "route": "/components/samplecharts",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/sampleCharts/dataGrid/dataGrid_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/sampleCharts/defaultBarChart/defaultBarChart_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/sampleCharts/defaultLineChart/defaultLineChart_design.md"
+          },
+          {
+            "content": "lib/assets/content/components/sampleCharts/defaultPieChart/defaultPieChart_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Data Grid",
+            "platform": "flutter",
+            "component": "dataGrid",
+            "content": "lib/assets/content/components/sampleCharts/dataGrid/dataGrid_flutter.md"
+          },
+          {
+            "componentName": "Default Bar Chart",
+            "platform": "flutter",
+            "component": "defaultBarChart",
+            "content": "lib/assets/content/components/sampleCharts/defaultBarChart/defaultBarChart_flutter.md"
+          },
+          {
+            "componentName": "Default Line Chart",
+            "platform": "flutter",
+            "component": "defaultLineChart",
+            "content": "lib/assets/content/components/sampleCharts/defaultLineChart/defaultLineChart_flutter.md"
+          },
+          {
+            "componentName": "Default Pie Chart",
+            "platform": "flutter",
+            "component": "defaultPieChart",
+            "content": "lib/assets/content/components/sampleCharts/defaultPieChart/defaultPieChart_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Tab Bar",
+        "route": "/components/tabbar",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/bar/tabBar/tab_bar_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Tab Bar",
+            "platform": "flutter",
+            "component": "fmiTabBar",
+            "content": "lib/assets/content/components/bar/tabBar/tab_bar_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Text Field",
+        "route": "/components/textfield",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/textField/oob/text_field_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Text Field",
+            "platform": "flutter",
+            "component": "textField",
+            "content": "lib/assets/content/components/textField/oob/text_field_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Timeline",
+        "route": "/components/timeline",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/timeline/timeline_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "platform": "flutter",
+            "component": "fmiTimeline",
+            "content": "lib/assets/content/components/timeline/timeline_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Treeview",
+        "route": "/components/treeview",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/treeview/treeview_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "platform": "flutter",
+            "component": "treeview",
+            "content": "lib/assets/content/components/treeview/treeview_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Warning TextField",
+        "route": "/components/warning",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/warning/warning_text_field_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Warning TextField",
+            "platform": "flutter",
+            "component": "fmiWarningTextField",
+            "content": "lib/assets/content/components/warning/warning_text_field_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      },
+      {
+        "name": "Warning TextField Na",
+        "route": "/components/naWarning",
+        "designContents": [
+          {
+            "content": "lib/assets/content/components/naWarning/na_warning_text_field_design.md"
+          }
+        ],
+        "codeContents": [
+          {
+            "componentName": "Fmi Na Warning TextField",
+            "platform": "flutter",
+            "component": "fmiNaWarningTextField",
+            "content": "lib/assets/content/components/naWarning/na_warning_text_field_flutter.md"
+          }
+        ],
+        "view": "documentationView",
+        "category": "components"
+      }
+    ]
+  },
+  {
+    "name": "Demos",
+    "pages": [
+      {
+        "name": "Demo Overview",
+        "route": "/demos",
+        "view": "demoView",
+        "category": "demos",
+        "overviewContent": "lib/assets/content/demos/demos_overview.md"
+      },
+      {
+        "name": "Flutter Widgets",
+        "route": "/demos/flutter",
+        "view": "demoFlutterView",
+        "category": "demos"
+      },
+      {
+        "name": "Scaffold",
+        "route": "/demos/scaffold",
+        "view": "demoScaffoldView",
+        "category": "demos"
+      }
+    ]
+  }
+]

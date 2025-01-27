@@ -1,0 +1,119 @@
+import 'package:flutter/material.dart';
+import 'package:fmi_core/fmi_core.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:poc/ui/demo/demo.dart';
+
+class DemoFabZeroElevation extends StatelessWidget {
+  const DemoFabZeroElevation({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+              left: FMIThemeBase.basePaddingSmall,
+              bottom: FMIThemeBase.basePaddingMedium),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ComponentHeader(
+                  title:
+                      'FAB – Zero Elevation – FmiFloatingActionButtonTheme.zeroElevation'),
+              ScrollConfiguration(
+                behavior:
+                    CustomScrollBehavior.horizontalScrollConfiguration(context),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.all(FMIThemeBase.basePaddingSmall),
+                        child: Theme(
+                          data: FmiFloatingActionButtonTheme.zeroElevation(
+                              context,
+                              FmiFloatingActionButtonTheme.primary(context)),
+                          child: FloatingActionButton.extended(
+                            onPressed: () {},
+                            icon: const FaIcon(
+                              FontAwesomeIcons.plus,
+                            ),
+                            label: const Text("Button"),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.all(FMIThemeBase.basePaddingSmall),
+                        child: Theme(
+                            data: FmiFloatingActionButtonTheme.zeroElevation(
+                                context,
+                                FmiFloatingActionButtonTheme.secondary(
+                                    context)),
+                            child: FloatingActionButton.small(
+                              onPressed: () {},
+                              child: const FaIcon(
+                                FontAwesomeIcons.plus,
+                              ),
+                            )),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.all(FMIThemeBase.basePaddingSmall),
+                        child: Theme(
+                            data: FmiFloatingActionButtonTheme.zeroElevation(
+                                context,
+                                FmiFloatingActionButtonTheme.tertiary(context)),
+                            child: FloatingActionButton(
+                              onPressed: () {},
+                              child: const FaIcon(
+                                FontAwesomeIcons.plus,
+                              ),
+                            )),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.all(FMIThemeBase.basePaddingSmall),
+                        child: SizedBox(
+                          height: FMIThemeBase.baseContainerDimension72,
+                          width: FMIThemeBase.baseContainerDimension72,
+                          child: Theme(
+                            data: FmiFloatingActionButtonTheme.zeroElevation(
+                                context,
+                                FmiFloatingActionButtonTheme.tertiaryContainer(
+                                    context)),
+                            child: FloatingActionButton(
+                              onPressed: () {},
+                              child: const FaIcon(
+                                FontAwesomeIcons.plus,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.all(FMIThemeBase.basePaddingSmall),
+                        child: Theme(
+                            data: FmiFloatingActionButtonTheme.zeroElevation(
+                                context,
+                                FmiFloatingActionButtonTheme.hero(context)),
+                            child: FloatingActionButton.large(
+                              onPressed: () {},
+                              child: const FaIcon(
+                                FontAwesomeIcons.plus,
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}

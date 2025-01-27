@@ -1,0 +1,21 @@
+{
+  "source": [
+    "./../../data/fmi-tokens/base.json",
+    "./../../data/fmi-tokens/light.json"],
+  "platforms": {
+    "flutter": {
+      "prefix": "light",
+      "transformGroup": "mds/flutter",
+      "buildPath": "flutter/",
+      "files": [{
+        "destination": "fmi_theme_light.dart",
+        "format": "flutter/class.dart",
+        "filter": "filterColors",
+        "className": "FMIThemeLight",
+        "options": {
+          "showFileHeader": false
+        }
+      }]
+    }
+  }
+}

@@ -1,0 +1,1 @@
+enum SearchOptionLayout { list, wrap }
