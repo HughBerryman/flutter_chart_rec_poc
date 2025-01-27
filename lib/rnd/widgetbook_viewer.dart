@@ -14,6 +14,7 @@ class WidgetbookViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook(
+      initialRoute: 'welcome/welcome-page',
       directories: [
         WidgetbookComponent(
           name: 'Welcome',
@@ -22,8 +23,6 @@ class WidgetbookViewer extends StatelessWidget {
             WidgetbookUseCase(
               name: 'Welcome Page',
               builder: (context) => const WelcomePage(),
-              initialBuilder:
-                  true, // This makes it the initially selected use case
             ),
           ],
         ),
