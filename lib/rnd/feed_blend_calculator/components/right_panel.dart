@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fmi_core/fmi_core.dart';
 import '../../models/lot_data.dart';
 import '../widgets/elements_section.dart';
 import 'feed_composition_section.dart';
@@ -390,9 +391,13 @@ class _RightPanelState extends State<RightPanel> {
           cursor: SystemMouseCursors.resizeColumn,
           child: GestureDetector(
             onHorizontalDragUpdate: (details) {
+              final screenWidth = MediaQuery.of(context).size.width;
+              final minWidth = context.isMedium ? 500.0 : 600.0;
+              final maxWidthFactor = context.isLarge ? 0.45 : 0.5;
+
               widget.onWidthChanged(
                 (widget.width - details.delta.dx)
-                    .clamp(600.0, MediaQuery.of(context).size.width * 0.6),
+                    .clamp(minWidth, screenWidth * maxWidthFactor),
               );
             },
             child: Container(

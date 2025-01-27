@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fmi_core/fmi_core.dart';
 import 'feed_blend_calculator/components/feed_parameters_section.dart';
 import 'feed_blend_calculator/components/right_panel.dart';
 import 'feed_blend_calculator/components/left_navigation.dart';
@@ -34,9 +35,16 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     final now = DateTime.now();
     _projectedStartDate = now;
     _targetEndDate = now.add(const Duration(days: 4));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _panelWidth =
+            MediaQuery.of(context).size.width * (context.isLarge ? 0.35 : 0.4);
+      });
+    });
   }
 
-  double _panelWidth = 800;
+  double _panelWidth = 700; // Will be set in initState
   Set<String> selectedLocations = {'All Locations'};
   String? selectedSort;
 
