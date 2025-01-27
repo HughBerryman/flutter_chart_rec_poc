@@ -233,16 +233,16 @@ class WidgetbookViewer extends StatelessWidget {
       addons: [
         DeviceFrameAddon(
           devices: [
+            // Large Screens
+            Devices.macOS.macBookPro,
+            Devices.linux.laptop,
+            // Tablets
+            Devices.ios.iPadPro11Inches,
+            Devices.ios.iPadAir4,
             // Mobile Devices
             Devices.ios.iPhone13,
             Devices.ios.iPhone13ProMax,
             Devices.android.samsungGalaxyS20,
-            // Tablets
-            Devices.ios.iPadPro11Inches,
-            Devices.ios.iPadAir4,
-            // Large Screens
-            Devices.macOS.macBookPro,
-            Devices.linux.laptop,
           ],
         ),
         MaterialThemeAddon(
