@@ -1,4 +1,4 @@
-name: widgetbook_workspace
+name: ideation_widgetbook
 description: "A new Flutter project."
 publish_to: "none"
 version: 0.1.0
@@ -9,10 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_chart_app:
+  ideation:
     path: ../
   widgetbook: ^3.10.0
   widgetbook_annotation: ^3.2.0
+  device_frame: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -20,6 +21,10 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   widgetbook_generator: ^3.9.0
   build_runner: ^2.4.11
+
+dependency_overrides:
+  ffi: ^2.0.1
+  http: ^1.0.0
 
 flutter:
   uses-material-design: true
