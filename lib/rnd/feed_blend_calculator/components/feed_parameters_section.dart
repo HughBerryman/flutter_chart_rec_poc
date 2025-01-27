@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fmi_core/fmi_core.dart';
 import 'feed_parameters.dart';
 
 class FeedParametersSection extends StatelessWidget {
@@ -27,15 +28,18 @@ class FeedParametersSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
+      color: Theme.of(context).colorScheme.fmiBaseThemeAltSurfaceAltSurface,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Feed Parameters',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .fmiBaseThemeAltSurfaceOnAltSurface,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           const SizedBox(height: 16),
           FeedParameters(

@@ -129,43 +129,24 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     final selectedLotCount = lots.where((lot) => lot.selectedBags > 0).length;
 
     return Theme(
-      data: Theme.of(context).copyWith(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          surfaceTint: Colors.white,
-        ),
-        filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(
-            backgroundColor: Colors.blue[700],
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor: Colors.grey[700],
-          ),
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            foregroundColor: Colors.grey[700],
-            side: BorderSide(color: Colors.grey[300]!),
-          ),
-        ),
-        popupMenuTheme: PopupMenuThemeData(
-          color: Colors.white,
-          surfaceTintColor: Colors.white,
-        ),
-      ),
+      data: FmiThemeLight.fmiThemeDataLight,
       child: Scaffold(
-        backgroundColor: const Color(0xFFEBF2F8),
-        appBar: FeedAppBar(
-          selectedLotCount: selectedLotCount,
-          totalLotCount: lots.length,
-          onViewSaved: _showSavedStrategies,
-          onSaveStrategy: _showSaveStrategy,
-          onExport: _showExportDialog,
-          isPanelVisible: _isPanelVisible,
-          onPanelToggle: () =>
-              setState(() => _isPanelVisible = !_isPanelVisible),
+        backgroundColor: FmiThemeLight.fmiThemeDataLight.colorScheme.background,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Theme(
+            data: FmiAppBarTheme.inverseAltSurface(context),
+            child: FeedAppBar(
+              selectedLotCount: selectedLotCount,
+              totalLotCount: lots.length,
+              onViewSaved: _showSavedStrategies,
+              onSaveStrategy: _showSaveStrategy,
+              onExport: _showExportDialog,
+              isPanelVisible: _isPanelVisible,
+              onPanelToggle: () =>
+                  setState(() => _isPanelVisible = !_isPanelVisible),
+            ),
+          ),
         ),
         body: Row(
           children: [
@@ -175,70 +156,77 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
                 children: [
                   // Left side - Feed parameters and lots
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Feed parameters section
-                        FeedParametersSection(
-                          feedRate: _feedRate,
-                          sieProduction: _sieProduction,
-                          projectedStartDate: _projectedStartDate,
-                          targetEndDate: _targetEndDate,
-                          onFeedRateChanged: (value) {
-                            setState(() => _feedRate = value);
-                          },
-                          onSieProductionChanged: (value) {
-                            setState(() => _sieProduction = value);
-                          },
-                          onStartDateChanged: (date) {
-                            setState(() => _projectedStartDate = date);
-                          },
-                          onTargetEndDateChanged: (date) {
-                            setState(() => _targetEndDate = date);
-                          },
-                        ),
-                        const Divider(height: 1),
-
-                        // Lots section
-                        Expanded(
-                          child: LotsSection(
-                            lots: lots,
-                            showSelected: showSelected,
-                            selectedLocations: selectedLocations,
-                            selectedSort: selectedSort,
-                            onShowSelectedChanged: (value) =>
-                                setState(() => showSelected = value),
-                            onLocationsChanged: (locations) {
-                              setState(() {
-                                if (locations.contains('All Locations')) {
-                                  selectedLocations = {'All Locations'};
-                                } else {
-                                  selectedLocations = locations;
-                                }
-                              });
+                    child: Theme(
+                      data: FmiListTileTheme.altSurface(context),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Feed parameters section
+                          FeedParametersSection(
+                            feedRate: _feedRate,
+                            sieProduction: _sieProduction,
+                            projectedStartDate: _projectedStartDate,
+                            targetEndDate: _targetEndDate,
+                            onFeedRateChanged: (value) {
+                              setState(() => _feedRate = value);
                             },
-                            onSortChanged: (value) =>
-                                setState(() => selectedSort = value),
-                            onBagsChanged: _updateLotBags,
-                            onExpandChanged: _toggleLotExpanded,
-                            onAssayValuesChanged: _updateLotAssayValues,
+                            onSieProductionChanged: (value) {
+                              setState(() => _sieProduction = value);
+                            },
+                            onStartDateChanged: (date) {
+                              setState(() => _projectedStartDate = date);
+                            },
+                            onTargetEndDateChanged: (date) {
+                              setState(() => _targetEndDate = date);
+                            },
                           ),
-                        ),
-                      ],
+                          const Divider(height: 1),
+
+                          // Lots section
+                          Expanded(
+                            child: LotsSection(
+                              lots: lots,
+                              showSelected: showSelected,
+                              selectedLocations: selectedLocations,
+                              selectedSort: selectedSort,
+                              onShowSelectedChanged: (value) =>
+                                  setState(() => showSelected = value),
+                              onLocationsChanged: (locations) {
+                                setState(() {
+                                  if (locations.contains('All Locations')) {
+                                    selectedLocations = {'All Locations'};
+                                  } else {
+                                    selectedLocations = locations;
+                                  }
+                                });
+                              },
+                              onSortChanged: (value) =>
+                                  setState(() => selectedSort = value),
+                              onBagsChanged: _updateLotBags,
+                              onExpandChanged: _toggleLotExpanded,
+                              onAssayValuesChanged: _updateLotAssayValues,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
 
                   // Right panel
                   if (_isPanelVisible)
-                    RightPanel(
-                      width: _panelWidth,
-                      onWidthChanged: (value) =>
-                          setState(() => _panelWidth = value),
-                      lots: lots.where((lot) => lot.selectedBags > 0).toList(),
-                      feedRate: _feedRate,
-                      sieProduction: _sieProduction,
-                      projectedStartDate: _projectedStartDate,
-                      targetEndDate: _targetEndDate,
+                    Theme(
+                      data: FmiListTileTheme.altSurface(context),
+                      child: RightPanel(
+                        width: _panelWidth,
+                        onWidthChanged: (value) =>
+                            setState(() => _panelWidth = value),
+                        lots:
+                            lots.where((lot) => lot.selectedBags > 0).toList(),
+                        feedRate: _feedRate,
+                        sieProduction: _sieProduction,
+                        projectedStartDate: _projectedStartDate,
+                        targetEndDate: _targetEndDate,
+                      ),
                     ),
                 ],
               ),
