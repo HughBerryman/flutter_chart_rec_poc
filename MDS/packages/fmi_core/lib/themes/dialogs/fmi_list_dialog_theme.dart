@@ -4,7 +4,7 @@ import '../fmi_theme_base.dart';
 
 class FmiListDialogTheme {
   static ThemeData listDialog(BuildContext context) {
-    DialogTheme dialogTheme = Theme.of(context).dialogTheme;
+    DialogTheme dialogTheme = Theme.of(context).dialogTheme as DialogTheme;
     ListTileThemeData listTileTheme = Theme.of(context).listTileTheme;
 
     return Theme.of(context).copyWith(
@@ -16,7 +16,7 @@ class FmiListDialogTheme {
   }
 
   static ThemeData listDialogSecondaryContainer(BuildContext context) {
-    DialogTheme dialogTheme = Theme.of(context).dialogTheme;
+    DialogTheme dialogTheme = Theme.of(context).dialogTheme as DialogTheme;
     ListTileThemeData listTileTheme = Theme.of(context).listTileTheme;
 
     return Theme.of(context).copyWith(
