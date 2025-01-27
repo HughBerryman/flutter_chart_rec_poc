@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:fmi_core/fmi_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'rnd/rec_selector.dart';
 import 'rnd/chart_app.dart';
 import 'rnd/feed_blend_calculator.dart';
@@ -35,8 +36,63 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  final List<FmiNavigationDestination> _destinations = [
+    FmiNavigationDestination(
+      icon: FontAwesomeIcons.calculator,
+      label: 'Feed Blend Calculator',
+    ),
+    FmiNavigationDestination(
+      icon: FontAwesomeIcons.chartLine,
+      label: 'Chart App',
+    ),
+    FmiNavigationDestination(
+      icon: FontAwesomeIcons.list,
+      label: 'Rec Selector',
+    ),
+    FmiNavigationDestination(
+      icon: FontAwesomeIcons.book,
+      label: 'Widgetbook',
+    ),
+  ];
+
+  void _onDestinationSelected(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const FeedBlendCalculator()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ChartApp()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const RecSelector()),
+        );
+        break;
+      case 3:
+        _launchWidgetbook();
+        break;
+    }
+  }
 
   Future<void> _launchWidgetbook() async {
     final Uri url = Uri.parse(
@@ -49,71 +105,70 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 300),
-            child: FmiGenericCard(
-              title: 'Navigation',
-              titleTextThemeMobile: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: Theme.of(context).colorScheme.primary),
-              titleTextThemeNotMobile: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(color: Theme.of(context).colorScheme.primary),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: FMIThemeBase.basePaddingLarge),
-                  FmiToggleButton(
-                    text: 'Feed Blend Calculator',
-                    type: FmiToggleButtonType.elevated,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const FeedBlendCalculator()),
-                      );
-                    },
-                  ),
-                  SizedBox(height: FMIThemeBase.basePaddingLarge),
-                  FmiToggleButton(
-                    text: 'Show Chart App UI',
-                    type: FmiToggleButtonType.outline,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ChartApp()),
-                      );
-                    },
-                  ),
-                  SizedBox(height: FMIThemeBase.basePaddingLarge),
-                  FmiToggleButton(
-                    text: 'Show Rec Selector UI',
-                    type: FmiToggleButtonType.outline,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RecSelector()),
-                      );
-                    },
-                  ),
-                  SizedBox(height: FMIThemeBase.basePaddingLarge),
-                  FmiToggleButton(
-                    text: 'Open Widgetbook POC',
-                    type: FmiToggleButtonType.outline,
-                    onPressed: _launchWidgetbook,
-                  ),
-                  SizedBox(height: FMIThemeBase.basePaddingLarge),
-                ],
+      body: Row(
+        children: [
+          if (context.isLarge || context.isMedium)
+            FmiNavigationRail(
+              selectedIndex: _selectedIndex,
+              destinations: _destinations,
+              onDestinationSelected: _onDestinationSelected,
+              showElevation: true,
+            ),
+          Expanded(
+            child: Center(
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 300),
+                  child: context.isSmall
+                      ? FmiGenericCard(
+                          title: 'Navigation',
+                          titleTextThemeMobile: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary),
+                          titleTextThemeNotMobile: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary),
+                          body: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(height: FMIThemeBase.basePaddingLarge),
+                              FmiToggleButton(
+                                text: 'Feed Blend Calculator',
+                                type: FmiToggleButtonType.elevated,
+                                onPressed: () => _onDestinationSelected(0),
+                              ),
+                              SizedBox(height: FMIThemeBase.basePaddingLarge),
+                              FmiToggleButton(
+                                text: 'Show Chart App UI',
+                                type: FmiToggleButtonType.outline,
+                                onPressed: () => _onDestinationSelected(1),
+                              ),
+                              SizedBox(height: FMIThemeBase.basePaddingLarge),
+                              FmiToggleButton(
+                                text: 'Show Rec Selector UI',
+                                type: FmiToggleButtonType.outline,
+                                onPressed: () => _onDestinationSelected(2),
+                              ),
+                              SizedBox(height: FMIThemeBase.basePaddingLarge),
+                              FmiToggleButton(
+                                text: 'Open Widgetbook POC',
+                                type: FmiToggleButtonType.outline,
+                                onPressed: () => _onDestinationSelected(3),
+                              ),
+                              SizedBox(height: FMIThemeBase.basePaddingLarge),
+                            ],
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
