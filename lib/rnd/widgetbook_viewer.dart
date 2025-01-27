@@ -43,13 +43,14 @@ class WidgetbookViewer extends StatelessWidget {
         ),
         WidgetbookCategory(
           name: 'Feed Blend Calculator',
-          isInitiallyExpanded: false,
+          isInitiallyExpanded: true,
           children: [
             WidgetbookFolder(
               name: 'Screens',
               children: [
                 WidgetbookComponent(
                   name: 'Feed Blend Calculator',
+                  isInitiallyExpanded: false,
                   useCases: [
                     WidgetbookUseCase(
                       name: 'Default',
@@ -62,38 +63,6 @@ class WidgetbookViewer extends StatelessWidget {
             WidgetbookFolder(
               name: 'Widgets',
               children: [
-                WidgetbookComponent(
-                  name: 'Right Panel',
-                  useCases: [
-                    WidgetbookUseCase(
-                      name: 'Default',
-                      builder: (context) => RightPanel(
-                        lots: const [],
-                        width: 300,
-                        onWidthChanged: mockDoubleCallback,
-                        feedRate: 100,
-                        sieProduction: 200,
-                      ),
-                    ),
-                  ],
-                ),
-                WidgetbookComponent(
-                  name: 'Feed App Bar',
-                  useCases: [
-                    WidgetbookUseCase(
-                      name: 'Default',
-                      builder: (context) => FeedAppBar(
-                        selectedLotCount: 0,
-                        totalLotCount: 10,
-                        onViewSaved: mockVoidCallback,
-                        onSaveStrategy: mockVoidCallback,
-                        onExport: mockVoidCallback,
-                        isPanelVisible: true,
-                        onPanelToggle: mockVoidCallback,
-                      ),
-                    ),
-                  ],
-                ),
                 WidgetbookComponent(
                   name: 'Feed Parameters',
                   useCases: [
@@ -111,7 +80,7 @@ class WidgetbookViewer extends StatelessWidget {
                   ],
                 ),
                 WidgetbookComponent(
-                  name: 'Material Assays',
+                  name: 'Feed Material Assays',
                   useCases: [
                     WidgetbookUseCase(
                       name: 'Default',
@@ -126,6 +95,51 @@ class WidgetbookViewer extends StatelessWidget {
                         onBagsChanged: mockBagCallback,
                         onExpandChanged: mockExpandCallback,
                         onAssayValuesChanged: mockAssayCallback,
+                      ),
+                    ),
+                  ],
+                ),
+                WidgetbookComponent(
+                  name: 'Right Panel',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Default',
+                      builder: (context) {
+                        final hasData = context.knobs.boolean(
+                          label: 'Has Data',
+                          description:
+                              'Toggle between empty and with-data states',
+                          initialValue: false,
+                        );
+
+                        return RightPanel(
+                          lots: hasData
+                              ? [
+                                  // Add mock data when hasData is true
+                                ]
+                              : const [],
+                          width: 300,
+                          onWidthChanged: mockDoubleCallback,
+                          feedRate: 5,
+                          sieProduction: 6,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                WidgetbookComponent(
+                  name: 'Feed App Bar',
+                  useCases: [
+                    WidgetbookUseCase(
+                      name: 'Default',
+                      builder: (context) => FeedAppBar(
+                        selectedLotCount: 0,
+                        totalLotCount: 10,
+                        onViewSaved: mockVoidCallback,
+                        onSaveStrategy: mockVoidCallback,
+                        onExport: mockVoidCallback,
+                        isPanelVisible: true,
+                        onPanelToggle: mockVoidCallback,
                       ),
                     ),
                   ],
