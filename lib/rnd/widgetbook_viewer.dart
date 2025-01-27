@@ -100,8 +100,8 @@ class WidgetbookViewer extends StatelessWidget {
                     WidgetbookUseCase(
                       name: 'Default',
                       builder: (context) => FeedParametersSection(
-                        feedRate: 100,
-                        sieProduction: 200,
+                        feedRate: 5,
+                        sieProduction: 6,
                         onFeedRateChanged: mockDoubleCallback,
                         onSieProductionChanged: mockDoubleCallback,
                         onStartDateChanged: mockDateCallback,
@@ -135,7 +135,7 @@ class WidgetbookViewer extends StatelessWidget {
           ],
         ),
         WidgetbookCategory(
-          name: 'Components',
+          name: 'Other Components',
           isInitiallyExpanded: false,
           children: [
             WidgetbookComponent(
