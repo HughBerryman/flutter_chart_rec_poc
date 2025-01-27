@@ -130,108 +130,104 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
 
     return Theme(
       data: FmiThemeLight.fmiThemeDataLight,
-      child: Scaffold(
-        backgroundColor: FmiThemeLight.fmiThemeDataLight.colorScheme.background,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: Theme(
-            data: FmiAppBarTheme.inverseAltSurface(context),
-            child: FeedAppBar(
-              selectedLotCount: selectedLotCount,
-              totalLotCount: lots.length,
-              onViewSaved: _showSavedStrategies,
-              onSaveStrategy: _showSaveStrategy,
-              onExport: _showExportDialog,
-              isPanelVisible: _isPanelVisible,
-              onPanelToggle: () =>
-                  setState(() => _isPanelVisible = !_isPanelVisible),
-            ),
-          ),
-        ),
-        body: Row(
-          children: [
-            // Main content
-            Expanded(
-              child: Row(
-                children: [
-                  // Left side - Feed parameters and lots
-                  Expanded(
-                    child: Theme(
-                      data: FmiListTileTheme.altSurface(context),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Feed parameters section
-                          FeedParametersSection(
-                            feedRate: _feedRate,
-                            sieProduction: _sieProduction,
-                            projectedStartDate: _projectedStartDate,
-                            targetEndDate: _targetEndDate,
-                            onFeedRateChanged: (value) {
-                              setState(() => _feedRate = value);
-                            },
-                            onSieProductionChanged: (value) {
-                              setState(() => _sieProduction = value);
-                            },
-                            onStartDateChanged: (date) {
-                              setState(() => _projectedStartDate = date);
-                            },
-                            onTargetEndDateChanged: (date) {
-                              setState(() => _targetEndDate = date);
-                            },
-                          ),
-                          const Divider(height: 1),
-
-                          // Lots section
-                          Expanded(
-                            child: LotsSection(
-                              lots: lots,
-                              showSelected: showSelected,
-                              selectedLocations: selectedLocations,
-                              selectedSort: selectedSort,
-                              onShowSelectedChanged: (value) =>
-                                  setState(() => showSelected = value),
-                              onLocationsChanged: (locations) {
-                                setState(() {
-                                  if (locations.contains('All Locations')) {
-                                    selectedLocations = {'All Locations'};
-                                  } else {
-                                    selectedLocations = locations;
-                                  }
-                                });
-                              },
-                              onSortChanged: (value) =>
-                                  setState(() => selectedSort = value),
-                              onBagsChanged: _updateLotBags,
-                              onExpandChanged: _toggleLotExpanded,
-                              onAssayValuesChanged: _updateLotAssayValues,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // Right panel
-                  if (_isPanelVisible)
-                    Theme(
-                      data: FmiListTileTheme.altSurface(context),
-                      child: RightPanel(
-                        width: _panelWidth,
-                        onWidthChanged: (value) =>
-                            setState(() => _panelWidth = value),
-                        lots:
-                            lots.where((lot) => lot.selectedBags > 0).toList(),
-                        feedRate: _feedRate,
-                        sieProduction: _sieProduction,
-                        projectedStartDate: _projectedStartDate,
-                        targetEndDate: _targetEndDate,
-                      ),
-                    ),
-                ],
+      child: Builder(
+        builder: (context) => Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Theme(
+              data: FmiAppBarTheme.inverseAltSurface(context),
+              child: FeedAppBar(
+                selectedLotCount: selectedLotCount,
+                totalLotCount: lots.length,
+                onViewSaved: _showSavedStrategies,
+                onSaveStrategy: _showSaveStrategy,
+                onExport: _showExportDialog,
+                isPanelVisible: _isPanelVisible,
+                onPanelToggle: () =>
+                    setState(() => _isPanelVisible = !_isPanelVisible),
               ),
             ),
-          ],
+          ),
+          body: Row(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Theme(
+                        data: FmiListTileTheme.altSurface(context),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FeedParametersSection(
+                              feedRate: _feedRate,
+                              sieProduction: _sieProduction,
+                              projectedStartDate: _projectedStartDate,
+                              targetEndDate: _targetEndDate,
+                              onFeedRateChanged: (value) {
+                                setState(() => _feedRate = value);
+                              },
+                              onSieProductionChanged: (value) {
+                                setState(() => _sieProduction = value);
+                              },
+                              onStartDateChanged: (date) {
+                                setState(() => _projectedStartDate = date);
+                              },
+                              onTargetEndDateChanged: (date) {
+                                setState(() => _targetEndDate = date);
+                              },
+                            ),
+                            const Divider(height: 1),
+                            Expanded(
+                              child: LotsSection(
+                                lots: lots,
+                                showSelected: showSelected,
+                                selectedLocations: selectedLocations,
+                                selectedSort: selectedSort,
+                                onShowSelectedChanged: (value) =>
+                                    setState(() => showSelected = value),
+                                onLocationsChanged: (locations) {
+                                  setState(() {
+                                    if (locations.contains('All Locations')) {
+                                      selectedLocations = {'All Locations'};
+                                    } else {
+                                      selectedLocations = locations;
+                                    }
+                                  });
+                                },
+                                onSortChanged: (value) =>
+                                    setState(() => selectedSort = value),
+                                onBagsChanged: _updateLotBags,
+                                onExpandChanged: _toggleLotExpanded,
+                                onAssayValuesChanged: _updateLotAssayValues,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (_isPanelVisible)
+                      Theme(
+                        data: FmiListTileTheme.altSurface(context),
+                        child: RightPanel(
+                          width: _panelWidth,
+                          onWidthChanged: (value) =>
+                              setState(() => _panelWidth = value),
+                          lots: lots
+                              .where((lot) => lot.selectedBags > 0)
+                              .toList(),
+                          feedRate: _feedRate,
+                          sieProduction: _sieProduction,
+                          projectedStartDate: _projectedStartDate,
+                          targetEndDate: _targetEndDate,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
