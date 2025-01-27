@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fmi_core/fmi_core.dart';
 
 class RecSelector extends StatelessWidget {
   final bool isEnabled;
@@ -14,6 +15,9 @@ class RecSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final fmiTheme = FMIThemeBase.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -28,14 +32,16 @@ class RecSelector extends StatelessWidget {
         child: Container(
           width: 320,
           height: 80,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: EdgeInsets.all(fmiTheme.spacing.medium),
           decoration: BoxDecoration(
-            color: isEnabled ? color : Colors.grey,
-            border: Border.all(color: const Color(0xFFE2E2E5), width: 1),
-            borderRadius: BorderRadius.circular(8),
+            color: isEnabled
+                ? fmiTheme.colors.success100
+                : fmiTheme.colors.neutral300,
+            border: Border.all(color: fmiTheme.colors.neutral200, width: 1),
+            borderRadius: BorderRadius.circular(fmiTheme.radius.medium),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
+                color: fmiTheme.colors.neutral500.withOpacity(0.2),
                 spreadRadius: 2,
                 blurRadius: 5,
                 offset: const Offset(0, 3),
@@ -52,18 +58,16 @@ class RecSelector extends StatelessWidget {
                   children: [
                     Text(
                       "Accept",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 16,
+                      style: fmiTheme.typography.body1.copyWith(
+                        color: fmiTheme.colors.primary500,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: fmiTheme.spacing.xxsmall),
                     Text(
                       "Recommendation",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 12,
+                      style: fmiTheme.typography.body2.copyWith(
+                        color: fmiTheme.colors.primary500,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -75,34 +79,36 @@ class RecSelector extends StatelessWidget {
                 children: [
                   Text(
                     "2000",
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 16,
+                    style: fmiTheme.typography.body1.copyWith(
+                      color: fmiTheme.colors.primary500,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     "gal/shift",
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 12,
+                    style: fmiTheme.typography.body2.copyWith(
+                      color: fmiTheme.colors.primary500,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: fmiTheme.spacing.small),
               Container(
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: isEnabled ? const Color(0xFFDBF2E0) : Colors.red,
+                  color: isEnabled
+                      ? fmiTheme.colors.success100
+                      : fmiTheme.colors.error100,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.check,
                   size: 20,
-                  color: isEnabled ? Colors.green : Colors.red,
+                  color: isEnabled
+                      ? fmiTheme.colors.success500
+                      : fmiTheme.colors.error500,
                 ),
               ),
             ],
