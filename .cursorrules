@@ -1,0 +1,9 @@
+The main MDS Style package is found in fmi_core.dart within the /MDS folder.
+
+The overarching import to use for anything fmi_core related is: import 'package:fmi_core/fmi_core.dart';
+
+The list of components is in "/fmi_core/lib/ui/components/components.dart"
+
+The list of design tokens is in "/fmi_core/lib/designTokens/designTokens.dart"
+
+Please make sure you understand how to import the fundamental themes from FMIThemeBase class to use in all the designs (most of these have base prepended)
