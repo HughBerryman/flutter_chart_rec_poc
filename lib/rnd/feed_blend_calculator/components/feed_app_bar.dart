@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fmi_core/fmi_core.dart';
 
 class FeedAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int selectedLotCount;
@@ -22,69 +23,82 @@ class FeedAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return AppBar(
-      backgroundColor: const Color(0xFFEBF2F8),
+      backgroundColor: colorScheme.fmiBaseThemeAltSurfaceAltSurface,
       elevation: 0,
       automaticallyImplyLeading: false,
       title: Row(
         children: [
-          const Icon(Icons.science, color: Colors.black),
+          Icon(Icons.science,
+              color: colorScheme.fmiBaseThemeAltSurfaceOnAltSurface),
           const SizedBox(width: 8),
-          const Text(
+          Text(
             'Leach Feed Calculator',
-            style: TextStyle(color: Colors.black),
+            style: theme.textTheme.titleLarge?.copyWith(
+              color: colorScheme.fmiBaseThemeAltSurfaceOnAltSurface,
+            ),
           ),
           Text(
             ' • $selectedLotCount of $totalLotCount assays selected',
-            style: const TextStyle(fontSize: 14, color: Colors.grey),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: colorScheme.fmiBaseThemeAltSurfaceOnAltSurface
+                  .withOpacity(0.7),
+            ),
           ),
         ],
       ),
       actions: [
         TextButton.icon(
           onPressed: onViewSaved,
-          icon: Icon(Icons.visibility, color: Colors.grey[700]),
+          icon: Icon(Icons.visibility,
+              color: colorScheme.fmiBaseThemeAltSurfaceOnAltSurface),
           label: Text(
             'View Saved',
-            style: TextStyle(color: Colors.grey[700]),
-          ),
-          style: TextButton.styleFrom(
-            foregroundColor: Colors.grey[700],
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: colorScheme.fmiBaseThemeAltSurfaceOnAltSurface,
+            ),
           ),
         ),
         TextButton.icon(
           onPressed: onSaveStrategy,
-          icon: Icon(Icons.save, color: Colors.grey[700]),
+          icon: Icon(Icons.save,
+              color: colorScheme.fmiBaseThemeAltSurfaceOnAltSurface),
           label: Text(
             'Save Strategy',
-            style: TextStyle(color: Colors.grey[700]),
-          ),
-          style: TextButton.styleFrom(
-            foregroundColor: Colors.grey[700],
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: colorScheme.fmiBaseThemeAltSurfaceOnAltSurface,
+            ),
           ),
         ),
         TextButton.icon(
           onPressed: onExport,
-          icon: Icon(Icons.file_download, color: Colors.grey[700]),
+          icon: Icon(Icons.file_download,
+              color: colorScheme.fmiBaseThemeAltSurfaceOnAltSurface),
           label: Text(
             'Export',
-            style: TextStyle(color: Colors.grey[700]),
-          ),
-          style: TextButton.styleFrom(
-            foregroundColor: Colors.grey[700],
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: colorScheme.fmiBaseThemeAltSurfaceOnAltSurface,
+            ),
           ),
         ),
         IconButton(
           icon: Icon(
             isPanelVisible ? Icons.chevron_right : Icons.chevron_left,
-            color: Colors.grey[700],
+            color: colorScheme.fmiBaseThemeAltSurfaceOnAltSurface,
           ),
           onPressed: onPanelToggle,
         ),
       ],
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1),
-        child: Divider(height: 1, color: Colors.grey[300]),
+        child: Divider(
+          height: 1,
+          color:
+              colorScheme.fmiBaseThemeAltSurfaceOnAltSurface.withOpacity(0.12),
+        ),
       ),
     );
   }
