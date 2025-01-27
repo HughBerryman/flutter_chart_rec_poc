@@ -5,6 +5,7 @@ import 'package:fmi_core/fmi_core.dart';
 import 'chart_app.dart';
 import 'rec_selector.dart';
 import 'feed_blend_calculator.dart';
+import 'welcome_page.dart';
 
 class WidgetbookViewer extends StatelessWidget {
   const WidgetbookViewer({super.key});
@@ -13,8 +14,17 @@ class WidgetbookViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook(
       directories: [
+        WidgetbookComponent(
+          name: 'Welcome',
+          useCases: [
+            WidgetbookUseCase(
+              name: 'Default',
+              builder: (context) => const WelcomePage(),
+            ),
+          ],
+        ),
         WidgetbookCategory(
-          name: 'Components',
+          name: 'Applications',
           children: [
             WidgetbookComponent(
               name: 'Feed Blend Calculator',
@@ -34,6 +44,11 @@ class WidgetbookViewer extends StatelessWidget {
                 ),
               ],
             ),
+          ],
+        ),
+        WidgetbookCategory(
+          name: 'Components',
+          children: [
             WidgetbookComponent(
               name: 'Rec Selector',
               useCases: [
