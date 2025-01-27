@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
+import 'package:fmi_core/fmi_core.dart';
 
 class ChartApp extends StatelessWidget {
   const ChartApp({super.key});
@@ -9,14 +10,26 @@ class ChartApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Copper Analysis'),
+        title: Text(
+          'Copper Analysis',
+          style: TextStyle(
+            color: FMIThemeBase.basePalettePrimaryPrimary50,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: FMIThemeBase.basePalettePrimaryPrimary50,
+          ),
           onPressed: () {
-            Navigator.pop(context); // Navigate back to the previous screen
+            Navigator.pop(context);
           },
         ),
+        backgroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray95,
+        elevation: 0,
       ),
+      backgroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray95,
       body: LineChart(),
     );
   }
@@ -38,8 +51,21 @@ class LineChart extends StatelessWidget {
       // Adding Trackball to Chart
       trackballBehavior: _trackballBehavior,
       // Chart Title
-      title: const ChartTitle(text: 'Copper (Cu)'),
-      legend: const Legend(isVisible: true),
+      title: ChartTitle(
+        text: 'Copper (Cu)',
+        textStyle: TextStyle(
+          color: FMIThemeBase.basePalettePrimaryPrimary50,
+          fontWeight: FontWeight.bold,
+          fontSize: FMIThemeBase.baseFontSize3,
+        ),
+      ),
+      legend: Legend(
+        isVisible: true,
+        textStyle: TextStyle(
+          color: FMIThemeBase.basePalettePrimaryPrimary50,
+          fontSize: FMIThemeBase.baseFontSize1,
+        ),
+      ),
       tooltipBehavior: TooltipBehavior(enable: true),
       primaryXAxis: DateTimeAxis(
         intervalType: DateTimeIntervalType.days,
@@ -53,23 +79,33 @@ class LineChart extends StatelessWidget {
               date.month == DateTime.now().month &&
               date.year == DateTime.now().year) {
             return ChartAxisLabel(
-                'Today', const TextStyle(color: Colors.black));
+                'Today',
+                TextStyle(
+                  color: FMIThemeBase.basePalettePrimaryPrimary50,
+                  fontWeight: FontWeight.bold,
+                ));
           } else {
-            return ChartAxisLabel(DateFormat.Md().format(date),
-                const TextStyle(color: Colors.black));
+            return ChartAxisLabel(
+                DateFormat.Md().format(date),
+                TextStyle(
+                  color: FMIThemeBase.basePalettePrimaryPrimary50,
+                ));
           }
         },
       ),
-      primaryYAxis: const NumericAxis(
+      primaryYAxis: NumericAxis(
         minimum: 0,
         maximum: 10,
         interval: 1,
-        majorGridLines: MajorGridLines(dashArray: [5, 5]),
+        majorGridLines: const MajorGridLines(dashArray: [5, 5]),
+        labelStyle: TextStyle(
+          color: FMIThemeBase.basePalettePrimaryPrimary50,
+        ),
       ),
       series: <CartesianSeries>[
         LineSeries<ChartData, DateTime>(
           name: 'Cu - Recommend',
-          color: Colors.blue,
+          color: FMIThemeBase.basePalettePrimaryPrimary60,
           dataSource: getChartData(),
           xValueMapper: (ChartData data, _) => data.date,
           yValueMapper: (ChartData data, _) => data.recommend,
@@ -79,7 +115,7 @@ class LineChart extends StatelessWidget {
         ),
         LineSeries<ChartData, DateTime>(
           name: 'Cu - Current',
-          color: Colors.orange,
+          color: FMIThemeBase.basePaletteExtendedOrange50,
           dataSource: getChartData(),
           xValueMapper: (ChartData data, _) => data.date,
           yValueMapper: (ChartData data, _) => data.current,
@@ -93,7 +129,7 @@ class LineChart extends StatelessWidget {
         CartesianChartAnnotation(
           widget: Container(
             height: 2,
-            color: Color.fromARGB(255, 225, 66, 55),
+            color: FMIThemeBase.basePaletteRedRed50,
           ),
           coordinateUnit: CoordinateUnit.point,
           region: AnnotationRegion.plotArea,
@@ -105,7 +141,7 @@ class LineChart extends StatelessWidget {
         CartesianChartAnnotation(
           widget: Container(
             height: 2,
-            color: Colors.red,
+            color: FMIThemeBase.basePaletteRedRed50,
           ),
           coordinateUnit: CoordinateUnit.point,
           region: AnnotationRegion.plotArea,
@@ -118,7 +154,7 @@ class LineChart extends StatelessWidget {
         CartesianChartAnnotation(
           widget: Container(
             width: 2,
-            color: Colors.black,
+            color: FMIThemeBase.basePalettePrimaryPrimary50,
           ),
           coordinateUnit: CoordinateUnit.logicalPixel,
           region: AnnotationRegion.plotArea,
@@ -126,12 +162,12 @@ class LineChart extends StatelessWidget {
           y: 0.2,
         ),
         CartesianChartAnnotation(
-          widget: const Text(
+          widget: Text(
             'Today vertical line goes here',
             style: TextStyle(
-              color: Colors.black,
+              color: FMIThemeBase.basePalettePrimaryPrimary50,
               fontWeight: FontWeight.bold,
-              fontSize: 12,
+              fontSize: FMIThemeBase.baseFontSize1,
             ),
           ),
           coordinateUnit: CoordinateUnit.point,
@@ -154,7 +190,11 @@ class LineChart extends StatelessWidget {
                 throughput: 6.0 TPH
               """,
               preferBelow: false,
-              child: const Icon(Icons.check, color: Colors.green),
+              child: Icon(
+                Icons.check,
+                color: FMIThemeBase.basePaletteGreenGreen50,
+                size: FMIThemeBase.baseIconSmall,
+              ),
             ),
           ),
           coordinateUnit: CoordinateUnit.point,
@@ -175,7 +215,11 @@ class LineChart extends StatelessWidget {
                 throughput: 6.0 TPH
               """,
               preferBelow: false,
-              child: const Icon(Icons.check, color: Colors.green),
+              child: Icon(
+                Icons.check,
+                color: FMIThemeBase.basePaletteGreenGreen50,
+                size: FMIThemeBase.baseIconSmall,
+              ),
             ),
           ),
           coordinateUnit: CoordinateUnit.point,
@@ -196,7 +240,11 @@ class LineChart extends StatelessWidget {
                 throughput: 6.0 TPH
               """,
               preferBelow: false,
-              child: const Icon(Icons.check, color: Colors.green),
+              child: Icon(
+                Icons.check,
+                color: FMIThemeBase.basePaletteGreenGreen50,
+                size: FMIThemeBase.baseIconSmall,
+              ),
             ),
           ),
           coordinateUnit: CoordinateUnit.point,
@@ -205,12 +253,12 @@ class LineChart extends StatelessWidget {
         ),
         // Replace checkmark with "Today" text for 2024-08-25
         CartesianChartAnnotation(
-          widget: const Text(
+          widget: Text(
             'Today',
             style: TextStyle(
-              color: Colors.black,
+              color: FMIThemeBase.basePalettePrimaryPrimary50,
               fontWeight: FontWeight.bold,
-              fontSize: 12,
+              fontSize: FMIThemeBase.baseFontSize1,
             ),
           ),
           coordinateUnit: CoordinateUnit.point,

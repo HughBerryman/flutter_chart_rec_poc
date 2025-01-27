@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:fmi_core/fmi_core.dart';
 import 'rnd/rec_selector.dart';
 import 'rnd/chart_app.dart';
 import 'rnd/feed_blend_calculator.dart';
@@ -17,33 +18,53 @@ class MyApp extends StatelessWidget {
       title: 'UI Tester',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          surfaceTint: Colors.white,
+          seedColor: FMIThemeBase.basePalettePrimaryPrimary50,
+          surfaceTint: FMIThemeBase.basePaletteCoolGrayCoolGray100,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue[700],
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 12,
+            backgroundColor: FMIThemeBase.basePalettePrimaryPrimary50,
+            foregroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray100,
+            padding: EdgeInsets.symmetric(
+              horizontal: FMIThemeBase.basePaddingXLarge,
+              vertical: FMIThemeBase.basePaddingMedium,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(FMIThemeBase.baseBorderRadiusMedium),
             ),
           ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: Colors.grey[700],
+            foregroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray50,
+            padding: EdgeInsets.symmetric(
+              horizontal: FMIThemeBase.basePaddingXLarge,
+              vertical: FMIThemeBase.basePaddingMedium,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(FMIThemeBase.baseBorderRadiusMedium),
+            ),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-            foregroundColor: Colors.grey[700],
-            side: BorderSide(color: Colors.grey[300]!),
+            foregroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray50,
+            side: BorderSide(color: FMIThemeBase.basePaletteCoolGrayCoolGray30),
+            padding: EdgeInsets.symmetric(
+              horizontal: FMIThemeBase.basePaddingXLarge,
+              vertical: FMIThemeBase.basePaddingMedium,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(FMIThemeBase.baseBorderRadiusMedium),
+            ),
           ),
         ),
-        scaffoldBackgroundColor: const Color(0xFFEBF2F8),
+        scaffoldBackgroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray95,
       ),
-      home: const HomeScreen(), // HomeScreen will help select between UIs
+      home: const HomeScreen(),
     );
   }
 }
@@ -63,15 +84,21 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEBF2F8),
+        backgroundColor: FMIThemeBase.basePaletteCoolGrayCoolGray95,
         elevation: 0,
-        title: const Text('Concept Ideation'),
+        title: Text(
+          'Concept Ideation',
+          style: TextStyle(
+            color: FMIThemeBase.basePalettePrimaryPrimary50,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 20),
+            SizedBox(height: FMIThemeBase.basePaddingLarge),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -82,22 +109,17 @@ class HomeScreen extends StatelessWidget {
               },
               child: const Text('Feed Blend Calculator'),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: FMIThemeBase.basePaddingLarge),
             OutlinedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ChartApp()),
+                  MaterialPageRoute(builder: (context) => const ChartApp()),
                 );
               },
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Theme.of(context).primaryColor),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              ),
               child: const Text('Show Chart App UI'),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: FMIThemeBase.basePaddingLarge),
             OutlinedButton(
               onPressed: () {
                 Navigator.push(
@@ -105,24 +127,14 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const RecSelector()),
                 );
               },
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Theme.of(context).primaryColor),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              ),
               child: const Text('Show Rec Selector UI'),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: FMIThemeBase.basePaddingLarge),
             OutlinedButton(
               onPressed: _launchWidgetbook,
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Theme.of(context).primaryColor),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              ),
               child: const Text('Open Widgetbook POC'),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: FMIThemeBase.basePaddingLarge),
           ],
         ),
       ),
