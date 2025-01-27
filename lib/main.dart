@@ -53,8 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
       case 1:
         return const ChartApp();
       case 2:
-        return const RecSelector();
-      case 3:
         return const WidgetbookViewer();
       default:
         return const SizedBox();
@@ -69,10 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
     FmiNavigationDestination(
       icon: FontAwesomeIcons.chartLine,
       label: 'Chart App',
-    ),
-    FmiNavigationDestination(
-      icon: FontAwesomeIcons.list,
-      label: 'Rec Selector',
     ),
     FmiNavigationDestination(
       icon: FontAwesomeIcons.book,
