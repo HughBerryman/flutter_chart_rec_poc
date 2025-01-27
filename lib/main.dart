@@ -114,58 +114,9 @@ class _HomeScreenState extends State<HomeScreen> {
               onDestinationSelected: _onDestinationSelected,
               showElevation: true,
             ),
-          Expanded(
+          const Expanded(
             child: Center(
-              child: SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 300),
-                  child: (context.isXSmall || context.isSmall)
-                      ? FmiGenericCard(
-                          title: 'Navigation',
-                          titleTextThemeMobile: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary),
-                          titleTextThemeNotMobile: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary),
-                          body: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(height: FMIThemeBase.basePaddingLarge),
-                              FmiToggleButton(
-                                text: 'Feed Blend Calculator',
-                                type: FmiToggleButtonType.elevated,
-                                onPressed: () => _onDestinationSelected(0),
-                              ),
-                              SizedBox(height: FMIThemeBase.basePaddingLarge),
-                              FmiToggleButton(
-                                text: 'Show Chart App UI',
-                                type: FmiToggleButtonType.outline,
-                                onPressed: () => _onDestinationSelected(1),
-                              ),
-                              SizedBox(height: FMIThemeBase.basePaddingLarge),
-                              FmiToggleButton(
-                                text: 'Show Rec Selector UI',
-                                type: FmiToggleButtonType.outline,
-                                onPressed: () => _onDestinationSelected(2),
-                              ),
-                              SizedBox(height: FMIThemeBase.basePaddingLarge),
-                              FmiToggleButton(
-                                text: 'Open Widgetbook POC',
-                                type: FmiToggleButtonType.outline,
-                                onPressed: () => _onDestinationSelected(3),
-                              ),
-                              SizedBox(height: FMIThemeBase.basePaddingLarge),
-                            ],
-                          ),
-                        )
-                      : const SizedBox(),
-                ),
-              ),
+              child: Text('Select an option from the navigation'),
             ),
           ),
         ],
