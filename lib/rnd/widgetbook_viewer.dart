@@ -11,7 +11,6 @@ import 'feed_blend_calculator/components/right_panel.dart';
 import 'feed_blend_calculator/components/feed_app_bar.dart';
 import 'feed_blend_calculator/components/feed_parameters_section.dart';
 import 'feed_blend_calculator/components/feed_material_assays.dart';
-import 'feed_blend_calculator/models/lot.dart';
 
 class WidgetbookViewer extends StatelessWidget {
   const WidgetbookViewer({super.key});
