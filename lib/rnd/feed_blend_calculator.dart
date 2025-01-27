@@ -161,9 +161,6 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
         ),
         body: Row(
           children: [
-            // Left navigation
-            const LeftNavigation(),
-
             // Main content
             Expanded(
               child: Row(

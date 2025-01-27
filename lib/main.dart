@@ -46,13 +46,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    // Open simulator automatically after build
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _onDestinationSelected(0);
-    });
+  Widget _getSelectedContent() {
+    switch (_selectedIndex) {
+      case 0:
+        return const FeedBlendCalculator();
+      case 1:
+        return const ChartApp();
+      case 2:
+        return const RecSelector();
+      case 3:
+        _launchWidgetbook();
+        return const SizedBox(); // Empty widget when widgetbook is launched
+      default:
+        return const SizedBox();
+    }
   }
 
   final List<FmiNavigationDestination> _destinations = [
@@ -78,29 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
-    switch (index) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const FeedBlendCalculator()),
-        );
-        break;
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ChartApp()),
-        );
-        break;
-      case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const RecSelector()),
-        );
-        break;
-      case 3:
-        _launchWidgetbook();
-        break;
-    }
   }
 
   Future<void> _launchWidgetbook() async {
@@ -123,10 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
               onDestinationSelected: _onDestinationSelected,
               showElevation: true,
             ),
-          const Expanded(
-            child: Center(
-              child: SizedBox(), // Empty container instead of text
-            ),
+          Expanded(
+            child: _getSelectedContent(),
           ),
         ],
       ),
