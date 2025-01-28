@@ -39,12 +39,12 @@ class _FeedBlendCalculatorState extends State<FeedBlendCalculator> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         _panelWidth =
-            MediaQuery.of(context).size.width * (context.isLarge ? 0.35 : 0.4);
+            MediaQuery.of(context).size.width * (context.isLarge ? 0.45 : 0.5);
       });
     });
   }
 
-  double _panelWidth = 700; // Will be set in initState
+  double _panelWidth = 800; // Will be set in initState
   Set<String> selectedLocations = {'All Locations'};
   String? selectedSort;
 
