@@ -395,9 +395,11 @@ class _RightPanelState extends State<RightPanel> {
               final minWidth = context.isMedium ? 300.0 : 400.0;
               final maxWidthFactor = context.isLarge ? 0.7 : 0.6;
 
+              // Use details.globalPosition.dx directly for more responsive dragging
+              // Calculate new width based on screen position rather than delta
+              final newWidth = screenWidth - details.globalPosition.dx;
               widget.onWidthChanged(
-                (widget.width - details.delta.dx)
-                    .clamp(minWidth, screenWidth * maxWidthFactor),
+                newWidth.clamp(minWidth, screenWidth * maxWidthFactor),
               );
             },
             child: Container(
