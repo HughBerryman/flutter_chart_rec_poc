@@ -392,8 +392,8 @@ class _RightPanelState extends State<RightPanel> {
           child: GestureDetector(
             onHorizontalDragUpdate: (details) {
               final screenWidth = MediaQuery.of(context).size.width;
-              final minWidth = context.isMedium ? 600.0 : 700.0;
-              final maxWidthFactor = context.isLarge ? 0.45 : 0.5;
+              final minWidth = context.isMedium ? 300.0 : 400.0;
+              final maxWidthFactor = context.isLarge ? 0.7 : 0.6;
 
               widget.onWidthChanged(
                 (widget.width - details.delta.dx)
